@@ -38,7 +38,7 @@ public class A_UpdateSkillsApi : CoachesApiControllerTests
     }
 
     [Fact]
-    public async Task UpdateSkills_ReturnsOk_WithValidId()
+    public async Task UpdateSkills_Returns_NoContent()
     {
         var response = await controller.UpdateSkills(TheCanonical.CoachId, request);
         Assert.IsType<NoContentResult>(response);
