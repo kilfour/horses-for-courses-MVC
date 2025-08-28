@@ -1,4 +1,4 @@
-using HorsesForCourses.Api.Courses.UpdateTimeSlots;
+using HorsesForCourses.Api.Courses;
 using HorsesForCourses.Core.Domain.Coaches;
 using HorsesForCourses.Core.Domain.Courses;
 using HorsesForCourses.Core.Domain.Courses.TimeSlots;

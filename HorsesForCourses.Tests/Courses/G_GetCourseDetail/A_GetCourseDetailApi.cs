@@ -1,4 +1,4 @@
-using HorsesForCourses.Api.Courses.GetCourseDetail;
+using HorsesForCourses.Service.Courses.GetCourseDetail;
 using HorsesForCourses.Tests.Tools;
 using HorsesForCourses.Tests.Tools.Courses;
 using Microsoft.AspNetCore.Mvc;

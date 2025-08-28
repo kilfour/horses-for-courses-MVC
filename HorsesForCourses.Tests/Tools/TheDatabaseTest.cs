@@ -1,4 +1,4 @@
-using HorsesForCourses.Api.Warehouse;
+using HorsesForCourses.Service.Warehouse;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 

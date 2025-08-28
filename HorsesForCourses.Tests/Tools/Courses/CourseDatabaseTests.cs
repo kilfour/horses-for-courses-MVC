@@ -1,5 +1,5 @@
-using HorsesForCourses.Api.Warehouse;
 using HorsesForCourses.Core.Domain.Courses;
+using HorsesForCourses.Service.Warehouse;
 
 namespace HorsesForCourses.Tests.Tools.Courses;
 

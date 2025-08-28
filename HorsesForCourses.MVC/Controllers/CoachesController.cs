@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.Mvc;
-
 namespace HorsesForCourses.MVC.Controllers;
 
 // public class CoachesController(CoachesRepository repository) : Controller

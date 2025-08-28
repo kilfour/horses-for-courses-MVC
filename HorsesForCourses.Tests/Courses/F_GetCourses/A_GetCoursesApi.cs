@@ -1,5 +1,5 @@
-using HorsesForCourses.Api.Courses.GetCourses;
-using HorsesForCourses.Api.Warehouse.Paging;
+using HorsesForCourses.Service.Courses.GetCourses;
+using HorsesForCourses.Service.Warehouse.Paging;
 using HorsesForCourses.Tests.Tools.Courses;
 using Microsoft.AspNetCore.Mvc;
 using Moq;

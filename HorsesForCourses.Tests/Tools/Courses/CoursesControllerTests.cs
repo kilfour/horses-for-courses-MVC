@@ -1,10 +1,11 @@
-using HorsesForCourses.Api.Coaches;
 using HorsesForCourses.Api.Courses;
-using HorsesForCourses.Api.Courses.GetCourseDetail;
-using HorsesForCourses.Api.Courses.GetCourses;
-using HorsesForCourses.Api.Warehouse;
-using HorsesForCourses.Api.Warehouse.Paging;
 using HorsesForCourses.Core.Domain.Courses;
+using HorsesForCourses.Service.Coaches;
+using HorsesForCourses.Service.Courses;
+using HorsesForCourses.Service.Courses.GetCourseDetail;
+using HorsesForCourses.Service.Courses.GetCourses;
+using HorsesForCourses.Service.Warehouse;
+using HorsesForCourses.Service.Warehouse.Paging;
 using Moq;
 
 namespace HorsesForCourses.Tests.Tools.Courses;

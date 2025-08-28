@@ -1,8 +1,6 @@
-using HorsesForCourses.Api.Courses.AssignCoach;
-using HorsesForCourses.Api.Courses.CreateCourse;
-using HorsesForCourses.Api.Courses.UpdateTimeSlots;
-using HorsesForCourses.Api.Warehouse.Paging;
 using HorsesForCourses.Core.Domain.Courses;
+using HorsesForCourses.Service.Courses;
+using HorsesForCourses.Service.Warehouse.Paging;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HorsesForCourses.Api.Courses;

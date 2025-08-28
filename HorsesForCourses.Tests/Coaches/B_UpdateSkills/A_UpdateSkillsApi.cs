@@ -1,4 +1,4 @@
-using HorsesForCourses.Api.Coaches.UpdateSkills;
+using HorsesForCourses.Api.Coaches;
 using HorsesForCourses.Tests.Tools;
 using HorsesForCourses.Tests.Tools.Coaches;
 using Microsoft.AspNetCore.Mvc;

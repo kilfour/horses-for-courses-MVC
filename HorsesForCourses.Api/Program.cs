@@ -1,13 +1,13 @@
 
 using System.Text.Json.Serialization;
 using HorsesForCourses.Api;
-using HorsesForCourses.Api.Coaches;
-using HorsesForCourses.Api.Coaches.GetCoachDetail;
 using HorsesForCourses.Api.Coaches.GetCoaches;
-using HorsesForCourses.Api.Courses;
-using HorsesForCourses.Api.Courses.GetCourseDetail;
-using HorsesForCourses.Api.Courses.GetCourses;
-using HorsesForCourses.Api.Warehouse;
+using HorsesForCourses.Service.Coaches;
+using HorsesForCourses.Service.Coaches.GetCoachDetail;
+using HorsesForCourses.Service.Courses;
+using HorsesForCourses.Service.Courses.GetCourseDetail;
+using HorsesForCourses.Service.Courses.GetCourses;
+using HorsesForCourses.Service.Warehouse;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

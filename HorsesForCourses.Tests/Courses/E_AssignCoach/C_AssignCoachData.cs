@@ -1,6 +1,6 @@
-using HorsesForCourses.Api.Warehouse;
 using HorsesForCourses.Core.Domain.Coaches;
 using HorsesForCourses.Core.Domain.Courses;
+using HorsesForCourses.Service.Warehouse;
 using HorsesForCourses.Tests.Tools;
 using Microsoft.EntityFrameworkCore;
 
