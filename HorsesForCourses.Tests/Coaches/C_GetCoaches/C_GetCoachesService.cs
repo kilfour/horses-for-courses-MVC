@@ -1,5 +1,3 @@
-using HorsesForCourses.Core.Domain;
-using HorsesForCourses.Service.Coaches.GetCoaches;
 using HorsesForCourses.Service.Warehouse.Paging;
 using HorsesForCourses.Tests.Tools;
 using HorsesForCourses.Tests.Tools.Coaches;
