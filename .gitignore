@@ -1,0 +1,57 @@
+# Node modules
+node_modules/
+
+# Vite dev cache
+.vite/
+
+# Build output
+dist/
+
+# Test coverage
+coverage/
+
+# Local env files
+.env
+.env.*.local
+
+# VS Code settings
+.vscode/
+
+# VS settings
+.vs/
+
+# System files
+.DS_Store
+
+# Logs and temp files
+log*.txt
+*.log
+*.tmp
+*.swp
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+*.dll binary
+*.jmod binary
+*.exe binary
+
+temp*.md
+
+# DotNet intermediate files and binaries
+obj/
+bin/
+
+# Exclude the pap
+Solution/
+Hidden*Tests.cs
+solution.md
+*NotYet/
+
+.quickpulse/
+.quickacid/
+
+*.db
+*.db-shm
+*.db-wal
