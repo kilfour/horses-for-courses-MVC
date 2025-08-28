@@ -7,17 +7,17 @@ using Moq;
 
 namespace HorsesForCourses.Tests.Tools.Coaches;
 
-public abstract class CoachesControllerTests
+public abstract class CoachesServiceTests
 {
     protected readonly CoachesRepository repository;
-    protected readonly Mock<ICoachesService> service;
+    protected readonly ICoachesService service;
     protected readonly Mock<IAmASuperVisor> supervisor;
     protected readonly Mock<IGetCoachById> coachQuery;
     protected readonly Mock<IGetTheCoachSummaries> getCoachSummaries;
     protected readonly Mock<IGetTheCoachDetail> getCoachDetail;
     protected readonly CoachSpy spy;
 
-    public CoachesControllerTests()
+    public CoachesServiceTests()
     {
         getCoachDetail = new Mock<IGetTheCoachDetail>();
         getCoachDetail.Setup(a => a.One(TheCanonical.CoachId)).ReturnsAsync(new CoachDetail());
@@ -37,6 +37,6 @@ public abstract class CoachesControllerTests
             getCoachSummaries.Object,
             getCoachDetail.Object);
 
-        service = new Mock<ICoachesService>();
+        service = new CoachesService(repository);
     }
 }

@@ -3,16 +3,14 @@ using HorsesForCourses.Core.Domain.Coaches;
 using HorsesForCourses.Service.Warehouse;
 using HorsesForCourses.Tests.Tools;
 
-
 namespace HorsesForCourses.Tests.Coaches.A_RegisterCoach;
 
-
-public class C_RegisterCoachData : TheDatabaseTest
+public class D_RegisterCoachData : TheDatabaseTest
 {
     private readonly DataSupervisor supervisor;
     private readonly Coach coach;
 
-    public C_RegisterCoachData()
+    public D_RegisterCoachData()
     {
         supervisor = new DataSupervisor(GetDbContext());
         coach = TheCanonical.Coach();

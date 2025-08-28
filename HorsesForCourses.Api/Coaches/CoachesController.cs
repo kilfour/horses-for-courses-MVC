@@ -1,4 +1,3 @@
-using HorsesForCourses.Core.Domain.Coaches;
 using Microsoft.AspNetCore.Mvc;
 using HorsesForCourses.Service.Coaches;
 using HorsesForCourses.Service.Warehouse.Paging;
@@ -7,17 +6,16 @@ namespace HorsesForCourses.Api.Coaches;
 
 [ApiController]
 [Route("coaches")]
-public class CoachesController(CoachesRepository repository) : ControllerBase
+public class CoachesController(CoachesRepository repository, ICoachesService service) : ControllerBase
 {
     private readonly CoachesRepository repository = repository;
+    private readonly ICoachesService service = service;
 
     [HttpPost]
     public async Task<IActionResult> RegisterCoach(RegisterCoachRequest request)
     {
-        var coach = new Coach(request.Name, request.Email);
-        await repository.Supervisor.Enlist(coach);
-        await repository.Supervisor.Ship();
-        return Ok(coach.Id.Value);
+        var id = await service.RegisterCoach(request.Name, request.Email);
+        return Ok(id);
     }
 
     [HttpPost("{id}/skills")]

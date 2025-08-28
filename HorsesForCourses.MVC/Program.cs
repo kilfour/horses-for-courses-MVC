@@ -32,7 +32,9 @@ builder.Services
     .AddScoped<IGetTheCourseDetail, GetCourseDetail>()
 
     .AddScoped<CoachesRepository>()
-    .AddScoped<CoursesRepository>(); ;
+    .AddScoped<CoursesRepository>()
+
+    .AddScoped<ICoachesService, CoachesService>();
 
 var app = builder.Build();
 

@@ -6,7 +6,7 @@ using HorsesForCourses.Tests.Tools.Coaches;
 
 namespace HorsesForCourses.Tests.Coaches.A_RegisterCoach;
 
-public class B_RegisterCoachDomain : CoachDomainTests
+public class E_RegisterCoachDomain : CoachDomainTests
 {
     [Fact]
     public void RegisterCoach_WithValidData_ShouldSucceed()
