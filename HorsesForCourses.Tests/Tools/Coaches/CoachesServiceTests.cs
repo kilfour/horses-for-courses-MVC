@@ -20,15 +20,9 @@ public abstract class CoachesServiceTests
     public CoachesServiceTests()
     {
         getCoachDetail = new Mock<IGetTheCoachDetail>();
-        getCoachDetail.Setup(a => a.One(TheCanonical.CoachId)).ReturnsAsync(TheCanonical.CoachDetail());
-
         getCoachSummaries = new Mock<IGetTheCoachSummaries>();
-        getCoachSummaries.Setup(a => a.Paged(It.IsAny<PageRequest>()))
-            .ReturnsAsync(new PagedResult<CoachSummary>([], 0, 1, 15));
-
         spy = new();
         getCoachById = new Mock<IGetCoachById>();
-        getCoachById.Setup(a => a.Load(TheCanonical.CoachId)).ReturnsAsync(spy);
 
         supervisor = new Mock<IAmASuperVisor>();
         repository = new CoachesRepository(
