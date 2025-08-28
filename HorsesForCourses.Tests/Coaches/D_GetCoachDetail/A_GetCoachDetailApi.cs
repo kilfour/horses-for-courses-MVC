@@ -6,7 +6,7 @@ using Moq;
 
 namespace HorsesForCourses.Tests.Coaches.D_GetCoachDetail;
 
-public class A_GetCoachDetailApi : CoachesControllerTests
+public class A_GetCoachDetailApi : CoachesApiControllerTests
 {
     [Fact]
     public async Task GetCoachDetail_uses_the_query_object()

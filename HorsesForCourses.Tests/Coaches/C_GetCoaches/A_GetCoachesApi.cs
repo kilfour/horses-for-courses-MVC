@@ -1,4 +1,4 @@
-using HorsesForCourses.Api.Coaches.GetCoaches;
+using HorsesForCourses.Service.Coaches.GetCoaches;
 using HorsesForCourses.Service.Warehouse.Paging;
 using HorsesForCourses.Tests.Tools.Coaches;
 using Microsoft.AspNetCore.Mvc;
@@ -6,7 +6,7 @@ using Moq;
 
 namespace HorsesForCourses.Tests.Coaches.C_GetCoaches;
 
-public class A_GetCoachesApi : CoachesControllerTests
+public class A_GetCoachesApi : CoachesApiControllerTests
 {
     private async Task<OkObjectResult?> Act()
     {
@@ -14,7 +14,7 @@ public class A_GetCoachesApi : CoachesControllerTests
     }
 
     [Fact]
-    public async Task UpdateSkills_uses_the_query_object()
+    public async Task GetCoaches_uses_the_query_object()
     {
         var response = await controller.GetCoaches();
         getCoachSummaries.Verify(a => a.All(It.IsAny<PageRequest>()));

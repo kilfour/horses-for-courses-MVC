@@ -1,4 +1,5 @@
-using HorsesForCourses.Api.Coaches.GetCoaches;
+
+using HorsesForCourses.Service.Coaches.GetCoaches;
 using HorsesForCourses.Service.Warehouse.Paging;
 using HorsesForCourses.Tests.Tools;
 

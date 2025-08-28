@@ -1,7 +1,6 @@
-using HorsesForCourses.Api.Coaches;
-using HorsesForCourses.Api.Coaches.GetCoaches;
 using HorsesForCourses.Service.Coaches;
 using HorsesForCourses.Service.Coaches.GetCoachDetail;
+using HorsesForCourses.Service.Coaches.GetCoaches;
 using HorsesForCourses.Service.Warehouse;
 using HorsesForCourses.Service.Warehouse.Paging;
 using Moq;
@@ -10,7 +9,6 @@ namespace HorsesForCourses.Tests.Tools.Coaches;
 
 public abstract class CoachesControllerTests
 {
-    protected readonly CoachesController controller;
     protected readonly CoachesRepository repository;
     protected readonly Mock<IAmASuperVisor> supervisor;
     protected readonly Mock<IGetCoachById> coachQuery;
@@ -37,6 +35,5 @@ public abstract class CoachesControllerTests
             coachQuery.Object,
             getCoachSummaries.Object,
             getCoachDetail.Object);
-        controller = new CoachesController(repository);
     }
 }

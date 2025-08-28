@@ -7,7 +7,7 @@ using Moq;
 
 namespace HorsesForCourses.Tests.Coaches.A_RegisterCoach;
 
-public class A_RegisterCoachApi : CoachesControllerTests
+public class A_RegisterCoachApi : CoachesApiControllerTests
 {
     private readonly RegisterCoachRequest request;
 

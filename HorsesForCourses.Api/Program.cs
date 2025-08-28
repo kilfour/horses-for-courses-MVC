@@ -1,9 +1,9 @@
 
 using System.Text.Json.Serialization;
 using HorsesForCourses.Api;
-using HorsesForCourses.Api.Coaches.GetCoaches;
 using HorsesForCourses.Service.Coaches;
 using HorsesForCourses.Service.Coaches.GetCoachDetail;
+using HorsesForCourses.Service.Coaches.GetCoaches;
 using HorsesForCourses.Service.Courses;
 using HorsesForCourses.Service.Courses.GetCourseDetail;
 using HorsesForCourses.Service.Courses.GetCourses;

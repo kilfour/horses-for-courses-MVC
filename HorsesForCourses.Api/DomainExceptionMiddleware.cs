@@ -1,4 +1,3 @@
-using System.Text.RegularExpressions;
 using HorsesForCourses.Core.Domain;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,22 +23,13 @@ public sealed class DomainExceptionMiddleware
         catch (DomainException ex)
         {
             logger.LogInformation(ex, "Domain rule violated");
-            await WriteProblem(context, StatusCodes.Status400BadRequest, "Domain rule violated", GetDetailMessage(ex));
+            await WriteProblem(context, StatusCodes.Status400BadRequest, "Domain rule violated", ex.MessageFromType());
         }
         catch (Exception ex)
         {
             logger.LogError(ex, "Unhandled exception");
             await WriteProblem(context, StatusCodes.Status500InternalServerError, "Unexpected error", "An unexpected error occurred.");
         }
-    }
-
-    private static string GetDetailMessage(DomainException exception)
-    {
-        var type = exception.GetType().Name;
-        // Insert a space before each capital (except the first one)
-        string withSpaces = Regex.Replace(type, "(?<!^)([A-Z])", " $1");
-        return $"{new string([.. withSpaces.Take(1)])}{new string([.. withSpaces.Skip(1).Select(char.ToLower)])}.";
-
     }
 
     private static async Task WriteProblem(HttpContext ctx, int status, string title, string detail)

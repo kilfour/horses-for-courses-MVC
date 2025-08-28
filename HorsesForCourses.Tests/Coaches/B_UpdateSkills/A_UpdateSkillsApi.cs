@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HorsesForCourses.Tests.Coaches.B_UpdateSkills;
 
-public class A_UpdateSkillsApi : CoachesControllerTests
+public class A_UpdateSkillsApi : CoachesApiControllerTests
 {
     private readonly UpdateSkillsRequest request;
 
