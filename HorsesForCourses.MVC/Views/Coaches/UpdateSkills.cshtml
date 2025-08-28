@@ -4,8 +4,6 @@
 <h2>Update Skills</h2>
 
 <form asp-action="UpdateSkills" method="post" asp-antiforgery="true">
-    @* If your route is /Coaches/UpdateSkills/{id}, pass it like:
-       <form asp-action="UpdateSkills" asp-route-id="@ViewBag.CoachId" method="post"> *@
 
     <div class="mb-3">
         <label asp-for="Name" class="form-label"></label>
@@ -32,7 +30,6 @@
         }
     </div>
 
-    @* Hidden template used for new rows *@
     <template id="skill-template">
         <div class="input-group mb-2 skill-row">
             <input type="text" class="form-control skill-input" name="Skills[__INDEX__]" value=""
