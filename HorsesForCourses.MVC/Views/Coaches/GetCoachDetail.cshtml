@@ -2,10 +2,57 @@
 @using HorsesForCourses.Service.Coaches.GetCoachDetail
 @model CoachDetail
 
-@{
-    ViewData["Title"] = "Coach Detail";
-}
+<h2>Coach Details</h2>
 
-<h2>Coach Detail</h2>
-<div>@Model.Name</div>
-<div>@Model.Email</div>
+<div class="mb-3">
+    <label class="form-label">Id</label>
+    <p class="form-control-plaintext">@Model.Id</p>
+</div>
+
+<div class="mb-3">
+    <label class="form-label">Name</label>
+    <p class="form-control-plaintext">@Model.Name</p>
+</div>
+
+<div class="mb-3">
+    <label class="form-label">Email</label>
+    <p class="form-control-plaintext">@Model.Email</p>
+</div>
+
+<div class="mb-3">
+    <label class="form-label">Skills</label>
+    @if (Model.Skills.Any())
+    {
+        <ul class="list-group">
+            @foreach (var skill in Model.Skills)
+            {
+                <li class="list-group-item">@skill</li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p class="text-muted">No skills registered</p>
+    }
+</div>
+
+<div class="mb-3">
+    <label class="form-label">Courses</label>
+    @if (Model.Courses.Any())
+    {
+        <ul class="list-group">
+            @foreach (var course in Model.Courses)
+            {
+                <li class="list-group-item">
+                    @course.Id – @course.Name
+                </li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p class="text-muted">No courses assigned</p>
+    }
+</div>
+
+<a asp-action="Index" class="btn btn-secondary">Back to list</a>

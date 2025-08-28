@@ -21,16 +21,15 @@ public class CoachesController(ICoachesService Service) : MvcController
     }
 
     [HttpGet("UpdateSkills/{id}")]
-    public async Task<IActionResult> UpdateSkills()
-        => await Task.Run(() => View(new UpdateSkillsViewModel()));
+    public async Task<IActionResult> UpdateSkills(int id)
+        => ViewOrNotFoundIfNull(await Service.GetCoachDetail(id), a => new UpdateSkillsViewModel(a!));
 
     [HttpPost("UpdateSkills/{id}"), ValidateAntiForgeryToken]
     public async Task<IActionResult> UpdateSkills(int id, List<string> skills)
-    {
-        return await This(async () => await Service.UpdateSkills(id, skills))
+        => await This(async () => await Service.UpdateSkills(id, skills))
             .OnSuccess(() => RedirectToAction(nameof(Index)))
-            .OnException(() => View(new UpdateSkillsViewModel(skills)));
-    }
+            .OnException(async () =>
+                ViewOrNotFoundIfNull(await Service.GetCoachDetail(id), a => new UpdateSkillsViewModel(a!)));
 
     [HttpGet("Coaches/")]
     public async Task<IActionResult> Index(int page = 1, int pageSize = 25)
@@ -38,11 +37,7 @@ public class CoachesController(ICoachesService Service) : MvcController
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetCoachDetail(int id)
-    {
-        var coachDetail = await Service.GetCoachDetail(id);
-        if (coachDetail == null) return NotFound();
-        return View(coachDetail);
-    }
+        => ViewOrNotFoundIfNull(await Service.GetCoachDetail(id), a => a);
 }
 
 

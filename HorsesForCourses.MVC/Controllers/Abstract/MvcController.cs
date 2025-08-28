@@ -33,6 +33,26 @@ public abstract class MvcController : Controller
                 return onException();
             }
         }
+
+        public async Task<IActionResult> OnException(Func<Task<IActionResult>> onException)
+        {
+            try
+            {
+                await Action();
+                return OnSuccess();
+            }
+            catch (DomainException ex)
+            {
+                Controller.ModelState.AddModelError(string.Empty, ex.MessageFromType());
+                return await onException();
+            }
+        }
+    }
+
+    protected IActionResult ViewOrNotFoundIfNull<T, TViewModel>(T value, Func<T, TViewModel> func)
+    {
+        if (value == null) return NotFound();
+        return View(func(value));
     }
 }
 

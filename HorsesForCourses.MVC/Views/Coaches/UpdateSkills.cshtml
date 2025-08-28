@@ -1,8 +1,96 @@
 ﻿@using HorsesForCourses.MVC.Models.Coaches
 @model UpdateSkillsViewModel
 
-@{
-    ViewData["Title"] = "Update Skills";
-}
-
 <h2>Update Skills</h2>
+
+<form asp-action="UpdateSkills" method="post" asp-antiforgery="true">
+    @* If your route is /Coaches/UpdateSkills/{id}, pass it like:
+       <form asp-action="UpdateSkills" asp-route-id="@ViewBag.CoachId" method="post"> *@
+
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label"></label>
+        <input asp-for="Name" class="form-control" readonly />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Email" class="form-label"></label>
+        <input asp-for="Email" class="form-control" readonly />
+    </div>
+
+    <div class="mb-2 d-flex justify-content-between align-items-center">
+        <label class="form-label m-0">Skills</label>
+        <button type="button" id="add-skill" class="btn btn-outline-secondary btn-sm">Add skill</button>
+    </div>
+
+    <div id="skills-list">
+        @for (var i = 0; i < Model.Skills.Count; i++)
+        {
+            <div class="input-group mb-2 skill-row">
+                <input type="text" class="form-control skill-input" name="Skills[@i]" value="@Model.Skills[i]" />
+                <button type="button" class="btn btn-outline-danger remove-skill">Remove</button>
+            </div>
+        }
+    </div>
+
+    @* Hidden template used for new rows *@
+    <template id="skill-template">
+        <div class="input-group mb-2 skill-row">
+            <input type="text" class="form-control skill-input" name="Skills[__INDEX__]" value=""
+                placeholder="New skill" />
+            <button type="button" class="btn btn-outline-danger remove-skill">Remove</button>
+        </div>
+    </template>
+
+    <button type="submit" id="save-btn" class="btn btn-primary">Save</button>
+</form>
+
+@section Scripts {
+    <script>
+        (function () {
+            const skillsList = document.getElementById('skills-list');
+            const addBtn = document.getElementById('add-skill');
+            const template = document.getElementById('skill-template').innerHTML;
+
+            function reindex() {
+                const inputs = skillsList.querySelectorAll('.skill-input');
+                inputs.forEach((input, idx) => {
+                    input.name = `Skills[${idx}]`;
+                });
+            }
+
+            function addRow(value = '') {
+                const html = template.replace('Skills[__INDEX__]', 'Skills[0]'); // temp; reindex() will fix
+                const wrapper = document.createElement('div');
+                wrapper.innerHTML = html.trim();
+                const row = wrapper.firstElementChild;
+                const input = row.querySelector('.skill-input');
+                input.value = value;
+                skillsList.appendChild(row);
+                reindex();
+            }
+
+            // Add initial empty row if none exist
+            if (skillsList.querySelectorAll('.skill-row').length === 0) {
+                addRow('');
+            }
+
+            addBtn.addEventListener('click', () => addRow(''));
+
+            skillsList.addEventListener('click', (e) => {
+                if (e.target.classList.contains('remove-skill')) {
+                    const row = e.target.closest('.skill-row');
+                    row?.remove();
+                    reindex();
+
+                    // Ensure there is always at least one row for UX
+                    if (skillsList.querySelectorAll('.skill-row').length === 0) {
+                        addRow('');
+                    }
+                }
+            });
+
+            // Final safeguard: reindex on submit
+            document.getElementById('save-btn').closest('form').addEventListener('submit', reindex);
+        })();
+    </script>
+}

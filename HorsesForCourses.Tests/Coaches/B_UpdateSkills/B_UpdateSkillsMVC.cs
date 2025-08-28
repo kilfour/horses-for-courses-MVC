@@ -12,10 +12,13 @@ public class B_UpdateSkillsMVC : CoachesMVCControllerTests
     [Fact]
     public async Task UpdateSkills_GET_Passes_The_Model_To_The_View()
     {
-        var result = await controller.UpdateSkills();
+        service.Setup(a => a.GetCoachDetail(TheCanonical.CoachId)).ReturnsAsync(TheCanonical.CoachDetail());
+        var result = await controller.UpdateSkills(TheCanonical.CoachId);
         var view = Assert.IsType<ViewResult>(result);
-        var viewModel = Assert.IsType<UpdateSkillsViewModel>(view.Model);
-        Assert.Equal([], viewModel.Skills);
+        var model = Assert.IsType<UpdateSkillsViewModel>(view.Model);
+        Assert.Equal(TheCanonical.CoachName, model.Name);
+        Assert.Equal(TheCanonical.CoachEmail, model.Email);
+        Assert.Equal([], model.Skills);
     }
 
     [Fact]
@@ -28,6 +31,7 @@ public class B_UpdateSkillsMVC : CoachesMVCControllerTests
     [Fact]
     public async Task UpdateSkills_POST_Redirects_To_Index_On_Success()
     {
+        service.Setup(a => a.GetCoachDetail(TheCanonical.CoachId)).ReturnsAsync(TheCanonical.CoachDetail());
         var result = await controller.UpdateSkills(TheCanonical.CoachId, TheCanonical.Skills);
         var redirect = Assert.IsType<RedirectToActionResult>(result);
         Assert.Equal(nameof(controller.Index), redirect.ActionName);
@@ -36,12 +40,15 @@ public class B_UpdateSkillsMVC : CoachesMVCControllerTests
     [Fact]
     public async Task UpdateSkills_POST_Returns_View_On_Exception()
     {
+        service.Setup(a => a.GetCoachDetail(TheCanonical.CoachId)).ReturnsAsync(TheCanonical.CoachDetail());
         service.Setup(a => a.UpdateSkills(It.IsAny<int>(), It.IsAny<List<string>>()))
             .ThrowsAsync(new CoachAlreadyHasSkill("one"));
-        var result = await controller.UpdateSkills(-1, ["one", "one"]);
+        var result = await controller.UpdateSkills(TheCanonical.CoachId, ["one", "one"]);
         var view = Assert.IsType<ViewResult>(result);
         var model = Assert.IsType<UpdateSkillsViewModel>(view.Model);
-        Assert.Equal(["one", "one"], model.Skills);
+        Assert.Equal(TheCanonical.CoachName, model.Name);
+        Assert.Equal(TheCanonical.CoachEmail, model.Email);
+        Assert.Equal([], model.Skills);
     }
 
     [Fact]
