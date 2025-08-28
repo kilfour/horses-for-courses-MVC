@@ -5,10 +5,11 @@ namespace HorsesForCourses.Tests.Tools.Coaches;
 public class CoachSpy : Coach
 {
     public CoachSpy() : base(TheCanonical.CoachName, TheCanonical.CoachEmail) { }
-    public bool Called;
-    public IEnumerable<string>? Seen;
+    public bool UpdateSkillsCalled;
+    public IEnumerable<string>? UpdateSkillsSeen;
     public override void UpdateSkills(IEnumerable<string> skills)
     {
-        Called = true; Seen = skills;
+        UpdateSkillsCalled = true; UpdateSkillsSeen = skills;
+        base.UpdateSkills(skills);
     }
 }

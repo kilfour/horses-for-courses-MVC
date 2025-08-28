@@ -5,7 +5,7 @@ using HorsesForCourses.Tests.Tools.Coaches;
 
 namespace HorsesForCourses.Tests.Coaches.B_UpdateSkills;
 
-public class B_UpdateSkillsDomain : CoachDomainTests
+public class E_UpdateSkillsDomain : CoachDomainTests
 {
     [Fact]
     public void CreateSkill_Valid_ShouldSucceed()

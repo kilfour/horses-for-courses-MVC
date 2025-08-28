@@ -3,15 +3,13 @@ using HorsesForCourses.Core.Domain.Skills;
 using HorsesForCourses.Service.Warehouse;
 using HorsesForCourses.Tests.Tools;
 
-
 namespace HorsesForCourses.Tests.Coaches.B_UpdateSkills;
 
-
-public class C_UpdateSkillsData : TheDatabaseTest
+public class D_UpdateSkillsData : TheDatabaseTest
 {
     private readonly Coach coach;
 
-    public C_UpdateSkillsData()
+    public D_UpdateSkillsData()
     {
         coach = TheCanonical.Coach();
         AddToDb(coach);

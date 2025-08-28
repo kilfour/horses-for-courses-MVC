@@ -2,6 +2,7 @@ using HorsesForCourses.Api.Coaches;
 using HorsesForCourses.Tests.Tools;
 using HorsesForCourses.Tests.Tools.Coaches;
 using Microsoft.AspNetCore.Mvc;
+using Moq;
 
 
 namespace HorsesForCourses.Tests.Coaches.B_UpdateSkills;
@@ -16,37 +17,24 @@ public class A_UpdateSkillsApi : CoachesApiControllerTests
     }
 
     [Fact]
-    public async Task UpdateSkills_uses_the_query_object()
+    public async Task UpdateSkills_uses_the_service()
     {
         var response = await controller.UpdateSkills(TheCanonical.CoachId, request);
-        coachQuery.Verify(a => a.Load(TheCanonical.CoachId));
+        service.Verify(a => a.UpdateSkills(TheCanonical.CoachId, It.Is<List<string>>(a => a == request.Skills)));
     }
 
     [Fact]
-    public async Task UpdateSkills_calls_update_skills()
+    public async Task UpdateSkills_Service_Success_Returns_NoContent()
     {
-        await controller.UpdateSkills(TheCanonical.CoachId, request);
-        Assert.True(spy.Called);
-        Assert.Equal(request.Skills, spy.Seen);
-    }
-
-    [Fact]
-    public async Task UpdateSkills_calls_supervisor_ship()
-    {
-        await controller.UpdateSkills(TheCanonical.CoachId, request);
-        supervisor.Verify(a => a.Ship());
-    }
-
-    [Fact]
-    public async Task UpdateSkills_Returns_NoContent()
-    {
+        service.Setup(a => a.UpdateSkills(TheCanonical.CoachId, request.Skills)).ReturnsAsync(true);
         var response = await controller.UpdateSkills(TheCanonical.CoachId, request);
         Assert.IsType<NoContentResult>(response);
     }
 
     [Fact]
-    public async Task UpdateSkills_Returns_Not_Found_If_No_Coach()
+    public async Task UpdateSkills_Service_Failure_Returns_Not_Found()
     {
+        service.Setup(a => a.UpdateSkills(TheCanonical.CoachId, request.Skills)).ReturnsAsync(false);
         var response = await controller.UpdateSkills(-1, request);
         Assert.IsType<NotFoundResult>(response);
     }

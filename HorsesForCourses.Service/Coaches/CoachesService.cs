@@ -5,6 +5,7 @@ namespace HorsesForCourses.Service.Coaches;
 public interface ICoachesService
 {
     Task<int> RegisterCoach(string name, string email);
+    Task<bool> UpdateSkills(int id, IEnumerable<string> skills);
 }
 
 public class CoachesService(CoachesRepository repository) : ICoachesService
@@ -17,5 +18,14 @@ public class CoachesService(CoachesRepository repository) : ICoachesService
         await repository.Supervisor.Enlist(coach);
         await repository.Supervisor.Ship();
         return coach.Id.Value;
+    }
+
+    public async Task<bool> UpdateSkills(int id, IEnumerable<string> skills)
+    {
+        var coach = await repository.GetCoachById.Load(id);
+        if (coach == null) return false;
+        coach.UpdateSkills(skills);
+        await repository.Supervisor.Ship();
+        return true;
     }
 }

@@ -14,6 +14,7 @@ public static class TheCanonical
     public static Coach Coach()
         => new(CoachName, CoachEmail);
 
+    public readonly static List<string> Skills = ["one", "two"];
 
     public const int CourseId = 1;
     public const string CourseName = "A";

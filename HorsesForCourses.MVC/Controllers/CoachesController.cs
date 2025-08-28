@@ -22,6 +22,20 @@ public class CoachesController(CoachesRepository Repository, ICoachesService Ser
             .OnSuccess(() => RedirectToAction(nameof(Index)))
             .OnException(() => View(new RegisterCoachViewModel(name, email)));
     }
+
+    [HttpGet]
+    public async Task<IActionResult> UpdateSkills()
+        => await Task.Run(() => View(new UpdateSkillsViewModel()));
+
+    [HttpPost("/Coaches/UpdateSkills/{id}"), ValidateAntiForgeryToken]
+    public async Task<IActionResult> UpdateSkills(int id, List<string> skills)
+    {
+        return await This(async () => await Service.UpdateSkills(id, skills))
+            .OnSuccess(() => RedirectToAction(nameof(Index)))
+            .OnException(() => View(new UpdateSkillsViewModel(skills)));
+    }
+
+
 }
 
 

@@ -21,11 +21,8 @@ public class CoachesController(CoachesRepository repository, ICoachesService ser
     [HttpPost("{id}/skills")]
     public async Task<IActionResult> UpdateSkills(int id, UpdateSkillsRequest request)
     {
-        var coach = await repository.GetCoachById.Load(id);
-        if (coach == null) return NotFound();
-        coach.UpdateSkills(request.Skills);
-        await repository.Supervisor.Ship();
-        return NoContent();
+        var success = await service.UpdateSkills(id, request.Skills);
+        return success ? NoContent() : NotFound();
     }
 
     [HttpGet]
