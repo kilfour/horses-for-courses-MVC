@@ -1,4 +1,6 @@
 using HorsesForCourses.Core.Domain.Coaches;
+using HorsesForCourses.Service.Coaches.GetCoaches;
+using HorsesForCourses.Service.Warehouse.Paging;
 
 namespace HorsesForCourses.Service.Coaches;
 
@@ -6,26 +8,28 @@ public interface ICoachesService
 {
     Task<int> RegisterCoach(string name, string email);
     Task<bool> UpdateSkills(int id, IEnumerable<string> skills);
+    Task<PagedResult<CoachSummary>> GetCoaches(int page, int pageSize);
 }
 
-public class CoachesService(CoachesRepository repository) : ICoachesService
+public class CoachesService(CoachesRepository Repository) : ICoachesService
 {
-    private readonly CoachesRepository repository = repository;
-
     public async Task<int> RegisterCoach(string name, string email)
     {
         var coach = new Coach(name, email);
-        await repository.Supervisor.Enlist(coach);
-        await repository.Supervisor.Ship();
+        await Repository.Supervisor.Enlist(coach);
+        await Repository.Supervisor.Ship();
         return coach.Id.Value;
     }
 
     public async Task<bool> UpdateSkills(int id, IEnumerable<string> skills)
     {
-        var coach = await repository.GetCoachById.Load(id);
+        var coach = await Repository.GetCoachById.Load(id);
         if (coach == null) return false;
         coach.UpdateSkills(skills);
-        await repository.Supervisor.Ship();
+        await Repository.Supervisor.Ship();
         return true;
     }
+
+    public async Task<PagedResult<CoachSummary>> GetCoaches(int page, int pageSize)
+        => await Repository.GetTheCoachSummaries.All(new PageRequest(page, pageSize));
 }

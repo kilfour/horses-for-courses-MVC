@@ -7,7 +7,7 @@ using Moq;
 
 namespace HorsesForCourses.Tests.Coaches.C_GetCoaches;
 
-public class C_GetCoachesMVC : CoachesMVCControllerTests
+public class B_GetCoachesMVC : CoachesMVCControllerTests
 {
     [Fact]
     public async Task GetCoaches_uses_the_query_object()
@@ -26,7 +26,7 @@ public class C_GetCoachesMVC : CoachesMVCControllerTests
     [Fact]
     public async Task GetCoaches_Passes_The_List_To_The_View()
     {
-        var paged = new PagedResult<CoachSummary>([new(1, TheCanonical.CoachName, TheCanonical.CoachEmail, 0)], 1, 1, 25);
+        var paged = TheCanonical.CoachSummaryList();
         getCoachSummaries.Setup(q => q.All(It.IsAny<PageRequest>())).ReturnsAsync(paged);
 
         var result = await controller.Index();

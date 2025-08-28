@@ -8,10 +8,6 @@ namespace HorsesForCourses.MVC.Controllers;
 public class CoachesController(CoachesRepository Repository, ICoachesService Service) : MvcController
 {
     [HttpGet]
-    public async Task<IActionResult> Index(int page = 1, int pageSize = 25)
-        => View(await Repository.GetTheCoachSummaries.All(new PageRequest(page, pageSize)));
-
-    [HttpGet]
     public async Task<IActionResult> RegisterCoach()
         => await Task.Run(() => View(new RegisterCoachViewModel()));
 
@@ -27,7 +23,7 @@ public class CoachesController(CoachesRepository Repository, ICoachesService Ser
     public async Task<IActionResult> UpdateSkills()
         => await Task.Run(() => View(new UpdateSkillsViewModel()));
 
-    [HttpPost("/Coaches/UpdateSkills/{id}"), ValidateAntiForgeryToken]
+    [HttpPost("UpdateSkills/{id}"), ValidateAntiForgeryToken]
     public async Task<IActionResult> UpdateSkills(int id, List<string> skills)
     {
         return await This(async () => await Service.UpdateSkills(id, skills))
@@ -35,7 +31,17 @@ public class CoachesController(CoachesRepository Repository, ICoachesService Ser
             .OnException(() => View(new UpdateSkillsViewModel(skills)));
     }
 
+    [HttpGet]
+    public async Task<IActionResult> Index(int page = 1, int pageSize = 25)
+        => View(await Repository.GetTheCoachSummaries.All(new PageRequest(page, pageSize)));
 
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetCoachDetail(int id)
+    {
+        var coachDetail = await Repository.GetTheCoachDetail.One(id);
+        if (coachDetail == null) return NotFound();
+        return Ok(coachDetail);
+    }
 }
 
 

@@ -7,7 +7,7 @@ using HorsesForCourses.Tests.Tools;
 namespace HorsesForCourses.Tests.Coaches.C_GetCoaches;
 
 
-public class B_GetCoachesData : TheDatabaseTest
+public class D_GetCoachesData : TheDatabaseTest
 {
     private async Task<PagedResult<CoachSummary>> Act(PageRequest request)
         => await new GetCoachSummaries(GetDbContext()).All(request);
