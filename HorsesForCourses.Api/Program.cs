@@ -45,7 +45,10 @@ builder.Services
 
     .AddScoped<IGetCourseById, GetCourseById>()
     .AddScoped<IGetTheCourseSummaries, GetCourseSummaries>()
-    .AddScoped<IGetTheCourseDetail, GetCourseDetail>();
+    .AddScoped<IGetTheCourseDetail, GetCourseDetail>()
+
+    .AddScoped<CoachesRepository>()
+    .AddScoped<CoursesRepository>();
 
 
 var app = builder.Build();
