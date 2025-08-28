@@ -1,4 +1,5 @@
 using HorsesForCourses.Core.Domain.Coaches;
+using HorsesForCourses.Service.Coaches.GetCoachDetail;
 using HorsesForCourses.Service.Coaches.GetCoaches;
 using HorsesForCourses.Service.Warehouse.Paging;
 
@@ -9,6 +10,7 @@ public interface ICoachesService
     Task<int> RegisterCoach(string name, string email);
     Task<bool> UpdateSkills(int id, IEnumerable<string> skills);
     Task<PagedResult<CoachSummary>> GetCoaches(int page, int pageSize);
+    Task<CoachDetail?> GetCoachDetail(int id);
 }
 
 public class CoachesService(CoachesRepository Repository) : ICoachesService
@@ -31,5 +33,8 @@ public class CoachesService(CoachesRepository Repository) : ICoachesService
     }
 
     public async Task<PagedResult<CoachSummary>> GetCoaches(int page, int pageSize)
-        => await Repository.GetTheCoachSummaries.All(new PageRequest(page, pageSize));
+        => await Repository.GetTheCoachSummaries.Paged(new PageRequest(page, pageSize));
+
+    public async Task<CoachDetail?> GetCoachDetail(int id)
+        => await Repository.GetTheCoachDetail.One(id);
 }

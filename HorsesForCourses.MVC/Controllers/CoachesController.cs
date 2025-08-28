@@ -1,11 +1,12 @@
+
+using HorsesForCourses.MVC.Controllers.Abstract;
 using HorsesForCourses.MVC.Models.Coaches;
 using HorsesForCourses.Service.Coaches;
-using HorsesForCourses.Service.Warehouse.Paging;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HorsesForCourses.MVC.Controllers;
 
-public class CoachesController(CoachesRepository Repository, ICoachesService Service) : MvcController
+public class CoachesController(ICoachesService Service) : MvcController
 {
     [HttpGet]
     public async Task<IActionResult> RegisterCoach()
@@ -33,14 +34,14 @@ public class CoachesController(CoachesRepository Repository, ICoachesService Ser
 
     [HttpGet]
     public async Task<IActionResult> Index(int page = 1, int pageSize = 25)
-        => View(await Repository.GetTheCoachSummaries.All(new PageRequest(page, pageSize)));
+        => View(await Service.GetCoaches(page, pageSize));
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetCoachDetail(int id)
     {
-        var coachDetail = await Repository.GetTheCoachDetail.One(id);
+        var coachDetail = await Service.GetCoachDetail(id);
         if (coachDetail == null) return NotFound();
-        return Ok(coachDetail);
+        return View(coachDetail);
     }
 }
 

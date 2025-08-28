@@ -10,7 +10,7 @@ namespace HorsesForCourses.Tests.Coaches.C_GetCoaches;
 public class D_GetCoachesData : TheDatabaseTest
 {
     private async Task<PagedResult<CoachSummary>> Act(PageRequest request)
-        => await new GetCoachSummaries(GetDbContext()).All(request);
+        => await new GetCoachSummaries(GetDbContext()).Paged(request);
 
     [Fact]
     public async Task EmptyList()

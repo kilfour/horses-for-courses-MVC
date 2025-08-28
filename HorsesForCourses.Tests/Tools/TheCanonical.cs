@@ -2,6 +2,7 @@ using HorsesForCourses.Api.Courses;
 using HorsesForCourses.Core.Domain.Coaches;
 using HorsesForCourses.Core.Domain.Courses;
 using HorsesForCourses.Core.Domain.Courses.TimeSlots;
+using HorsesForCourses.Service.Coaches.GetCoachDetail;
 using HorsesForCourses.Service.Coaches.GetCoaches;
 using HorsesForCourses.Service.Warehouse.Paging;
 using WibblyWobbly;
@@ -15,6 +16,9 @@ public static class TheCanonical
     public const string CoachEmail = "a@a.a";
     public static Coach Coach()
         => new(CoachName, CoachEmail);
+
+    public static CoachDetail CoachDetail()
+        => new() { Id = CoachId, Name = CoachName, Email = CoachEmail };
 
     public static PagedResult<CoachSummary> CoachSummaryList()
         => new([new CoachSummary(CoachId, CoachName, CoachEmail, 0)], 1, 1, 25);

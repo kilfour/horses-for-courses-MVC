@@ -1,5 +1,6 @@
 using HorsesForCourses.Service.Coaches.GetCoaches;
 using HorsesForCourses.Service.Warehouse.Paging;
+using HorsesForCourses.Tests.Tools;
 using HorsesForCourses.Tests.Tools.Coaches;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -14,15 +15,16 @@ public class A_GetCoachesApi : CoachesApiControllerTests
     }
 
     [Fact]
-    public async Task GetCoaches_uses_the_query_object()
+    public async Task GetCoaches_uses_the_service()
     {
         var response = await controller.GetCoaches();
-        getCoachSummaries.Verify(a => a.All(It.IsAny<PageRequest>()));
+        service.Verify(a => a.GetCoaches(1, 25));
     }
 
     [Fact]
     public async Task GetCoachesReturnsOk_With_List()
     {
+        service.Setup(a => a.GetCoaches(1, 25)).ReturnsAsync(TheCanonical.CoachSummaryList());
         var result = await Act();
         Assert.NotNull(result);
         Assert.IsType<PagedResult<CoachSummary>>(result!.Value);

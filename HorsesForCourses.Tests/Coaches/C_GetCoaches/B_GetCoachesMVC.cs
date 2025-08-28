@@ -10,24 +10,24 @@ namespace HorsesForCourses.Tests.Coaches.C_GetCoaches;
 public class B_GetCoachesMVC : CoachesMVCControllerTests
 {
     [Fact]
-    public async Task GetCoaches_uses_the_query_object()
+    public async Task GetCoaches_uses_the_service()
     {
         var result = await controller.Index();
-        getCoachSummaries.Verify(a => a.All(It.Is<PageRequest>(a => a.Page == 1 && a.PageSize == 25)));
+        service.Verify(a => a.GetCoaches(1, 25));
     }
 
     [Fact]
     public async Task GetCoaches_uses_the_query_object_with_page_info()
     {
         var result = await controller.Index(3, 15);
-        getCoachSummaries.Verify(a => a.All(It.Is<PageRequest>(a => a.Page == 3 && a.PageSize == 15)));
+        service.Verify(a => a.GetCoaches(3, 15));
     }
 
     [Fact]
     public async Task GetCoaches_Passes_The_List_To_The_View()
     {
         var paged = TheCanonical.CoachSummaryList();
-        getCoachSummaries.Setup(q => q.All(It.IsAny<PageRequest>())).ReturnsAsync(paged);
+        service.Setup(a => a.GetCoaches(1, 25)).ReturnsAsync(paged);
 
         var result = await controller.Index();
 

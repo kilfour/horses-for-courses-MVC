@@ -8,6 +8,6 @@ public abstract class CoachesApiControllerTests : CoachesControllerTests
 
     public CoachesApiControllerTests()
     {
-        controller = new CoachesController(repository, service.Object);
+        controller = new CoachesController(service.Object);
     }
 }

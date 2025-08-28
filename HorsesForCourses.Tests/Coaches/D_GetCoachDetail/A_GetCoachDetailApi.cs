@@ -12,12 +12,13 @@ public class A_GetCoachDetailApi : CoachesApiControllerTests
     public async Task GetCoachDetail_uses_the_query_object()
     {
         var result = await controller.GetCoachDetail(TheCanonical.CoachId);
-        getCoachDetail.Verify(a => a.One(It.IsAny<int>()));
+        service.Verify(a => a.GetCoachDetail(TheCanonical.CoachId));
     }
 
     [Fact]
-    public async Task GetCoachDetailReturnsOk_With_List()
+    public async Task GetCoachDetail_Returns_Ok()
     {
+        service.Setup(a => a.GetCoachDetail(TheCanonical.CoachId)).ReturnsAsync(TheCanonical.CoachDetail());
         var result = await controller.GetCoachDetail(TheCanonical.CoachId);
         Assert.NotNull(result);
         var okResult = Assert.IsType<OkObjectResult>(result);

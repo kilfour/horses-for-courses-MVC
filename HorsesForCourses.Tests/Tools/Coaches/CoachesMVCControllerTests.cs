@@ -9,6 +9,6 @@ public abstract class CoachesMVCControllerTests : CoachesControllerTests
 
     public CoachesMVCControllerTests()
     {
-        controller = new CoachesController(repository, service.Object);
+        controller = new CoachesController(service.Object);
     }
 }

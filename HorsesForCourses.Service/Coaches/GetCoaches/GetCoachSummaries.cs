@@ -6,14 +6,14 @@ namespace HorsesForCourses.Service.Coaches.GetCoaches;
 
 public interface IGetTheCoachSummaries
 {
-    Task<PagedResult<CoachSummary>> All(PageRequest request);
+    Task<PagedResult<CoachSummary>> Paged(PageRequest request);
 }
 
 public class GetCoachSummaries(AppDbContext dbContext) : IGetTheCoachSummaries
 {
     private readonly AppDbContext dbContext = dbContext;
 
-    public async Task<PagedResult<CoachSummary>> All(PageRequest request)
+    public async Task<PagedResult<CoachSummary>> Paged(PageRequest request)
     {
         return await dbContext.Coaches
             .AsNoTracking()

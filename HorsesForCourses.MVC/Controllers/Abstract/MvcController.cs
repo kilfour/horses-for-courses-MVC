@@ -1,7 +1,7 @@
 using HorsesForCourses.Core.Domain;
 using Microsoft.AspNetCore.Mvc;
 
-namespace HorsesForCourses.MVC.Controllers;
+namespace HorsesForCourses.MVC.Controllers.Abstract;
 
 public abstract class MvcController : Controller
 {
