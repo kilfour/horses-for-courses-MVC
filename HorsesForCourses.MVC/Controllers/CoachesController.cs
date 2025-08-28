@@ -20,7 +20,7 @@ public class CoachesController(ICoachesService Service) : MvcController
             .OnException(() => View(new RegisterCoachViewModel(name, email)));
     }
 
-    [HttpGet]
+    [HttpGet("UpdateSkills/{id}")]
     public async Task<IActionResult> UpdateSkills()
         => await Task.Run(() => View(new UpdateSkillsViewModel()));
 
@@ -32,7 +32,7 @@ public class CoachesController(ICoachesService Service) : MvcController
             .OnException(() => View(new UpdateSkillsViewModel(skills)));
     }
 
-    [HttpGet]
+    [HttpGet("Coaches/")]
     public async Task<IActionResult> Index(int page = 1, int pageSize = 25)
         => View(await Service.GetCoaches(page, pageSize));
 

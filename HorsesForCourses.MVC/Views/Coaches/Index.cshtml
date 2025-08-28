@@ -29,7 +29,12 @@
                 <td>@coach.Email</td>
                 <td>@coach.NumberOfCoursesAssignedTo</td>
                 <td>
-                    <a class="nav-link text-dark" asp-controller="Coaches" asp-action="UpdateSkills" asp-route-id="@coach.Id">
+                    <a class="nav-link text-dark" asp-controller="Coaches" asp-action="GetCoachDetail"
+                        asp-route-id="@coach.Id">
+                        Detail
+                    </a>
+                    <a class="nav-link text-dark" asp-controller="Coaches" asp-action="UpdateSkills"
+                        asp-route-id="@coach.Id">
                         Edit
                     </a>
                 </td>
