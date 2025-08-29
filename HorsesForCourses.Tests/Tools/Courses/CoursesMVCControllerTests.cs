@@ -1,8 +1,6 @@
-
 using HorsesForCourses.MVC.Controllers;
-using HorsesForCourses.Tests.Tools.Courses;
 
-namespace HorsesForCourses.Tests.Tools.Coaches;
+namespace HorsesForCourses.Tests.Tools.Courses;
 
 public abstract class CoursesMVCControllerTests : CoursesControllerTests
 {
