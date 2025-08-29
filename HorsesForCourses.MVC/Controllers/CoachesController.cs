@@ -14,11 +14,9 @@ public class CoachesController(ICoachesService Service) : MvcController
 
     [HttpPost, ValidateAntiForgeryToken]
     public async Task<IActionResult> RegisterCoach(string name, string email)
-    {
-        return await This(async () => await Service.RegisterCoach(name, email))
+        => await This(async () => await Service.RegisterCoach(name, email))
             .OnSuccess(() => RedirectToAction(nameof(Index)))
             .OnException(() => View(new RegisterCoachViewModel(name, email)));
-    }
 
     [HttpGet("UpdateSkills/{id}")]
     public async Task<IActionResult> UpdateSkills(int id)

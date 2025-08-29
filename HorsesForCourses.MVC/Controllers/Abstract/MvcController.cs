@@ -5,36 +5,22 @@ namespace HorsesForCourses.MVC.Controllers.Abstract;
 
 public abstract class MvcController : Controller
 {
-    protected ControllerMethodBuilder This(Func<Task> action)
+    protected Actor This(Func<Task> action) => new(this, action);
+
+    protected class Actor(Controller Controller, Func<Task> Action)
     {
-        return new ControllerMethodBuilder(this, action);
+        public Critic OnSuccess(Func<IActionResult> onSucces) => new(Controller, Action, onSucces);
     }
 
-    protected class ControllerMethodBuilder(Controller Controller, Func<Task> Action)
-    {
-        public ControllerMethodBuilderEnd OnSuccess(Func<IActionResult> onSucces)
-        {
-            return new ControllerMethodBuilderEnd(Controller, Action, onSucces);
-        }
-    }
-
-    protected class ControllerMethodBuilderEnd(Controller Controller, Func<Task> Action, Func<IActionResult> OnSuccess)
+    protected class Critic(Controller Controller, Func<Task> Action, Func<IActionResult> OnSuccess)
     {
         public async Task<IActionResult> OnException(Func<IActionResult> onException)
-        {
-            try
-            {
-                await Action();
-                return OnSuccess();
-            }
-            catch (DomainException ex)
-            {
-                Controller.ModelState.AddModelError(string.Empty, ex.MessageFromType());
-                return onException();
-            }
-        }
+            => await SafeTry(Task.FromResult(onException()));
 
         public async Task<IActionResult> OnException(Func<Task<IActionResult>> onException)
+            => await SafeTry(onException());
+
+        private async Task<IActionResult> SafeTry(Task<IActionResult> onException)
         {
             try
             {
@@ -44,7 +30,7 @@ public abstract class MvcController : Controller
             catch (DomainException ex)
             {
                 Controller.ModelState.AddModelError(string.Empty, ex.MessageFromType());
-                return await onException();
+                return await onException;
             }
         }
     }

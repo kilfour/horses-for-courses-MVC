@@ -14,11 +14,9 @@ public class CoursesController(ICoursesService Service) : MvcController
 
     [HttpPost, ValidateAntiForgeryToken]
     public async Task<IActionResult> CreateCourse(string name, DateOnly startDate, DateOnly endDate)
-    {
-        return await This(async () => await Service.CreateCourse(name, startDate, endDate))
+        => await This(async () => await Service.CreateCourse(name, startDate, endDate))
             .OnSuccess(() => RedirectToAction(nameof(Index)))
             .OnException(() => View(new CreateCourseViewModel(name, startDate, endDate)));
-    }
 
     [HttpGet("UpdateRequiredSkills/{id}")]
     public async Task<IActionResult> UpdateRequiredSkills(int id)
