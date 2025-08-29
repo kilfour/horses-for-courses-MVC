@@ -1,8 +1,10 @@
+using Microsoft.EntityFrameworkCore;
+
 using HorsesForCourses.Core.Domain.Coaches;
 using HorsesForCourses.Core.Domain.Courses;
-using HorsesForCourses.Service.Coaches;
-using HorsesForCourses.Service.Courses;
-using Microsoft.EntityFrameworkCore;
+using HorsesForCourses.Service.Warehouse.Coaches;
+using HorsesForCourses.Service.Warehouse.Courses;
+
 
 namespace HorsesForCourses.Service.Warehouse;
 

@@ -4,9 +4,8 @@ using HorsesForCourses.Core.Domain.Courses;
 using Microsoft.EntityFrameworkCore.Metadata;
 using HorsesForCourses.Core.Domain.Courses.TimeSlots;
 using HorsesForCourses.Core.Abstractions;
-using HorsesForCourses.Service.Warehouse;
 
-namespace HorsesForCourses.Service.Courses;
+namespace HorsesForCourses.Service.Warehouse.Courses;
 
 public class CourseDataConfiguration : IEntityTypeConfiguration<Course>
 {

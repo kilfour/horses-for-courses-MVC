@@ -1,11 +1,10 @@
-using HorsesForCourses.Core.Domain.Coaches;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Metadata;
 using HorsesForCourses.Core.Abstractions;
-using HorsesForCourses.Service.Warehouse;
+using HorsesForCourses.Core.Domain.Coaches;
 
-namespace HorsesForCourses.Service.Coaches;
+namespace HorsesForCourses.Service.Warehouse.Coaches;
 
 public class CoachesDataConfiguration : IEntityTypeConfiguration<Coach>
 {
