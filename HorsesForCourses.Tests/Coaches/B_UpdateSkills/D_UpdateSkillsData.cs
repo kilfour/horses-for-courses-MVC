@@ -5,7 +5,7 @@ using HorsesForCourses.Tests.Tools;
 
 namespace HorsesForCourses.Tests.Coaches.B_UpdateSkills;
 
-public class D_UpdateSkillsData : TheDatabaseTest
+public class D_UpdateSkillsData : DatabaseTests
 {
     private readonly Coach coach;
 

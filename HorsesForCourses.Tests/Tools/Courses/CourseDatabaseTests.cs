@@ -3,7 +3,7 @@ using HorsesForCourses.Service.Warehouse;
 
 namespace HorsesForCourses.Tests.Tools.Courses;
 
-public class CourseDatabaseTests : TheDatabaseTest
+public class CourseDatabaseTests : DatabaseTests
 {
     protected readonly Course Entity;
 

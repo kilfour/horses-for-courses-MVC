@@ -6,7 +6,7 @@ using HorsesForCourses.Tests.Tools;
 namespace HorsesForCourses.Tests.Courses.F_GetCourses;
 
 
-public class D_GetCoursesData : TheDatabaseTest
+public class D_GetCoursesData : DatabaseTests
 {
     private async Task<PagedResult<CourseSummary>> Act(PageRequest request)
         => await new GetCourseSummaries(GetDbContext()).Paged(request);

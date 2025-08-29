@@ -7,7 +7,7 @@ namespace HorsesForCourses.Api.Courses;
 
 [ApiController]
 [Route("courses")]
-public class CoursesController(CoursesRepository Repository, ICoursesService Service) : WebApiController
+public class CoursesController(ICoursesService Service) : WebApiController
 {
     [HttpPost]
     public async Task<IActionResult> CreateCourse(CreateCourseRequest request)
@@ -36,9 +36,5 @@ public class CoursesController(CoursesRepository Repository, ICoursesService Ser
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetCourseDetail(int id)
-    {
-        var courseDetail = await Repository.GetCourseDetail.One(id);
-        if (courseDetail == null) return NotFound();
-        return Ok(courseDetail);
-    }
+        => OkNotFoundIfNull(await Service.GetCourseDetail(id));
 }

@@ -4,13 +4,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HorsesForCourses.Tests.Tools;
 
-public abstract class TheDatabaseTest : IDisposable
+public abstract class DatabaseTests : IDisposable
 {
     private readonly SqliteConnection connection;
     protected readonly DbContextOptions<AppDbContext> Options;
     protected AppDbContext GetDbContext() => new(Options);
 
-    public TheDatabaseTest()
+    public DatabaseTests()
     {
         connection = new SqliteConnection("DataSource=:memory:");
         connection.Open();

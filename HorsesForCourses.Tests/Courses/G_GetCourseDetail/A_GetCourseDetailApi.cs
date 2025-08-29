@@ -8,27 +8,23 @@ namespace HorsesForCourses.Tests.Courses.G_GetCourseDetail;
 
 public class A_GetCourseDetailApi : CoursesApiControllerTests
 {
-
     [Fact]
-    public async Task GetCourseDetail_uses_the_query_object()
+    public async Task GetCourseDetail_uses_the_service()
     {
         var result = await controller.GetCourseDetail(TheCanonical.CourseId);
-        getCourseDetail.Verify(a => a.One(TheCanonical.CourseId));
+        service.Verify(a => a.GetCourseDetail(TheCanonical.CourseId));
     }
 
     [Fact]
-    public async Task GetCourseDetailReturnsOk_With_List()
+    public async Task GetCourseDetailReturnsOk_With_Detail()
     {
-        getCourseDetail.Setup(a => a.One(TheCanonical.CourseId)).ReturnsAsync(new CourseDetail());
-        var result = await controller.GetCourseDetail(1) as OkObjectResult;
+        service.Setup(a => a.GetCourseDetail(TheCanonical.CourseId)).ReturnsAsync(new CourseDetail());
+        var result = await controller.GetCourseDetail(TheCanonical.CourseId) as OkObjectResult;
         Assert.NotNull(result);
         Assert.IsType<CourseDetail>(result!.Value);
     }
 
     [Fact]
     public async Task GetCourseDetailReturns_NotFound_If_Course_Not_Present()
-    {
-        var result = await controller.GetCourseDetail(-1);
-        Assert.IsType<NotFoundResult>(result);
-    }
+        => Assert.IsType<NotFoundResult>(await controller.GetCourseDetail(-1));
 }

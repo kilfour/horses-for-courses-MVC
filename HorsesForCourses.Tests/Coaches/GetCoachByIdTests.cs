@@ -6,7 +6,7 @@ using HorsesForCourses.Tests.Tools;
 namespace HorsesForCourses.Tests.Coaches;
 
 
-public class GetCoachByIdTests : TheDatabaseTest
+public class GetCoachByIdTests : DatabaseTests
 {
     private async Task<Coach?> Act()
         => await new GetCoachById(GetDbContext()).Load(TheCanonical.CoachId);

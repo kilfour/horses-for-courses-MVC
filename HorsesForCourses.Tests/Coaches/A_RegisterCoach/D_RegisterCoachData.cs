@@ -5,7 +5,7 @@ using HorsesForCourses.Tests.Tools;
 
 namespace HorsesForCourses.Tests.Coaches.A_RegisterCoach;
 
-public class D_RegisterCoachData : TheDatabaseTest
+public class D_RegisterCoachData : DatabaseTests
 {
     private readonly DataSupervisor supervisor;
     private readonly Coach coach;

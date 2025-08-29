@@ -5,7 +5,7 @@ using HorsesForCourses.Tests.Tools;
 
 namespace HorsesForCourses.Tests.Courses.D_ConfirmCourse;
 
-public class D_ConfirmCourseCourseData : TheDatabaseTest
+public class D_ConfirmCourseCourseData : DatabaseTests
 {
     private readonly Course course;
 

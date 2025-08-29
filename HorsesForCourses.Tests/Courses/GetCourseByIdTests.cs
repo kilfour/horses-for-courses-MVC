@@ -6,7 +6,7 @@ using HorsesForCourses.Tests.Tools;
 namespace HorsesForCourses.Tests.Courses;
 
 
-public class GetCourseByIdTests : TheDatabaseTest
+public class GetCourseByIdTests : DatabaseTests
 {
     private async Task<Course?> Act()
         => await new GetCourseById(GetDbContext()).Load(TheCanonical.CourseId);

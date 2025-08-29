@@ -5,7 +5,7 @@ using HorsesForCourses.Tests.Tools;
 namespace HorsesForCourses.Tests.Courses.G_GetCourseDetail;
 
 
-public class D_GetCourseDetailData : TheDatabaseTest
+public class D_GetCourseDetailData : DatabaseTests
 {
     private async Task<CourseDetail?> Act()
         => await new GetCourseDetail(GetDbContext()).One(TheCanonical.CourseId);
