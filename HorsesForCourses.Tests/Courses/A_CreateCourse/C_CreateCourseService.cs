@@ -1,7 +1,7 @@
 using HorsesForCourses.Core.Domain;
 using HorsesForCourses.Core.Domain.Courses;
 using HorsesForCourses.Tests.Tools;
-using HorsesForCourses.Tests.Tools.Coaches;
+using HorsesForCourses.Tests.Tools.Courses;
 using Moq;
 
 namespace HorsesForCourses.Tests.Courses.A_CreateCourse;

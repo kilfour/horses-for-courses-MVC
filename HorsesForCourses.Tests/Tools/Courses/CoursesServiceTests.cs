@@ -1,13 +1,12 @@
 using HorsesForCourses.Service.Coaches;
-using HorsesForCourses.Service.Coaches.GetCoachDetail;
-using HorsesForCourses.Service.Coaches.GetCoaches;
 using HorsesForCourses.Service.Courses;
 using HorsesForCourses.Service.Courses.GetCourseDetail;
 using HorsesForCourses.Service.Courses.GetCourses;
 using HorsesForCourses.Service.Warehouse;
+using HorsesForCourses.Tests.Tools.Coaches;
 using Moq;
 
-namespace HorsesForCourses.Tests.Tools.Coaches;
+namespace HorsesForCourses.Tests.Tools.Courses;
 
 public abstract class CoursesServiceTests
 {
@@ -18,13 +17,13 @@ public abstract class CoursesServiceTests
     protected readonly Mock<IGetCoachById> getCoachById;
     protected readonly Mock<IGetTheCourseSummaries> getCourseSummaries;
     protected readonly Mock<IGetTheCourseDetail> getCourseDetail;
-    protected readonly CoachSpy spy;
+    protected readonly CourseSpy courseSpy;
 
     public CoursesServiceTests()
     {
         getCourseDetail = new Mock<IGetTheCourseDetail>();
         getCourseSummaries = new Mock<IGetTheCourseSummaries>();
-        spy = new();
+        courseSpy = new();
         getCourseById = new Mock<IGetCourseById>();
         getCoachById = new Mock<IGetCoachById>();
 

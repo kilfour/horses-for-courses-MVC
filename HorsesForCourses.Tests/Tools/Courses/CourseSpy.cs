@@ -7,11 +7,11 @@ namespace HorsesForCourses.Tests.Tools.Courses;
 public class CourseSpy : Course
 {
     public CourseSpy() : base(TheCanonical.CourseName, TheCanonical.CourseStart, TheCanonical.CourseEnd) { }
-    public bool SkillsCalled;
-    public IEnumerable<string>? SkillsSeen;
+    public bool RequiredSkillsCalled;
+    public IEnumerable<string>? RequiredSkillsSeen;
     public override Course UpdateRequiredSkills(IEnumerable<string> skills)
     {
-        SkillsCalled = true; SkillsSeen = skills;
+        RequiredSkillsCalled = true; RequiredSkillsSeen = skills;
         base.UpdateRequiredSkills(skills);
         return this;
     }

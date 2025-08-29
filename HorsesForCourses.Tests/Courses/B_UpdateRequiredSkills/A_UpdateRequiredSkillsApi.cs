@@ -20,8 +20,8 @@ public class A_UpdateRequiredSkillsApi : CoursesControllerTests
     public async Task UpdateRequiredSkills_calls_update_skills()
     {
         await controller.UpdateRequiredSkills(TheCanonical.CourseId, request);
-        Assert.True(spy.SkillsCalled);
-        Assert.Equal(request, spy.SkillsSeen);
+        Assert.True(spy.RequiredSkillsCalled);
+        Assert.Equal(request, spy.RequiredSkillsSeen);
     }
 
     [Fact]
