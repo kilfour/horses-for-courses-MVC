@@ -13,10 +13,6 @@ public class UpdateTimeSlotsViewModel(CourseDetail detail)
             : [.. detail.TimeSlots.Select(a => new TimeSlotViewModel(a.Day, a.Start, a.End))];
 }
 
-public class ConfirmCourseViewModel
-{
-}
-
 public class AssignCoachViewModel
 {
 }

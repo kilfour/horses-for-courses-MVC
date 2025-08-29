@@ -14,14 +14,21 @@ public class D_GetCourseDetailData : DatabaseTests
     [Fact]
     public async Task With_Course()
     {
-        AddToDb(TheCanonical.Course());
+
+        AddToDb(TheCanonical.Course()
+            .UpdateRequiredSkills(TheCanonical.Skills)
+            .UpdateTimeSlots(TheCanonical.TimeSlotsFullDayMonday(), a => a)
+            .Confirm());
+
         var detail = await Act();
         Assert.NotNull(detail);
         Assert.Equal(1, detail.Id);
         Assert.Equal(TheCanonical.CourseName, detail.Name);
         Assert.Equal(TheCanonical.CourseStart, detail.Start);
         Assert.Equal(TheCanonical.CourseEnd, detail.End);
-        Assert.Equal([], detail.Skills);
+        Assert.Equal(TheCanonical.Skills, detail.Skills);
+        Assert.Equal(TheCanonical.TimeSlotsFullDayMondayInfo(), detail.TimeSlots);
+        Assert.True(detail.IsConfirmed);
         Assert.Null(detail.Coach);
     }
 

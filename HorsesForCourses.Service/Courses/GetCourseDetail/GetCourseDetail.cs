@@ -28,6 +28,7 @@ public class GetCourseDetail(AppDbContext dbContext) : IGetTheCourseDetail
                 End = a.EndDate,
                 Skills = a.RequiredSkills.Select(b => b.Value),
                 TimeSlots = a.TimeSlots.Select(b => new CourseDetail.TimeSlotInfo(b.Day, b.Start.Value, b.End.Value)),
+                IsConfirmed = a.IsConfirmed,
                 Coach = a.AssignedCoach == null ? null : new IdAndName(a.AssignedCoach.Id.Value, a.AssignedCoach.Name)
 
             }).SingleOrDefaultAsync();

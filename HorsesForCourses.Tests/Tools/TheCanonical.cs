@@ -10,6 +10,7 @@ using HorsesForCourses.Service.Courses.GetCourseDetail;
 using HorsesForCourses.Service.Courses.GetCourses;
 using HorsesForCourses.Service.Warehouse.Paging;
 using WibblyWobbly;
+using static HorsesForCourses.Service.Courses.GetCourseDetail.CourseDetail;
 
 namespace HorsesForCourses.Tests.Tools;
 
@@ -47,6 +48,8 @@ public static class TheCanonical
         => [new TimeSlotViewModel(CourseDay.Monday, 9, 17)];
     public static IEnumerable<TimeSlot> TimeSlotsFullDayMondayExpected()
         => [TimeSlot.From(CourseDay.Monday, 9, 17)];
+    public static IEnumerable<TimeSlotInfo> TimeSlotsFullDayMondayInfo()
+        => [new TimeSlotInfo(CourseDay.Monday, 9, 17)];
 
     public static IEnumerable<TimeSlotViewModel> TimeSlotsWithDuplicateViewModel()
         => [new TimeSlotViewModel(CourseDay.Monday, 9, 17), new TimeSlotViewModel(CourseDay.Monday, 9, 17)];
