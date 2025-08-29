@@ -35,7 +35,7 @@ public class CoachesController(ICoachesService Service) : MvcController
     public async Task<IActionResult> Index(int page = 1, int pageSize = 25)
         => View(await Service.GetCoaches(page, pageSize));
 
-    [HttpGet("{id}")]
+    [HttpGet("Coaches/{id}")]
     public async Task<IActionResult> GetCoachDetail(int id)
         => ViewOrNotFoundIfNull(await Service.GetCoachDetail(id), a => a);
 }

@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using HorsesForCourses.Service;
 using HorsesForCourses.Service.Coaches;
 using HorsesForCourses.Service.Coaches.GetCoachDetail;
 using HorsesForCourses.Service.Coaches.GetCoaches;
@@ -20,22 +21,7 @@ builder.Services.AddControllers().AddJsonOptions(options =>
     options.JsonSerializerOptions.Converters.Add(
         new JsonStringEnumConverter(null, allowIntegerValues: false)));
 
-builder.Services
-    .AddScoped<IAmASuperVisor, DataSupervisor>()
-
-    .AddScoped<IGetCoachById, GetCoachById>()
-    .AddScoped<IGetTheCoachSummaries, GetCoachSummaries>()
-    .AddScoped<IGetTheCoachDetail, GetCoachDetail>()
-
-    .AddScoped<IGetCourseById, GetCourseById>()
-    .AddScoped<IGetTheCourseSummaries, GetCourseSummaries>()
-    .AddScoped<IGetTheCourseDetail, GetCourseDetail>()
-
-    .AddScoped<CoachesRepository>()
-    .AddScoped<CoursesRepository>()
-
-    .AddScoped<ICoachesService, CoachesService>()
-    .AddScoped<ICoursesService, CoursesService>();
+builder.Services.AddHorsesForCourses();
 
 var app = builder.Build();
 
