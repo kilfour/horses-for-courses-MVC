@@ -6,7 +6,7 @@ using Moq;
 
 namespace HorsesForCourses.Tests.Courses.F_GetCourses;
 
-public class A_GetCoursesApi : CoursesControllerTests
+public class A_GetCoursesApi : CoursesApiControllerTests
 {
     private async Task<OkObjectResult?> Act()
     {

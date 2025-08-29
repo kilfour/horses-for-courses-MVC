@@ -7,7 +7,7 @@ using Moq;
 
 namespace HorsesForCourses.Tests.Courses.A_CreateCourse;
 
-public class A_CreateCourseApi : CoursesControllerTests
+public class A_CreateCourseApi : CoursesApiControllerTests
 {
     private readonly CreateCourseRequest request;
 

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace HorsesForCourses.Tests.Courses.B_UpdateRequiredSkills;
 
 
-public class A_UpdateRequiredSkillsApi : CoursesControllerTests
+public class A_UpdateRequiredSkillsApi : CoursesApiControllerTests
 {
     private readonly List<string> request = ["one", "two"];
 

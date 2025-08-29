@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace HorsesForCourses.Tests.Courses.C_UpdateTimeSlots;
 
 
-public class A_UpdateTimeSlotsApi : CoursesControllerTests
+public class A_UpdateTimeSlotsApi : CoursesApiControllerTests
 {
     private readonly IEnumerable<TimeSlotRequest> request =
         TheCanonical.TimeSlotsRequestFullDayMonday();

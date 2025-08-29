@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace HorsesForCourses.Tests.Courses.D_ConfirmCourse;
 
 
-public class A_ConfirmCourseApi : CoursesControllerTests
+public class A_ConfirmCourseApi : CoursesApiControllerTests
 {
     private readonly List<string> request = ["one", "two"];
 

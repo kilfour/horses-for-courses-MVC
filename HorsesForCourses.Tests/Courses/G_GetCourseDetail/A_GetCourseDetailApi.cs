@@ -6,7 +6,7 @@ using Moq;
 
 namespace HorsesForCourses.Tests.Courses.G_GetCourseDetail;
 
-public class A_GetCourseDetailApi : CoursesControllerTests
+public class A_GetCourseDetailApi : CoursesApiControllerTests
 {
 
     [Fact]

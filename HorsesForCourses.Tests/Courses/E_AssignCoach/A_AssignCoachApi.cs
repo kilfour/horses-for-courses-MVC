@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace HorsesForCourses.Tests.Courses.E_AssignCoach;
 
 
-public class A_AssignCoachApi : CoursesControllerTests
+public class A_AssignCoachApi : CoursesApiControllerTests
 {
     protected override void ManipulateEntity(Course entity)
     {
