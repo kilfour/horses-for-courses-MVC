@@ -1,44 +1,24 @@
-using HorsesForCourses.Core.Domain.Courses;
 using HorsesForCourses.Tests.Tools;
 using HorsesForCourses.Tests.Tools.Courses;
 using Microsoft.AspNetCore.Mvc;
+using Moq;
 
 namespace HorsesForCourses.Tests.Courses.D_ConfirmCourse;
 
 
 public class A_ConfirmCourseApi : CoursesApiControllerTests
 {
-    private readonly List<string> request = ["one", "two"];
-
-    protected override void ManipulateEntity(Course entity)
-    {
-        entity.UpdateTimeSlots(TheCanonical.TimeSlotsFullDayMonday(), a => a);
-    }
-
     [Fact]
     public async Task ConfirmCourse_uses_the_query_object()
     {
         await controller.ConfirmCourse(TheCanonical.CourseId);
-        getCourseById.Verify(a => a.Load(TheCanonical.CourseId));
-    }
-
-    [Fact]
-    public async Task ConfirmCourse_calls_confirm()
-    {
-        await controller.ConfirmCourse(TheCanonical.CourseId);
-        Assert.True(spy.IsConfirmed);
-    }
-
-    [Fact]
-    public async Task ConfirmCourse_calls_supervisor_ship()
-    {
-        await controller.ConfirmCourse(TheCanonical.CourseId);
-        supervisor.Verify(a => a.Ship());
+        service.Verify(a => a.ConfirmCourse(TheCanonical.CourseId));
     }
 
     [Fact]
     public async Task ConfirmCourse_NoContent()
     {
+        service.Setup(a => a.ConfirmCourse(TheCanonical.CourseId)).ReturnsAsync(true);
         var response = await controller.ConfirmCourse(TheCanonical.CourseId);
         Assert.IsType<NoContentResult>(response);
     }

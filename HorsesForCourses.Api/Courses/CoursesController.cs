@@ -23,13 +23,7 @@ public class CoursesController(CoursesRepository Repository, ICoursesService Ser
 
     [HttpPost("{id}/confirm")]
     public async Task<IActionResult> ConfirmCourse(int id)
-    {
-        var course = await Repository.GetCourseById.Load(id);
-        if (course == null) return NotFound();
-        course.Confirm();
-        await Repository.Supervisor.Ship();
-        return NoContent();
-    }
+        => NoContentNotFoundIfFalse(await Service.ConfirmCourse(id));
 
 
     [HttpPost("{id}/assign-coach")]
