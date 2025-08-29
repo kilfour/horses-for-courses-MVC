@@ -1,6 +1,5 @@
 using HorsesForCourses.Api.Abstract;
 using HorsesForCourses.Service.Courses;
-using HorsesForCourses.Service.Warehouse.Paging;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HorsesForCourses.Api.Courses;

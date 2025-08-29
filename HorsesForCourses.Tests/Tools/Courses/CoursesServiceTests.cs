@@ -3,7 +3,6 @@ using HorsesForCourses.Service.Courses;
 using HorsesForCourses.Service.Courses.GetCourseDetail;
 using HorsesForCourses.Service.Courses.GetCourses;
 using HorsesForCourses.Service.Warehouse;
-using HorsesForCourses.Tests.Tools.Coaches;
 using Moq;
 
 namespace HorsesForCourses.Tests.Tools.Courses;

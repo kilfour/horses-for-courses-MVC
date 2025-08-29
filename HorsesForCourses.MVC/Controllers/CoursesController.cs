@@ -43,15 +43,26 @@ public class CoursesController(ICoursesService Service) : MvcController
                 ViewOrNotFoundIfNull(await Service.GetCourseDetail(id), a => new UpdateTimeSlotsViewModel(a!)));
 
     [HttpGet("ConfirmCourse/{id}")]
-    public async Task<IActionResult> ConfirmCourse(int id)
+    public async Task<IActionResult> GetConfirmCourseInfo(int id)
         => ViewOrNotFoundIfNull(await Service.GetCourseDetail(id), a => new ConfirmCourseViewModel(a!));
 
     [HttpPost("ConfirmCourse/{id}"), ValidateAntiForgeryToken]
-    public async Task<IActionResult> ConfirmCourse(int id, IEnumerable<TimeSlotViewModel> timeSlots)
+    public async Task<IActionResult> ConfirmCourse(int id)
         => await This(async () => await Service.ConfirmCourse(id))
             .OnSuccess(() => RedirectToAction(nameof(Index)))
             .OnException(async () =>
                 ViewOrNotFoundIfNull(await Service.GetCourseDetail(id), a => new ConfirmCourseViewModel(a!)));
+
+    [HttpGet("AssignCoach/{id}")]
+    public async Task<IActionResult> AssignCoach(int id)
+        => ViewOrNotFoundIfNull(await Service.GetCourseDetail(id), a => new AssignCoachViewModel(a!));
+
+    [HttpPost("AssignCoach/{id}"), ValidateAntiForgeryToken]
+    public async Task<IActionResult> AssignCoach(int id, int coachId)
+        => await This(async () => await Service.AssignCoach(id, coachId))
+            .OnSuccess(() => RedirectToAction(nameof(Index)))
+            .OnException(async () =>
+                ViewOrNotFoundIfNull(await Service.GetCourseDetail(id), a => new AssignCoachViewModel(a!)));
 
     [HttpGet("Courses/")]
     public async Task<IActionResult> Index(int page = 1, int pageSize = 25)

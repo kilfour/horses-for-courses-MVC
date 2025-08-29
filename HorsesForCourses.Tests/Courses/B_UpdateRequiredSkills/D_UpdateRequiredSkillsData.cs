@@ -1,4 +1,3 @@
-using HorsesForCourses.Core.Domain.Skills;
 using HorsesForCourses.Tests.Tools;
 using HorsesForCourses.Tests.Tools.Courses;
 

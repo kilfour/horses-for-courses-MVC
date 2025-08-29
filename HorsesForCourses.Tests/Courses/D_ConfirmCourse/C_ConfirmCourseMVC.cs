@@ -15,7 +15,7 @@ public class C_ConfirmCourseMVC : CoursesMVCControllerTests
     {
         service.Setup(a => a.GetCourseDetail(TheCanonical.CourseId))
             .ReturnsAsync(TheCanonical.CourseDetail() with { IsConfirmed = true });
-        var result = await controller.ConfirmCourse(TheCanonical.CourseId);
+        var result = await controller.GetConfirmCourseInfo(TheCanonical.CourseId);
         var view = Assert.IsType<ViewResult>(result);
         var model = Assert.IsType<ConfirmCourseViewModel>(view.Model);
         Assert.Equal(TheCanonical.CourseName, model.Name);
@@ -25,7 +25,7 @@ public class C_ConfirmCourseMVC : CoursesMVCControllerTests
     [Fact]
     public async Task ConfirmCourse_POST_calls_the_service()
     {
-        await controller.ConfirmCourse(TheCanonical.CourseId, TheCanonical.TimeSlotsFullDayMondayViewModel());
+        await controller.ConfirmCourse(TheCanonical.CourseId);
         service.Verify(a => a.ConfirmCourse(TheCanonical.CourseId));
     }
 

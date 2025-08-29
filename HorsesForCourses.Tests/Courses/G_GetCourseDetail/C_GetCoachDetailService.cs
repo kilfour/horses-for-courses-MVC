@@ -2,7 +2,7 @@ using HorsesForCourses.Tests.Tools;
 using HorsesForCourses.Tests.Tools.Courses;
 using Moq;
 
-namespace HorsesForCourses.Tests.Courses.D_GetCourseDetail;
+namespace HorsesForCourses.Tests.Courses.G_GetCourseDetail;
 
 public class C_GetCourseDetailService : CoursesServiceTests
 {
