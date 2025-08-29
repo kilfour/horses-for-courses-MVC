@@ -3,6 +3,7 @@ using HorsesForCourses.Core.Domain.Coaches;
 using HorsesForCourses.Core.Domain.Courses;
 using HorsesForCourses.Core.Domain.Courses.TimeSlots;
 using HorsesForCourses.Core.Domain.Skills;
+using HorsesForCourses.MVC.Models.Courses;
 using HorsesForCourses.Service.Coaches.GetCoachDetail;
 using HorsesForCourses.Service.Coaches.GetCoaches;
 using HorsesForCourses.Service.Courses.GetCourseDetail;
@@ -42,9 +43,13 @@ public static class TheCanonical
         => [new(CourseDay.Monday, 9, 17)];
     public static IEnumerable<(CourseDay, int, int)> TimeSlotsFullDayMonday()
         => [(CourseDay.Monday, 9, 17)];
+    public static IEnumerable<TimeSlotViewModel> TimeSlotsFullDayMondayViewModel()
+        => [new TimeSlotViewModel(CourseDay.Monday, 9, 17)];
     public static IEnumerable<TimeSlot> TimeSlotsFullDayMondayExpected()
         => [TimeSlot.From(CourseDay.Monday, 9, 17)];
 
+    public static IEnumerable<TimeSlotViewModel> TimeSlotsWithDuplicateViewModel()
+        => [new TimeSlotViewModel(CourseDay.Monday, 9, 17), new TimeSlotViewModel(CourseDay.Monday, 9, 17)];
 
     public static PagedResult<CourseSummary> CourseSummaryList()
         => new([new CourseSummary(CourseId, CourseName, CourseStart, CourseEnd, false, false)], 1, 1, 25);

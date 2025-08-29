@@ -31,6 +31,17 @@ public class CoursesController(ICoursesService Service) : MvcController
             .OnException(async () =>
                 ViewOrNotFoundIfNull(await Service.GetCourseDetail(id), a => new UpdateRequiredSkillsViewModel(a!)));
 
+    [HttpGet("UpdateTimeSlots/{id}")]
+    public async Task<IActionResult> UpdateTimeSlots(int id)
+        => ViewOrNotFoundIfNull(await Service.GetCourseDetail(id), a => new UpdateTimeSlotsViewModel(a!));
+
+    [HttpPost("UpdateTimeSlots/{id}"), ValidateAntiForgeryToken]
+    public async Task<IActionResult> UpdateTimeSlots(int id, IEnumerable<TimeSlotViewModel> timeSlots)
+        => await This(async () => await Service.UpdateTimeSlots(id, timeSlots, a => (a.Day, a.Start, a.End)))
+            .OnSuccess(() => RedirectToAction(nameof(Index)))
+            .OnException(async () =>
+                ViewOrNotFoundIfNull(await Service.GetCourseDetail(id), a => new UpdateTimeSlotsViewModel(a!)));
+
     [HttpGet("Courses/")]
     public async Task<IActionResult> Index(int page = 1, int pageSize = 25)
         => View(await Service.GetCourses(page, pageSize));
