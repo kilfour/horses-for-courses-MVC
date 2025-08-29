@@ -1,7 +1,9 @@
 using HorsesForCourses.Api.Courses;
+using HorsesForCourses.Core.Domain.Courses.TimeSlots;
 using HorsesForCourses.Tests.Tools;
 using HorsesForCourses.Tests.Tools.Courses;
 using Microsoft.AspNetCore.Mvc;
+using Moq;
 
 namespace HorsesForCourses.Tests.Courses.C_UpdateTimeSlots;
 
@@ -12,30 +14,22 @@ public class A_UpdateTimeSlotsApi : CoursesApiControllerTests
         TheCanonical.TimeSlotsRequestFullDayMonday();
 
     [Fact]
-    public async Task UpdateTimeSlots_uses_the_query_object()
+    public async Task UpdateTimeSlots_uses_the_service()
     {
         var response = await controller.UpdateTimeSlots(TheCanonical.CourseId, request);
-        getCourseById.Verify(a => a.Load(TheCanonical.CourseId));
-    }
-
-    [Fact]
-    public async Task UpdateTimeSlots_calls_domain_entity()
-    {
-        await controller.UpdateTimeSlots(TheCanonical.CourseId, request);
-        Assert.True(spy.TimeSlotsCalled);
-        Assert.Equal(TheCanonical.TimeSlotsFullDayMondayExpected(), spy.TimeSlotsSeen);
-    }
-
-    [Fact]
-    public async Task UpdateTimeSlots_calls_supervisor_ship()
-    {
-        await controller.UpdateTimeSlots(TheCanonical.CourseId, request);
-        supervisor.Verify(a => a.Ship());
+        service.Verify(a =>
+            a.UpdateTimeSlots(
+                TheCanonical.CourseId,
+                request, It.IsAny<Func<TimeSlotRequest, (CourseDay, int, int)>>()));
     }
 
     [Fact]
     public async Task UpdateTimeSlots_Returns_NoContent()
     {
+        service.Setup(a =>
+            a.UpdateTimeSlots(
+                TheCanonical.CourseId,
+                request, It.IsAny<Func<TimeSlotRequest, (CourseDay, int, int)>>())).ReturnsAsync(true);
         var response = await controller.UpdateTimeSlots(TheCanonical.CourseId, request);
         Assert.IsType<NoContentResult>(response);
     }

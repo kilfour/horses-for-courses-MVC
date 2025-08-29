@@ -19,13 +19,7 @@ public class CoursesController(CoursesRepository Repository, ICoursesService Ser
 
     [HttpPost("{id}/timeslots")]
     public async Task<IActionResult> UpdateTimeSlots(int id, IEnumerable<TimeSlotRequest> timeSlots)
-    {
-        var course = await Repository.GetCourseById.Load(id);
-        if (course == null) return NotFound();
-        course.UpdateTimeSlots(timeSlots, a => (a.Day, a.Start, a.End));
-        await Repository.Supervisor.Ship();
-        return NoContent();
-    }
+        => NoContentNotFoundIfFalse(await Service.UpdateTimeSlots(id, timeSlots, a => (a.Day, a.Start, a.End)));
 
     [HttpPost("{id}/confirm")]
     public async Task<IActionResult> ConfirmCourse(int id)
