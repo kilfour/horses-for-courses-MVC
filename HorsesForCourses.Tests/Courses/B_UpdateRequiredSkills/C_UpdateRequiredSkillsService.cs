@@ -17,7 +17,7 @@ public class C_UpdateRequiredSkillsService : CoursesServiceTests
     }
 
     [Fact]
-    public async Task UpdateRequiredSkills_calls_update_skills()
+    public async Task UpdateRequiredSkills_calls_domain()
     {
         getCourseById.Setup(a => a.Load(TheCanonical.CourseId)).ReturnsAsync(courseSpy);
         await service.UpdateRequiredSkills(TheCanonical.CourseId, skills);

@@ -1,3 +1,4 @@
+using HorsesForCourses.Api.Abstract;
 using HorsesForCourses.Service.Courses;
 using HorsesForCourses.Service.Warehouse.Paging;
 using Microsoft.AspNetCore.Mvc;
@@ -6,7 +7,7 @@ namespace HorsesForCourses.Api.Courses;
 
 [ApiController]
 [Route("courses")]
-public class CoursesController(CoursesRepository Repository, ICoursesService Service) : ControllerBase
+public class CoursesController(CoursesRepository Repository, ICoursesService Service) : WebApiController
 {
     [HttpPost]
     public async Task<IActionResult> CreateCourse(CreateCourseRequest request)
@@ -14,13 +15,7 @@ public class CoursesController(CoursesRepository Repository, ICoursesService Ser
 
     [HttpPost("{id}/skills")]
     public async Task<IActionResult> UpdateRequiredSkills(int id, IEnumerable<string> skills)
-    {
-        var course = await Repository.GetCourseById.Load(id);
-        if (course == null) return NotFound();
-        course.UpdateRequiredSkills(skills);
-        await Repository.Supervisor.Ship();
-        return NoContent();
-    }
+        => NoContentNotFoundIfFalse(await Service.UpdateRequiredSkills(id, skills));
 
     [HttpPost("{id}/timeslots")]
     public async Task<IActionResult> UpdateTimeSlots(int id, IEnumerable<TimeSlotRequest> timeSlots)
