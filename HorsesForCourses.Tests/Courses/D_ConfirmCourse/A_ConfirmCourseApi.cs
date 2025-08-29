@@ -9,7 +9,7 @@ namespace HorsesForCourses.Tests.Courses.D_ConfirmCourse;
 public class A_ConfirmCourseApi : CoursesApiControllerTests
 {
     [Fact]
-    public async Task ConfirmCourse_uses_the_query_object()
+    public async Task ConfirmCourse_uses_the_service()
     {
         await controller.ConfirmCourse(TheCanonical.CourseId);
         service.Verify(a => a.ConfirmCourse(TheCanonical.CourseId));
