@@ -17,7 +17,7 @@ public class A_GetCoursesApi : CoursesControllerTests
     public async Task UpdateSkills_uses_the_query_object()
     {
         var response = await controller.GetCourses();
-        getCourseSummaries.Verify(a => a.All(It.IsAny<PageRequest>()));
+        getCourseSummaries.Verify(a => a.Paged(It.IsAny<PageRequest>()));
     }
 
     [Fact]

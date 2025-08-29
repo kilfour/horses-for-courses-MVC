@@ -28,7 +28,7 @@ public abstract class CoursesControllerTests
         getCourseDetail = new Mock<IGetTheCourseDetail>();
 
         getCourseSummaries = new Mock<IGetTheCourseSummaries>();
-        getCourseSummaries.Setup(a => a.All(It.IsAny<PageRequest>()))
+        getCourseSummaries.Setup(a => a.Paged(It.IsAny<PageRequest>()))
             .ReturnsAsync(new PagedResult<CourseSummary>([], 0, 1, 15));
 
         spy = new();

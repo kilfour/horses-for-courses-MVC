@@ -6,10 +6,10 @@ using HorsesForCourses.Tests.Tools;
 namespace HorsesForCourses.Tests.Courses.F_GetCourses;
 
 
-public class B_GetCoursesData : TheDatabaseTest
+public class D_GetCoursesData : TheDatabaseTest
 {
     private async Task<PagedResult<CourseSummary>> Act(PageRequest request)
-        => await new GetCourseSummaries(GetDbContext()).All(request);
+        => await new GetCourseSummaries(GetDbContext()).Paged(request);
 
     [Fact]
     public async Task EmptyList()

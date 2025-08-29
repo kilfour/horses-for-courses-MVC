@@ -1,5 +1,7 @@
 using HorsesForCourses.Core.Domain.Courses;
 using HorsesForCourses.Core.Domain.Courses.TimeSlots;
+using HorsesForCourses.Service.Courses.GetCourses;
+using HorsesForCourses.Service.Warehouse.Paging;
 
 namespace HorsesForCourses.Service.Courses;
 
@@ -13,6 +15,7 @@ public interface ICoursesService
         Func<T, (CourseDay Day, int Start, int End)> getTimeSlot);
     Task<bool> ConfirmCourse(int id);
     Task<bool> AssignCoach(int courseId, int coachId);
+    Task<PagedResult<CourseSummary>> GetCourses(int page, int pageSize);
 }
 
 public class CoursesService(CoursesRepository Repository) : ICoursesService
@@ -65,5 +68,6 @@ public class CoursesService(CoursesRepository Repository) : ICoursesService
         return true;
     }
 
-
+    public async Task<PagedResult<CourseSummary>> GetCourses(int page, int pageSize)
+        => await Repository.GetCourseSummaries.Paged(new PageRequest(page, pageSize));
 }

@@ -4,6 +4,7 @@ using HorsesForCourses.Core.Domain.Courses;
 using HorsesForCourses.Core.Domain.Courses.TimeSlots;
 using HorsesForCourses.Service.Coaches.GetCoachDetail;
 using HorsesForCourses.Service.Coaches.GetCoaches;
+using HorsesForCourses.Service.Courses.GetCourses;
 using HorsesForCourses.Service.Warehouse.Paging;
 using WibblyWobbly;
 
@@ -39,4 +40,8 @@ public static class TheCanonical
         => [(CourseDay.Monday, 9, 17)];
     public static IEnumerable<TimeSlot> TimeSlotsFullDayMondayExpected()
         => [TimeSlot.From(CourseDay.Monday, 9, 17)];
+
+
+    public static PagedResult<CourseSummary> CourseSummaryList()
+        => new([new CourseSummary(CourseId, CourseName, CourseStart, CourseEnd, false, false)], 1, 1, 25);
 }
