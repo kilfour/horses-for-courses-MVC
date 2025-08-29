@@ -5,11 +5,11 @@ using HorsesForCourses.Tests.Tools.Courses;
 
 namespace HorsesForCourses.Tests.Courses.A_CreateCourse;
 
-public class C_CreateCourseData : CourseDatabaseTests
+public class D_CreateCourseData : CourseDatabaseTests
 {
     private readonly DataSupervisor supervisor;
 
-    public C_CreateCourseData()
+    public D_CreateCourseData()
     {
         supervisor = new DataSupervisor(GetDbContext());
     }

@@ -7,7 +7,7 @@ using WibblyWobbly;
 
 namespace HorsesForCourses.Tests.Courses.E_AssignCoach;
 
-public class B_AssignCoachDomain : CourseDomainTests
+public class E_AssignCoachDomain : CourseDomainTests
 {
     [Fact]
     public void AssignCoach_WithValidData_ShouldSucceed()

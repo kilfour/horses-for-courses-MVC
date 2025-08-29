@@ -8,8 +8,8 @@ namespace HorsesForCourses.Tests.Tools.Coaches;
 
 public abstract class CoachesServiceTests
 {
-    protected readonly CoachesRepository repository;
     protected readonly ICoachesService service;
+    protected readonly CoachesRepository repository;
     protected readonly Mock<IAmASuperVisor> supervisor;
     protected readonly Mock<IGetCoachById> getCoachById;
     protected readonly Mock<IGetTheCoachSummaries> getCoachSummaries;

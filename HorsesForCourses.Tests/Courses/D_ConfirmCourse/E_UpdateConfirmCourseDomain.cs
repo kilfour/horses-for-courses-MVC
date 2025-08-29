@@ -7,7 +7,7 @@ using HorsesForCourses.Tests.Tools.Courses;
 
 namespace HorsesForCourses.Tests.Courses.D_ConfirmCourse;
 
-public class B_UpdateConfirmCourseDomain : CourseDomainTests
+public class E_UpdateConfirmCourseDomain : CourseDomainTests
 {
     protected override Course ManipulateEntity(Course entity)
         => entity.UpdateTimeSlots(TheCanonical.TimeSlotsFullDayMonday(), a => a);

@@ -22,11 +22,11 @@ public class A_CreateCourseApi : CoursesControllerTests
     }
 
     [Fact]
-    public async Task CreateCourse_delivers_to_the_supervisor()
+    public async Task CreateCourse_calls_the_service()
     {
         await Act();
-        supervisor.Verify(a => a.Enlist(It.Is<Course>(a => a.Name == "A")));
-        supervisor.Verify(a => a.Ship());
+        service.Verify(a => a.CreateCourse(TheCanonical.CourseName, TheCanonical.CourseStart, TheCanonical.CourseEnd));
+        service.VerifyNoOtherCalls();
     }
 
     [Fact]

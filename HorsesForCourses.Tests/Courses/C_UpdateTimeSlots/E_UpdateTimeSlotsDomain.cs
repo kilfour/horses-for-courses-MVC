@@ -6,7 +6,7 @@ using HorsesForCourses.Tests.Tools.Courses;
 
 namespace HorsesForCourses.Tests.Courses.C_UpdateTimeSlots;
 
-public class B_UpdateTimeSlotsDomain : CourseDomainTests
+public class E_UpdateTimeSlotsDomain : CourseDomainTests
 {
     [Theory]
     [InlineData(9)]

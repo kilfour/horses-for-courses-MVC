@@ -7,12 +7,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HorsesForCourses.Tests.Courses.E_AssignCoach;
 
-public class C_AssignCoachData : TheDatabaseTest
+public class D_AssignCoachData : TheDatabaseTest
 {
     private readonly Course course;
     private readonly Coach coach;
 
-    public C_AssignCoachData()
+    public D_AssignCoachData()
     {
         course = TheCanonical.Course();
         coach = TheCanonical.Coach();

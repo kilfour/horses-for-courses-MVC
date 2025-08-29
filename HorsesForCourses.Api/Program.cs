@@ -50,7 +50,8 @@ builder.Services
     .AddScoped<CoachesRepository>()
     .AddScoped<CoursesRepository>()
 
-    .AddScoped<ICoachesService, CoachesService>();
+    .AddScoped<ICoachesService, CoachesService>()
+    .AddScoped<ICoursesService, CoursesService>();
 
 
 var app = builder.Build();

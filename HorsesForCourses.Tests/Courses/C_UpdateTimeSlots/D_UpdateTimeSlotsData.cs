@@ -3,7 +3,7 @@ using HorsesForCourses.Tests.Tools.Courses;
 
 namespace HorsesForCourses.Tests.Courses.C_UpdateTimeSlots;
 
-public class C_UpdateTimeSlotsData : CourseDatabaseTests
+public class D_UpdateTimeSlotsData : CourseDatabaseTests
 {
     private void Act()
     {

@@ -6,7 +6,7 @@ using HorsesForCourses.Tests.Tools.Courses;
 
 namespace HorsesForCourses.Tests.Courses.A_CreateCourse;
 
-public class B_CreateCourseDomain : CourseDomainTests
+public class E_CreateCourseDomain : CourseDomainTests
 {
     [Fact]
     public void CreateCourse_WithValidData_ShouldSucceed()

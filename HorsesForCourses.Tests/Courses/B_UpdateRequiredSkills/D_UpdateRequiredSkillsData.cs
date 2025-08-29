@@ -4,7 +4,7 @@ using HorsesForCourses.Tests.Tools.Courses;
 
 namespace HorsesForCourses.Tests.Courses.B_UpdateRequiredSkills;
 
-public class C_UpdateRequiredSkillsData : CourseDatabaseTests
+public class D_UpdateRequiredSkillsData : CourseDatabaseTests
 {
     private void Act()
     {
