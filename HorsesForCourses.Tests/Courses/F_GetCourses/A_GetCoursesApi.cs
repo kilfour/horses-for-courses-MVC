@@ -1,5 +1,6 @@
 using HorsesForCourses.Service.Courses.GetCourses;
 using HorsesForCourses.Service.Warehouse.Paging;
+using HorsesForCourses.Tests.Tools;
 using HorsesForCourses.Tests.Tools.Courses;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -14,15 +15,16 @@ public class A_GetCoursesApi : CoursesApiControllerTests
     }
 
     [Fact]
-    public async Task UpdateSkills_uses_the_query_object()
+    public async Task GetCourses_uses_the_query_object()
     {
         var response = await controller.GetCourses();
-        getCourseSummaries.Verify(a => a.Paged(It.IsAny<PageRequest>()));
+        service.Verify(a => a.GetCourses(1, 25));
     }
 
     [Fact]
-    public async Task GetCoursesReturnsOk_With_List()
+    public async Task GetCourses_Returns_Ok_With_List()
     {
+        service.Setup(a => a.GetCourses(1, 25)).ReturnsAsync(TheCanonical.CourseSummaryList());
         var result = await Act();
         Assert.NotNull(result);
         Assert.IsType<PagedResult<CourseSummary>>(result!.Value);

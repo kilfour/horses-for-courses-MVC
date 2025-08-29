@@ -45,7 +45,7 @@ public class CoursesController(CoursesRepository Repository, ICoursesService Ser
 
     [HttpGet]
     public async Task<IActionResult> GetCourses(int page = 1, int pageSize = 25)
-        => Ok(await Repository.GetCourseSummaries.Paged(new PageRequest(page, pageSize)));
+        => Ok(await Service.GetCourses(page, pageSize));
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetCourseDetail(int id)
