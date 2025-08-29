@@ -7,8 +7,9 @@ namespace HorsesForCourses.Tests.Courses.G_GetCourseDetail;
 
 public class D_GetCourseDetailData : DatabaseTests
 {
+    private const int ExpectedIdAssignedByDb = 1;
     private async Task<CourseDetail?> Act()
-        => await new GetCourseDetail(GetDbContext()).One(TheCanonical.CourseId);
+        => await new GetCourseDetail(GetDbContext()).One(ExpectedIdAssignedByDb);
 
     [Fact]
     public async Task With_Course()

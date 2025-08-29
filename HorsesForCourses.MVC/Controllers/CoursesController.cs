@@ -23,6 +23,10 @@ public class CoursesController(ICoursesService Service) : MvcController
     [HttpGet("Courses/")]
     public async Task<IActionResult> Index(int page = 1, int pageSize = 25)
         => View(await Service.GetCourses(page, pageSize));
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetCourseDetail(int id)
+        => ViewOrNotFoundIfNull(await Service.GetCourseDetail(id), a => a);
 }
 
 

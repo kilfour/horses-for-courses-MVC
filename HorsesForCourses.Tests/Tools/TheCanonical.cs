@@ -13,7 +13,7 @@ namespace HorsesForCourses.Tests.Tools;
 
 public static class TheCanonical
 {
-    public const int CoachId = 1;
+    public const int CoachId = 99;
     public const string CoachName = "a";
     public const string CoachEmail = "a@a.a";
     public static Coach Coach()
@@ -27,7 +27,7 @@ public static class TheCanonical
 
     public readonly static List<string> Skills = ["one", "two"];
 
-    public const int CourseId = 1;
+    public const int CourseId = 999;
     public const string CourseName = "A";
     public static readonly DateOnly CourseStart = 1.January(2025);
     public static readonly DateOnly CourseEnd = 31.January(2025);
@@ -47,5 +47,5 @@ public static class TheCanonical
         => new([new CourseSummary(CourseId, CourseName, CourseStart, CourseEnd, false, false)], 1, 1, 25);
 
     public static CourseDetail CourseDetail()
-        => new() { Id = CourseId, Start = CourseStart, End = CourseEnd };
+        => new() { Id = CourseId, Name = CourseName, Start = CourseStart, End = CourseEnd };
 }

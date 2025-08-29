@@ -8,8 +8,9 @@ namespace HorsesForCourses.Tests.Courses;
 
 public class GetCourseByIdTests : DatabaseTests
 {
+    private const int ExpectedIdAssignedByDb = 1;
     private async Task<Course?> Act()
-        => await new GetCourseById(GetDbContext()).Load(TheCanonical.CourseId);
+        => await new GetCourseById(GetDbContext()).Load(ExpectedIdAssignedByDb);
 
     [Fact]
     public async Task LoadIt()
@@ -17,7 +18,7 @@ public class GetCourseByIdTests : DatabaseTests
         AddToDb(TheCanonical.Course());
         var result = await Act();
         Assert.NotNull(result);
-        Assert.Equal(1, result.Id.Value);
+        Assert.Equal(ExpectedIdAssignedByDb, result.Id.Value);
         Assert.Equal(TheCanonical.CourseName, result.Name);
     }
 
