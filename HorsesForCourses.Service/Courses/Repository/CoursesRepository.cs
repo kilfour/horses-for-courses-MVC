@@ -10,5 +10,5 @@ public record CoursesRepository(
     IAmASuperVisor Supervisor,
     IGetCourseById GetCourseById,
     IGetCoachById GetCoachById,
-    IGetTheCourseSummaries GetCourseSummaries,
-    IGetTheCourseDetail GetCourseDetail);
+    IGetCourseSummaries GetCourseSummaries,
+    IGetCourseDetail GetCourseDetail);

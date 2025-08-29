@@ -8,5 +8,5 @@ namespace HorsesForCourses.Service.Coaches.Repository;
 public record CoachesRepository(
     IAmASuperVisor Supervisor,
     IGetCoachById GetCoachById,
-    IGetTheCoachSummaries GetTheCoachSummaries,
-    IGetTheCoachDetail GetTheCoachDetail);
+    IGetCoachSummaries GetCoachSummaries,
+    IGetCoachDetail GetCoachDetail);

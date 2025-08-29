@@ -4,12 +4,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HorsesForCourses.Service.Courses.GetCourses;
 
-public interface IGetTheCourseSummaries
+public interface IGetCourseSummaries
 {
     Task<PagedResult<CourseSummary>> Paged(PageRequest request);
 }
 
-public class GetCourseSummaries(AppDbContext dbContext) : IGetTheCourseSummaries
+public class GetCourseSummaries(AppDbContext dbContext) : IGetCourseSummaries
 {
     private readonly AppDbContext dbContext = dbContext;
 

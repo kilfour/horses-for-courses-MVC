@@ -34,8 +34,8 @@ public class CoachesService(CoachesRepository Repository) : ICoachesService
     }
 
     public async Task<PagedResult<CoachSummary>> GetCoaches(int page, int pageSize)
-        => await Repository.GetTheCoachSummaries.Paged(new PageRequest(page, pageSize));
+        => await Repository.GetCoachSummaries.Paged(new PageRequest(page, pageSize));
 
     public async Task<CoachDetail?> GetCoachDetail(int id)
-        => await Repository.GetTheCoachDetail.One(id);
+        => await Repository.GetCoachDetail.One(id);
 }

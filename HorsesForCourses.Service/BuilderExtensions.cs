@@ -20,12 +20,12 @@ public static class BuilderExtensions
             .AddScoped<IAmASuperVisor, DataSupervisor>()
 
             .AddScoped<IGetCoachById, GetCoachById>()
-            .AddScoped<IGetTheCoachSummaries, GetCoachSummaries>()
-            .AddScoped<IGetTheCoachDetail, GetCoachDetail>()
+            .AddScoped<IGetCoachSummaries, GetCoachSummaries>()
+            .AddScoped<IGetCoachDetail, GetCoachDetail>()
 
             .AddScoped<IGetCourseById, GetCourseById>()
-            .AddScoped<IGetTheCourseSummaries, GetCourseSummaries>()
-            .AddScoped<IGetTheCourseDetail, GetCourseDetail>()
+            .AddScoped<IGetCourseSummaries, GetCourseSummaries>()
+            .AddScoped<IGetCourseDetail, GetCourseDetail>()
 
             .AddScoped<CoachesRepository>()
             .AddScoped<CoursesRepository>()
