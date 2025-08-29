@@ -1,6 +1,5 @@
 using HorsesForCourses.Service.Warehouse.Paging;
 using HorsesForCourses.Tests.Tools;
-using HorsesForCourses.Tests.Tools.Coaches;
 using HorsesForCourses.Tests.Tools.Courses;
 using Moq;
 

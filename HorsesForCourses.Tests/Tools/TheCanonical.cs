@@ -4,6 +4,7 @@ using HorsesForCourses.Core.Domain.Courses;
 using HorsesForCourses.Core.Domain.Courses.TimeSlots;
 using HorsesForCourses.Service.Coaches.GetCoachDetail;
 using HorsesForCourses.Service.Coaches.GetCoaches;
+using HorsesForCourses.Service.Courses.GetCourseDetail;
 using HorsesForCourses.Service.Courses.GetCourses;
 using HorsesForCourses.Service.Warehouse.Paging;
 using WibblyWobbly;
@@ -18,11 +19,11 @@ public static class TheCanonical
     public static Coach Coach()
         => new(CoachName, CoachEmail);
 
-    public static CoachDetail CoachDetail()
-        => new() { Id = CoachId, Name = CoachName, Email = CoachEmail };
-
     public static PagedResult<CoachSummary> CoachSummaryList()
         => new([new CoachSummary(CoachId, CoachName, CoachEmail, 0)], 1, 1, 25);
+
+    public static CoachDetail CoachDetail()
+        => new() { Id = CoachId, Name = CoachName, Email = CoachEmail };
 
     public readonly static List<string> Skills = ["one", "two"];
 
@@ -44,4 +45,7 @@ public static class TheCanonical
 
     public static PagedResult<CourseSummary> CourseSummaryList()
         => new([new CourseSummary(CourseId, CourseName, CourseStart, CourseEnd, false, false)], 1, 1, 25);
+
+    public static CourseDetail CourseDetail()
+        => new() { Id = CourseId, Start = CourseStart, End = CourseEnd };
 }
