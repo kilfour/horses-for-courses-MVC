@@ -5,11 +5,11 @@ using HorsesForCourses.Tests.Tools;
 
 namespace HorsesForCourses.Tests.Courses.D_ConfirmCourse;
 
-public class D_UpdateConfirmCourseData : TheDatabaseTest
+public class D_ConfirmCourseCourseData : TheDatabaseTest
 {
     private readonly Course course;
 
-    public D_UpdateConfirmCourseData()
+    public D_ConfirmCourseCourseData()
     {
         course = TheCanonical.Course();
         AddToDb(course);

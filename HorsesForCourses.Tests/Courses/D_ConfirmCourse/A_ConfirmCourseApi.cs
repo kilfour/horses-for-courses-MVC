@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace HorsesForCourses.Tests.Courses.D_ConfirmCourse;
 
 
-public class A_UpdateConfirmCourseApi : CoursesControllerTests
+public class A_ConfirmCourseApi : CoursesControllerTests
 {
     private readonly List<string> request = ["one", "two"];
 
@@ -16,28 +16,28 @@ public class A_UpdateConfirmCourseApi : CoursesControllerTests
     }
 
     [Fact]
-    public async Task UpdateConfirmCourse_uses_the_query_object()
+    public async Task ConfirmCourse_uses_the_query_object()
     {
         await controller.ConfirmCourse(TheCanonical.CourseId);
         getCourseById.Verify(a => a.Load(TheCanonical.CourseId));
     }
 
     [Fact]
-    public async Task UpdateConfirmCourse_calls_confirm()
+    public async Task ConfirmCourse_calls_confirm()
     {
         await controller.ConfirmCourse(TheCanonical.CourseId);
         Assert.True(spy.IsConfirmed);
     }
 
     [Fact]
-    public async Task UpdateConfirmCourse_calls_supervisor_ship()
+    public async Task ConfirmCourse_calls_supervisor_ship()
     {
         await controller.ConfirmCourse(TheCanonical.CourseId);
         supervisor.Verify(a => a.Ship());
     }
 
     [Fact]
-    public async Task UpdateConfirmCourse_NoContent()
+    public async Task ConfirmCourse_NoContent()
     {
         var response = await controller.ConfirmCourse(TheCanonical.CourseId);
         Assert.IsType<NoContentResult>(response);

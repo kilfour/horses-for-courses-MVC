@@ -7,27 +7,27 @@ using HorsesForCourses.Tests.Tools.Courses;
 
 namespace HorsesForCourses.Tests.Courses.D_ConfirmCourse;
 
-public class E_UpdateConfirmCourseDomain : CourseDomainTests
+public class E_ConfirmCourseCourseDomain : CourseDomainTests
 {
     protected override Course ManipulateEntity(Course entity)
         => entity.UpdateTimeSlots(TheCanonical.TimeSlotsFullDayMonday(), a => a);
 
     [Fact]
-    public void UpdateConfirmCourse_WithValidData_ShouldSucceed()
+    public void ConfirmCourseCourse_WithValidData_ShouldSucceed()
     {
         Entity.Confirm();
         Assert.True(Entity.IsConfirmed);
     }
 
     [Fact]
-    public void UpdateConfirmCourse_Twice_Throws()
+    public void ConfirmCourseCourse_Twice_Throws()
     {
         Entity.Confirm();
         Assert.Throws<CourseAlreadyConfirmed>(() => Entity.Confirm());
     }
 
     [Fact]
-    public void UpdateConfirmCourse_Without_TimeSlots_Throws()
+    public void ConfirmCourseCourse_Without_TimeSlots_Throws()
     {
         Entity.UpdateTimeSlots((IEnumerable<(CourseDay, int, int)>)[], a => a);
         Assert.Throws<AtLeastOneTimeSlotRequired>(() => Entity.Confirm());

@@ -1,4 +1,5 @@
 using HorsesForCourses.Core.Domain.Courses;
+using HorsesForCourses.Core.Domain.Courses.TimeSlots;
 
 namespace HorsesForCourses.Service.Courses;
 
@@ -6,6 +7,11 @@ public interface ICoursesService
 {
     Task<int> CreateCourse(string name, DateOnly startDate, DateOnly endDate);
     Task<bool> UpdateRequiredSkills(int id, IEnumerable<string> skills);
+    Task<bool> UpdateTimeSlots<T>(
+        int id,
+        IEnumerable<T> timeSlotInfo,
+        Func<T, (CourseDay Day, int Start, int End)> getTimeSlot);
+    Task<bool> ConfirmCourse(int id);
     Task<bool> AssignCoach(int courseId, int coachId);
 }
 
@@ -28,6 +34,27 @@ public class CoursesService(CoursesRepository Repository) : ICoursesService
         return true;
     }
 
+    public async Task<bool> UpdateTimeSlots<T>(
+        int id,
+        IEnumerable<T> timeSlotInfo,
+        Func<T, (CourseDay Day, int Start, int End)> getTimeSlot)
+    {
+        var course = await Repository.GetCourseById.Load(id);
+        if (course == null) return false;
+        course.UpdateTimeSlots(timeSlotInfo, getTimeSlot);
+        await Repository.Supervisor.Ship();
+        return true;
+    }
+
+    public async Task<bool> ConfirmCourse(int id)
+    {
+        var course = await Repository.GetCourseById.Load(id);
+        if (course == null) return false;
+        course.Confirm();
+        await Repository.Supervisor.Ship();
+        return true;
+    }
+
     public async Task<bool> AssignCoach(int courseId, int coachId)
     {
         var course = await Repository.GetCourseById.Load(courseId);
@@ -37,4 +64,6 @@ public class CoursesService(CoursesRepository Repository) : ICoursesService
         await Repository.Supervisor.Ship();
         return true;
     }
+
+
 }
