@@ -1,5 +1,4 @@
 using HorsesForCourses.Core.Domain.Coaches;
-using HorsesForCourses.Core.Domain.Skills;
 using HorsesForCourses.Service.Warehouse;
 using HorsesForCourses.Tests.Tools;
 
@@ -18,7 +17,7 @@ public class D_UpdateSkillsData : DatabaseTests
     private void Act()
     {
         var context = GetDbContext();
-        Reload(context).UpdateSkills(["one", "two"]);
+        Reload(context).UpdateSkills(TheCanonical.Skills);
         context.SaveChanges();
     }
 
@@ -29,6 +28,6 @@ public class D_UpdateSkillsData : DatabaseTests
     public void Skills_can_be_updated()
     {
         Act();
-        Assert.Equal([Skill.From("one"), Skill.From("two")], Reload().Skills);
+        Assert.Equal(TheCanonical.HardSkills, Reload().Skills);
     }
 }

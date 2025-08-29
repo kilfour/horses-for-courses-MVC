@@ -7,8 +7,6 @@ namespace HorsesForCourses.Tests.Courses.D_ConfirmCourse;
 
 public class C_ConfirmCourseService : CoursesServiceTests
 {
-    private readonly IEnumerable<string> skills = ["one", "two"];
-
     [Fact]
     public async Task ConfirmCourse_uses_the_query_object()
     {

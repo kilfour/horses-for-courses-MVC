@@ -2,6 +2,7 @@ using HorsesForCourses.Api.Courses;
 using HorsesForCourses.Core.Domain.Coaches;
 using HorsesForCourses.Core.Domain.Courses;
 using HorsesForCourses.Core.Domain.Courses.TimeSlots;
+using HorsesForCourses.Core.Domain.Skills;
 using HorsesForCourses.Service.Coaches.GetCoachDetail;
 using HorsesForCourses.Service.Coaches.GetCoaches;
 using HorsesForCourses.Service.Courses.GetCourseDetail;
@@ -14,8 +15,8 @@ namespace HorsesForCourses.Tests.Tools;
 public static class TheCanonical
 {
     public const int CoachId = 99;
-    public const string CoachName = "a";
-    public const string CoachEmail = "a@a.a";
+    public const string CoachName = "The Coach";
+    public const string CoachEmail = "coach@coaching.mcCoach";
     public static Coach Coach()
         => new(CoachName, CoachEmail);
 
@@ -26,9 +27,11 @@ public static class TheCanonical
         => new() { Id = CoachId, Name = CoachName, Email = CoachEmail };
 
     public readonly static List<string> Skills = ["one", "two"];
+    public readonly static HashSet<Skill> HardSkills = [Skill.From("one"), Skill.From("two")];
+    public readonly static List<Skill> HardSkillsList = [Skill.From("one"), Skill.From("two")];
 
     public const int CourseId = 999;
-    public const string CourseName = "A";
+    public const string CourseName = "The Course";
     public static readonly DateOnly CourseStart = 1.January(2025);
     public static readonly DateOnly CourseEnd = 31.January(2025);
 

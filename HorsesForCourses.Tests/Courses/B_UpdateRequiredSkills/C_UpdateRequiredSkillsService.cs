@@ -7,12 +7,10 @@ namespace HorsesForCourses.Tests.Courses.B_UpdateRequiredSkills;
 
 public class C_UpdateRequiredSkillsService : CoursesServiceTests
 {
-    private readonly IEnumerable<string> skills = ["one", "two"];
-
     [Fact]
     public async Task UpdateRequiredSkills_uses_the_query_object()
     {
-        await service.UpdateRequiredSkills(TheCanonical.CourseId, skills);
+        await service.UpdateRequiredSkills(TheCanonical.CourseId, TheCanonical.Skills);
         getCourseById.Verify(a => a.Load(TheCanonical.CourseId));
     }
 
@@ -20,16 +18,16 @@ public class C_UpdateRequiredSkillsService : CoursesServiceTests
     public async Task UpdateRequiredSkills_calls_domain()
     {
         getCourseById.Setup(a => a.Load(TheCanonical.CourseId)).ReturnsAsync(courseSpy);
-        await service.UpdateRequiredSkills(TheCanonical.CourseId, skills);
+        await service.UpdateRequiredSkills(TheCanonical.CourseId, TheCanonical.Skills);
         Assert.True(courseSpy.RequiredSkillsCalled);
-        Assert.Equal(skills, courseSpy.RequiredSkillsSeen);
+        Assert.Equal(TheCanonical.Skills, courseSpy.RequiredSkillsSeen);
     }
 
     [Fact]
     public async Task UpdateRequiredSkills_calls_supervisor_ship()
     {
         getCourseById.Setup(a => a.Load(TheCanonical.CourseId)).ReturnsAsync(courseSpy);
-        await service.UpdateRequiredSkills(TheCanonical.CourseId, skills);
+        await service.UpdateRequiredSkills(TheCanonical.CourseId, TheCanonical.Skills);
         supervisor.Verify(a => a.Ship());
     }
 
@@ -38,7 +36,7 @@ public class C_UpdateRequiredSkillsService : CoursesServiceTests
     {
         getCourseById.Setup(a => a.Load(TheCanonical.CourseId)).ReturnsAsync(courseSpy);
         await Assert.ThrowsAnyAsync<DomainException>(
-            async () => await service.UpdateRequiredSkills(TheCanonical.CourseId, ["one", "one"]));
+            async () => await service.UpdateRequiredSkills(TheCanonical.CourseId, ["a", "a"]));
         supervisor.Verify(a => a.Ship(), Times.Never);
     }
 
@@ -46,14 +44,14 @@ public class C_UpdateRequiredSkillsService : CoursesServiceTests
     public async Task UpdateRequiredSkills_success_returns_true()
     {
         getCourseById.Setup(a => a.Load(TheCanonical.CourseId)).ReturnsAsync(courseSpy);
-        var success = await service.UpdateRequiredSkills(TheCanonical.CourseId, skills);
+        var success = await service.UpdateRequiredSkills(TheCanonical.CourseId, TheCanonical.Skills);
         Assert.True(success);
     }
 
     [Fact]
     public async Task UpdateRequiredSkills_failure_returns_false()
     {
-        var success = await service.UpdateRequiredSkills(-1, skills);
+        var success = await service.UpdateRequiredSkills(-1, TheCanonical.Skills);
         Assert.False(success);
     }
 }

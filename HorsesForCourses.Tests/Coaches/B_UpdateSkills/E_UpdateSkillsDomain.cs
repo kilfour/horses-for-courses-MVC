@@ -1,5 +1,6 @@
 using HorsesForCourses.Core.Domain.Coaches.InvalidationReasons;
 using HorsesForCourses.Core.Domain.Skills;
+using HorsesForCourses.Tests.Tools;
 using HorsesForCourses.Tests.Tools.Coaches;
 
 
@@ -20,22 +21,21 @@ public class E_UpdateSkillsDomain : CoachDomainTests
     [Fact]
     public void UpdateSkills_WithValidData_ShouldSucceed()
     {
-        var skills = new List<string> { "one", "two" };
-        Entity.UpdateSkills(skills);
-        Assert.Equal([Skill.From("one"), Skill.From("two")], Entity.Skills);
+        Entity.UpdateSkills(TheCanonical.Skills);
+        Assert.Equal(TheCanonical.HardSkills, Entity.Skills);
     }
 
     [Fact]
     public void UpdateSkills_WithInValidSkill_Throws()
     {
-        var skills = new List<string> { "", "two" };
+        var skills = new List<string> { "" };
         Assert.Throws<SkillValueCanNotBeEmpty>(() => Entity.UpdateSkills(skills));
     }
 
     [Fact]
     public void UpdateSkills_With_Duplicates_Throws()
     {
-        var skills = new List<string> { "two", "two" };
+        var skills = new List<string> { "a", "a" };
         Assert.Throws<CoachAlreadyHasSkill>(() => Entity.UpdateSkills(skills));
     }
 }

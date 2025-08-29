@@ -20,6 +20,17 @@ public class CoursesController(ICoursesService Service) : MvcController
             .OnException(() => View(new CreateCourseViewModel(name, startDate, endDate)));
     }
 
+    [HttpGet("UpdateRequiredSkills/{id}")]
+    public async Task<IActionResult> UpdateRequiredSkills(int id)
+        => ViewOrNotFoundIfNull(await Service.GetCourseDetail(id), a => new UpdateRequiredSkillsViewModel(a!));
+
+    [HttpPost("UpdateRequiredSkills/{id}"), ValidateAntiForgeryToken]
+    public async Task<IActionResult> UpdateRequiredSkills(int id, List<string> skills)
+        => await This(async () => await Service.UpdateRequiredSkills(id, skills))
+            .OnSuccess(() => RedirectToAction(nameof(Index)))
+            .OnException(async () =>
+                ViewOrNotFoundIfNull(await Service.GetCourseDetail(id), a => new UpdateRequiredSkillsViewModel(a!)));
+
     [HttpGet("Courses/")]
     public async Task<IActionResult> Index(int page = 1, int pageSize = 25)
         => View(await Service.GetCourses(page, pageSize));

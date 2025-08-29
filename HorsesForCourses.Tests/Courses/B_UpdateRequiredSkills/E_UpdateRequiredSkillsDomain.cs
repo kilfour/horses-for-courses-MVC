@@ -21,22 +21,21 @@ public class E_UpdateRequiredSkillsDomain : CourseDomainTests
     [Fact]
     public void UpdateRequiredSkills_WithValidData_ShouldSucceed()
     {
-        var skills = new List<string> { "one", "two" };
-        Entity.UpdateRequiredSkills(skills);
-        Assert.Equal([Skill.From("one"), Skill.From("two")], Entity.RequiredSkills);
+        Entity.UpdateRequiredSkills(TheCanonical.Skills);
+        Assert.Equal(TheCanonical.HardSkillsList, Entity.RequiredSkills);
     }
 
     [Fact]
     public void UpdateRequiredSkills_WithInValidSkill_Throws()
     {
-        var skills = new List<string> { "", "two" };
+        var skills = new List<string> { "" };
         Assert.Throws<SkillValueCanNotBeEmpty>(() => Entity.UpdateRequiredSkills(skills));
     }
 
     [Fact]
     public void UpdateRequiredSkills_With_Duplicates_Throws()
     {
-        var skills = new List<string> { "two", "two" };
+        var skills = new List<string> { "a", "a" };
         Assert.Throws<CourseAlreadyHasSkill>(() => Entity.UpdateRequiredSkills(skills));
     }
 

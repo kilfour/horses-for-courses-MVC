@@ -13,7 +13,7 @@ public class A_UpdateSkillsApi : CoachesApiControllerTests
 
     public A_UpdateSkillsApi()
     {
-        request = new UpdateSkillsRequest(["one", "two"]);
+        request = new UpdateSkillsRequest(TheCanonical.Skills);
     }
 
     [Fact]

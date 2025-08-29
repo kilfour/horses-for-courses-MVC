@@ -7,8 +7,6 @@ namespace HorsesForCourses.Tests.Courses.C_UpdateTimeSlots;
 
 public class C_UpdateTimeSlotsService : CoursesServiceTests
 {
-    private readonly IEnumerable<string> skills = ["one", "two"];
-
     [Fact]
     public async Task UpdateTimeSlots_uses_the_query_object()
     {
