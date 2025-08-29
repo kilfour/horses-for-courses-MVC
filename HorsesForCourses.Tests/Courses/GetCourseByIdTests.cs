@@ -1,5 +1,5 @@
 using HorsesForCourses.Core.Domain.Courses;
-using HorsesForCourses.Service.Courses;
+using HorsesForCourses.Service.Courses.GetCourseById;
 using HorsesForCourses.Tests.Tools;
 
 

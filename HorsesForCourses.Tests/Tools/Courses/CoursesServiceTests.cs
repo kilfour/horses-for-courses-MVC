@@ -1,7 +1,9 @@
-using HorsesForCourses.Service.Coaches;
+using HorsesForCourses.Service.Coaches.GetCoachById;
 using HorsesForCourses.Service.Courses;
+using HorsesForCourses.Service.Courses.GetCourseById;
 using HorsesForCourses.Service.Courses.GetCourseDetail;
 using HorsesForCourses.Service.Courses.GetCourses;
+using HorsesForCourses.Service.Courses.Repository;
 using HorsesForCourses.Service.Warehouse;
 using Moq;
 

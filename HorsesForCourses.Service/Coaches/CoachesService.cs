@@ -1,6 +1,7 @@
 using HorsesForCourses.Core.Domain.Coaches;
 using HorsesForCourses.Service.Coaches.GetCoachDetail;
 using HorsesForCourses.Service.Coaches.GetCoaches;
+using HorsesForCourses.Service.Coaches.Repository;
 using HorsesForCourses.Service.Warehouse.Paging;
 
 namespace HorsesForCourses.Service.Coaches;

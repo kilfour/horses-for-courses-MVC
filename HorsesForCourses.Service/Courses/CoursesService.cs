@@ -2,6 +2,7 @@ using HorsesForCourses.Core.Domain.Courses;
 using HorsesForCourses.Core.Domain.Courses.TimeSlots;
 using HorsesForCourses.Service.Courses.GetCourseDetail;
 using HorsesForCourses.Service.Courses.GetCourses;
+using HorsesForCourses.Service.Courses.Repository;
 using HorsesForCourses.Service.Warehouse.Paging;
 
 namespace HorsesForCourses.Service.Courses;

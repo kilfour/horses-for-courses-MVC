@@ -1,5 +1,5 @@
 using HorsesForCourses.Core.Domain.Coaches;
-using HorsesForCourses.Service.Coaches;
+using HorsesForCourses.Service.Coaches.GetCoachById;
 using HorsesForCourses.Tests.Tools;
 
 
