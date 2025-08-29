@@ -3,44 +3,24 @@ using HorsesForCourses.Core.Domain.Courses;
 using HorsesForCourses.Tests.Tools;
 using HorsesForCourses.Tests.Tools.Courses;
 using Microsoft.AspNetCore.Mvc;
+using Moq;
 
 namespace HorsesForCourses.Tests.Courses.E_AssignCoach;
 
 
 public class A_AssignCoachApi : CoursesApiControllerTests
 {
-    protected override void ManipulateEntity(Course entity)
-    {
-        entity.UpdateTimeSlots(TheCanonical.TimeSlotsFullDayMonday(), a => a);
-        entity.Confirm();
-    }
-
     [Fact]
-    public async Task AssignCoach_uses_the_query_objects()
-    {
-        await controller.AssignCoach(1, new AssignCoachRequest(1));
-        getCourseById.Verify(a => a.Load(TheCanonical.CourseId));
-        getCoachById.Verify(a => a.Load(TheCanonical.CoachId));
-    }
-
-    [Fact]
-    public async Task AssignCoach_calls_domain()
+    public async Task AssignCoach_uses_the_service()
     {
         await controller.AssignCoach(TheCanonical.CourseId, new AssignCoachRequest(TheCanonical.CoachId));
-        Assert.True(spy.AssignCoachCalled);
-        Assert.Equal("a", spy.AssignCoachSeen!.Name);
-    }
-
-    [Fact]
-    public async Task AssignCoach_calls_supervisor_ship()
-    {
-        await controller.AssignCoach(TheCanonical.CourseId, new AssignCoachRequest(TheCanonical.CoachId));
-        supervisor.Verify(a => a.Ship());
+        service.Verify(a => a.AssignCoach(TheCanonical.CourseId, TheCanonical.CoachId));
     }
 
     [Fact]
     public async Task AssignCoach_NoContent()
     {
+        service.Setup(a => a.AssignCoach(TheCanonical.CourseId, TheCanonical.CoachId)).ReturnsAsync(true);
         var response = await controller.AssignCoach(TheCanonical.CourseId, new AssignCoachRequest(TheCanonical.CoachId));
         Assert.IsType<NoContentResult>(response);
     }

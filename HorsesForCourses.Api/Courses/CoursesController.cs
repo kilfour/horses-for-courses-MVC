@@ -28,14 +28,7 @@ public class CoursesController(CoursesRepository Repository, ICoursesService Ser
 
     [HttpPost("{id}/assign-coach")]
     public async Task<IActionResult> AssignCoach(int id, AssignCoachRequest request)
-    {
-        var course = await Repository.GetCourseById.Load(id);
-        var coach = await Repository.GetCoachById.Load(request.CoachId);
-        if (course == null || coach == null) return NotFound();
-        course.AssignCoach(coach);
-        await Repository.Supervisor.Ship();
-        return NoContent();
-    }
+        => NoContentNotFoundIfFalse(await Service.AssignCoach(id, request.CoachId));
 
     [HttpGet]
     public async Task<IActionResult> GetCourses(int page = 1, int pageSize = 25)
