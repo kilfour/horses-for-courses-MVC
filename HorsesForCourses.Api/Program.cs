@@ -6,7 +6,6 @@ using HorsesForCourses.Service.Warehouse;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
-
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(
@@ -17,24 +16,12 @@ builder.Services.AddCors(options =>
                   .AllowAnyMethod();
         });
 });
-
 builder.Services.AddControllers();
-
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlite("Data Source=horsesforcourses.db"));
-
-builder.Services.AddControllers().AddJsonOptions(options =>
-    options.JsonSerializerOptions.Converters.Add(
-        new JsonStringEnumConverter(null, allowIntegerValues: false)));
-
 builder.Services.AddEndpointsApiExplorer();
-
 builder.Services.AddSwaggerGen();
-
 builder.Services.AddHorsesForCourses();
-
+builder.Services.AddHorsesForCoursesWebApi();
 var app = builder.Build();
-
 if (app.Environment.IsDevelopment())
 {
     using (var scope = app.Services.CreateScope())
@@ -44,13 +31,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
 app.UseMiddleware<DomainExceptionMiddleware>();
-
 app.UseCors();
-
 app.UseHttpsRedirection();
 app.MapControllers();
 app.Run();
-
 public partial class Program { }

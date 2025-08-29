@@ -3,16 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HorsesForCourses.Api;
 
-public sealed class DomainExceptionMiddleware
+public sealed class DomainExceptionMiddleware(RequestDelegate next, ILogger<DomainExceptionMiddleware> logger)
 {
-    private readonly RequestDelegate next;
-    private readonly ILogger<DomainExceptionMiddleware> logger;
-
-    public DomainExceptionMiddleware(RequestDelegate next, ILogger<DomainExceptionMiddleware> logger)
-    {
-        this.next = next;
-        this.logger = logger;
-    }
+    private readonly RequestDelegate next = next;
+    private readonly ILogger<DomainExceptionMiddleware> logger = logger;
 
     public async Task Invoke(HttpContext context)
     {
@@ -23,12 +17,20 @@ public sealed class DomainExceptionMiddleware
         catch (DomainException ex)
         {
             logger.LogInformation(ex, "Domain rule violated");
-            await WriteProblem(context, StatusCodes.Status400BadRequest, "Domain rule violated", ex.MessageFromType());
+            await WriteProblem(
+                context,
+                StatusCodes.Status400BadRequest,
+                "Domain rule violated",
+                ex.MessageFromType());
         }
         catch (Exception ex)
         {
             logger.LogError(ex, "Unhandled exception");
-            await WriteProblem(context, StatusCodes.Status500InternalServerError, "Unexpected error", "An unexpected error occurred.");
+            await WriteProblem(
+                context,
+                StatusCodes.Status500InternalServerError,
+                "Unexpected error",
+                "An unexpected error occurred.");
         }
     }
 

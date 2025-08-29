@@ -9,9 +9,9 @@ public abstract class WebApiController : ControllerBase
         if (value == null) return NotFound();
         return Ok(value);
     }
-    protected IActionResult NoContentNotFoundIfFalse(bool value)
+    protected IActionResult NoContentNotFoundIfFalse(bool flag)
     {
-        if (!value) return NotFound();
+        if (!flag) return NotFound();
         return NoContent();
     }
 }
