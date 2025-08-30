@@ -23,11 +23,11 @@ public class GetCoachDetail(AppDbContext dbContext) : IGetCoachDetail
             .Select(a => new CoachDetail
             {
                 Id = a.Id.Value,
-                Name = a.Name,
-                Email = a.Email,
+                Name = a.Name.Value,
+                Email = a.Email.Value,
                 Skills = a.Skills.Select(a => a.Value).ToList(),
                 Courses = a.AssignedCourses.Select(
-                    b => new CoachDetail.CourseInfo(b.Id.Value, b.Name)).ToList()
+                    b => new CoachDetail.CourseInfo(b.Id.Value, b.Name.Value)).ToList()
             }).SingleOrDefaultAsync();
     }
 }

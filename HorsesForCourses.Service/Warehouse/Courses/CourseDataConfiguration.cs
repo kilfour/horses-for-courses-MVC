@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using HorsesForCourses.Core.Domain.Courses;
 using Microsoft.EntityFrameworkCore.Metadata;
 using HorsesForCourses.Core.Domain.Courses.TimeSlots;
-using HorsesForCourses.Core.ValidationHelpers;
+using HorsesForCourses.Core.Abstractions;
 
 namespace HorsesForCourses.Service.Warehouse.Courses;
 
@@ -24,9 +24,12 @@ public class CourseDataConfiguration : IEntityTypeConfiguration<Course>
             .HasColumnType("INTEGER")
             .HasAnnotation("Sqlite:Autoincrement", true);
 
-        course.Property(c => c.Name)
-            .IsRequired()
-            .HasMaxLength(DefaultString.MaxLength);
+        course.OwnsOne(c => c.Name, name =>
+        {
+            name.Property(a => a.Value)
+                .IsRequired()
+                .HasMaxLength(DefaultString.MaxLength);
+        });
 
         course.Property(c => c.Start)
             .IsRequired();

@@ -32,8 +32,8 @@ public class AcidTest
                     coachService.RegisterCoach(TheCanonical.CoachName, TheCanonical.CoachEmail).GetAwaiter().GetResult())
                 from reload in Script.Execute(() => GetDbContext(options).Find<Coach>(Id<Coach>.From(coachId)))
                 from registered in "Coach Is Registered".Spec(() => reload != null)
-                from _ in "Coach Name Registered".Spec(() => reload.Name == TheCanonical.CoachName)
-                from __ in "Coach Email Registered".Spec(() => reload.Email == TheCanonical.CoachEmail)
+                from _ in "Coach Name Registered".Spec(() => reload.Name.Value == TheCanonical.CoachName)
+                from __ in "Coach Email Registered".Spec(() => reload.Email.Value == TheCanonical.CoachEmail)
 
                 select Acid.Test
             )
@@ -72,7 +72,7 @@ public class AcidTest
                     () => needler.Check((a, b) => LoadCoach(options, b) != null))
                 from withEmail in "Coach Email Registered".SpecIf(
                     () => needler.HasDataWaiting,
-                    () => needler.Check(a => a.Email, a => LoadCoach(options, a).Email))
+                    () => needler.Check(a => a.Email, a => LoadCoach(options, a).Email.Value))
                 select Acid.Test)
 
             select Acid.Test;

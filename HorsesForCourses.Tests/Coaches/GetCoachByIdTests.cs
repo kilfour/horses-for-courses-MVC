@@ -19,7 +19,7 @@ public class GetCoachByIdTests : DatabaseTests
         var result = await Act();
         Assert.NotNull(result);
         Assert.Equal(ExpectedIdAssignedByDb, result.Id.Value);
-        Assert.Equal(TheCanonical.CoachName, result.Name);
+        Assert.Equal(TheCanonical.CoachName, result.Name.Value);
     }
 
     [Fact]

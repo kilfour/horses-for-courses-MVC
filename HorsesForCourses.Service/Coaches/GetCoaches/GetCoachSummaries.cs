@@ -17,11 +17,11 @@ public class GetCoachSummaries(AppDbContext dbContext) : IGetCoachSummaries
     {
         return await dbContext.Coaches
             .AsNoTracking()
-            .OrderBy(p => p.Name).ThenBy(p => p.Id)
+            .OrderBy(p => p.Name.Value).ThenBy(p => p.Id)
             .Select(p => new CoachSummary(
                 p.Id.Value,
-                p.Name,
-                p.Email,
+                p.Name.Value,
+                p.Email.Value,
                 p.AssignedCourses.Count))
             .ToPagedResultAsync(request);
     }

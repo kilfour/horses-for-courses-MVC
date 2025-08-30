@@ -9,7 +9,7 @@ namespace HorsesForCourses.Core.Domain.Courses;
 
 public class Course : DomainEntity<Course>
 {
-    public string Name { get; init; } = string.Empty;
+    public CourseName Name { get; init; } = CourseName.Empty;
     public DateOnly Start { get; init; }
     public DateOnly End { get; init; }
     public List<TimeSlot> TimeSlots { get; private set; } = [];
@@ -22,7 +22,7 @@ public class Course : DomainEntity<Course>
     {
         if (start > end)
             throw new CourseEndDateCanNotBeBeforeStartDate();
-        Name = name.IsValidDefaultString<CourseNameCanNotBeEmpty, CourseNameCanNotBeTooLong>();
+        Name = new CourseName(name);
         Start = start;
         End = end;
     }

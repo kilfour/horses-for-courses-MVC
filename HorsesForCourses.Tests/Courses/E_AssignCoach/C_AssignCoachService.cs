@@ -31,7 +31,7 @@ public class C_AssignCoachService : CoursesServiceTests
         SetUpMocks();
         await service.AssignCoach(TheCanonical.CourseId, TheCanonical.CoachId);
         Assert.True(courseSpy.AssignCoachCalled);
-        Assert.Equal(TheCanonical.CoachName, courseSpy.AssignCoachSeen!.Name);
+        Assert.Equal(TheCanonical.CoachName, courseSpy.AssignCoachSeen!.Name.Value);
     }
 
     [Fact]

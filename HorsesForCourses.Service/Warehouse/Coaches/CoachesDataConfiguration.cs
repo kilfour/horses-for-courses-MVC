@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Metadata;
 using HorsesForCourses.Core.Domain.Coaches;
-using HorsesForCourses.Core.ValidationHelpers;
+using HorsesForCourses.Core.Abstractions;
 
 namespace HorsesForCourses.Service.Warehouse.Coaches;
 
@@ -23,13 +23,18 @@ public class CoachesDataConfiguration : IEntityTypeConfiguration<Coach>
             .HasColumnType("INTEGER")
             .HasAnnotation("Sqlite:Autoincrement", true);
 
-        coach.Property(c => c.Name)
-            .IsRequired()
-            .HasMaxLength(DefaultString.MaxLength);
-
-        coach.Property(c => c.Email)
-            .IsRequired()
-            .HasMaxLength(DefaultString.MaxLength);
+        coach.OwnsOne(c => c.Name, name =>
+        {
+            name.Property(a => a.Value)
+                .IsRequired()
+                .HasMaxLength(DefaultString.MaxLength);
+        });
+        coach.OwnsOne(c => c.Email, email =>
+        {
+            email.Property(a => a.Value)
+                .IsRequired()
+                .HasMaxLength(DefaultString.MaxLength);
+        });
 
         coach.OwnsMany(c => c.Skills, sb =>
         {

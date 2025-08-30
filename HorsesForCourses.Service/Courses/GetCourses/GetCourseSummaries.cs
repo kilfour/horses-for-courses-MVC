@@ -17,10 +17,10 @@ public class GetCourseSummaries(AppDbContext dbContext) : IGetCourseSummaries
     {
         return await dbContext.Courses
             .AsNoTracking()
-            .OrderBy(p => p.Name).ThenBy(p => p.Id)
+            .OrderBy(p => p.Name.Value).ThenBy(p => p.Id)
             .Select(p => new CourseSummary(
                 p.Id.Value,
-                p.Name,
+                p.Name.Value,
                 p.Start,
                 p.End,
                 p.TimeSlots.Any(),

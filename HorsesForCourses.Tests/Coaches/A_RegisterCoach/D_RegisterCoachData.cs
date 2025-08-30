@@ -46,7 +46,7 @@ public class D_RegisterCoachData : DatabaseTests
     {
         await Act();
         var reloaded = Reload();
-        Assert.Equal(TheCanonical.CoachName, reloaded!.Name);
-        Assert.Equal(TheCanonical.CoachEmail, reloaded!.Email);
+        Assert.Equal(TheCanonical.CoachName, reloaded!.Name.Value);
+        Assert.Equal(TheCanonical.CoachEmail, reloaded!.Email.Value);
     }
 }

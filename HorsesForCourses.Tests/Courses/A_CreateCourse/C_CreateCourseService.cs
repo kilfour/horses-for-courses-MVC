@@ -13,7 +13,7 @@ public class C_CreateCourseService : CoursesServiceTests
     public async Task CreateCourse_delivers_to_the_supervisor()
     {
         await service.CreateCourse(TheCanonical.CourseName, TheCanonical.CourseStart, TheCanonical.CourseEnd);
-        supervisor.Verify(a => a.Enlist(It.Is<Course>(a => a.Name == TheCanonical.CourseName)));
+        supervisor.Verify(a => a.Enlist(It.Is<Course>(a => a.Name.Value == TheCanonical.CourseName)));
         supervisor.Verify(a => a.Ship());
     }
 

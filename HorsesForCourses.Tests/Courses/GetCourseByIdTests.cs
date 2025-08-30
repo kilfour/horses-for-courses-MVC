@@ -19,7 +19,7 @@ public class GetCourseByIdTests : DatabaseTests
         var result = await Act();
         Assert.NotNull(result);
         Assert.Equal(ExpectedIdAssignedByDb, result.Id.Value);
-        Assert.Equal(TheCanonical.CourseName, result.Name);
+        Assert.Equal(TheCanonical.CourseName, result.Name.Value);
     }
 
     [Fact]

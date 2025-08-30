@@ -17,7 +17,7 @@ public class E_AssignCoachDomain : CourseDomainTests
             .Confirm()
             .AssignCoach(TheCanonical.Coach());
         Assert.NotNull(Entity.AssignedCoach);
-        Assert.Equal(TheCanonical.CoachName, Entity.AssignedCoach.Name);
+        Assert.Equal(TheCanonical.CoachName, Entity.AssignedCoach.Name.Value);
     }
 
     [Fact]

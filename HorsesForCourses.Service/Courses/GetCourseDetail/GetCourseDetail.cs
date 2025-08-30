@@ -23,13 +23,13 @@ public class GetCourseDetail(AppDbContext dbContext) : IGetCourseDetail
             .Select(a => new CourseDetail
             {
                 Id = a.Id.Value,
-                Name = a.Name,
+                Name = a.Name.Value,
                 Start = a.Start,
                 End = a.End,
                 Skills = a.RequiredSkills.Select(b => b.Value),
                 TimeSlots = a.TimeSlots.Select(b => new CourseDetail.TimeSlotInfo(b.Day, b.Start.Value, b.End.Value)),
                 IsConfirmed = a.IsConfirmed,
-                Coach = a.AssignedCoach == null ? null : new IdAndName(a.AssignedCoach.Id.Value, a.AssignedCoach.Name)
+                Coach = a.AssignedCoach == null ? null : new IdAndName(a.AssignedCoach.Id.Value, a.AssignedCoach.Name.Value)
 
             }).SingleOrDefaultAsync();
     }

@@ -14,8 +14,8 @@ public class C_RegisterCoachService : CoachesServiceTests
         await service.RegisterCoach(TheCanonical.CoachName, TheCanonical.CoachEmail);
         supervisor.Verify(a => a.Enlist(
             It.Is<Coach>(a =>
-                a.Name == TheCanonical.CoachName &&
-                a.Email == TheCanonical.CoachEmail)));
+                a.Name.Value == TheCanonical.CoachName &&
+                a.Email.Value == TheCanonical.CoachEmail)));
         supervisor.Verify(a => a.Ship());
     }
 

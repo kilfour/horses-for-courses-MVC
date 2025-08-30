@@ -11,8 +11,8 @@ public class E_RegisterCoachDomain : CoachDomainTests
     [Fact]
     public void RegisterCoach_WithValidData_ShouldSucceed()
     {
-        Assert.Equal(TheCanonical.CoachName, Entity.Name);
-        Assert.Equal(TheCanonical.CoachEmail, Entity.Email);
+        Assert.Equal(TheCanonical.CoachName, Entity.Name.Value);
+        Assert.Equal(TheCanonical.CoachEmail, Entity.Email.Value);
         Assert.Empty(Entity.Skills);
     }
 

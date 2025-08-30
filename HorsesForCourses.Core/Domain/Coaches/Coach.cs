@@ -6,15 +6,22 @@ using HorsesForCourses.Core.ValidationHelpers;
 
 namespace HorsesForCourses.Core.Domain.Coaches;
 
-public class Coach(string name, string email) : DomainEntity<Coach>
+public class Coach : DomainEntity<Coach>
 {
-    public string Name { get; init; } = name.IsValidDefaultString<CoachNameCanNotBeEmpty, CoachNameCanNotBeTooLong>();
-    public string Email { get; init; } = email.IsValidDefaultString<CoachEmailCanNotBeEmpty, CoachEmailCanNotBeTooLong>();
+    public CoachName Name { get; init; } = CoachName.Empty;
+    public CoachEmail Email { get; init; } = CoachEmail.Empty;
 
     public HashSet<Skill> Skills { get; init; } = [];
 
-    private readonly List<Course> assignedCourses = [];
     public IReadOnlyCollection<Course> AssignedCourses => assignedCourses.AsReadOnly();
+    private readonly List<Course> assignedCourses = [];
+
+    private Coach() { /*** EFC Was Here ****/ }
+    public Coach(string name, string email)
+    {
+        Name = new CoachName(name);
+        Email = new CoachEmail(email);
+    }
 
     public virtual void UpdateSkills(IEnumerable<string> skills)
     {

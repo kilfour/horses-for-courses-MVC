@@ -11,7 +11,7 @@ public class E_CreateCourseDomain : CourseDomainTests
     [Fact]
     public void CreateCourse_WithValidData_ShouldSucceed()
     {
-        Assert.Equal(TheCanonical.CourseName, Entity.Name);
+        Assert.Equal(TheCanonical.CourseName, Entity.Name.Value);
         Assert.Equal(TheCanonical.CourseStart, Entity.Start);
         Assert.Equal(TheCanonical.CourseEnd, Entity.End);
     }
