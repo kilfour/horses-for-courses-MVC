@@ -9,7 +9,7 @@ namespace HorsesForCourses.Tests.Coaches.D_GetCoachDetail;
 public class A_GetCoachDetailApi : CoachesApiControllerTests
 {
     [Fact]
-    public async Task GetCoachDetail_uses_the_query_object()
+    public async Task GetCoachDetail_uses_the_service()
     {
         var result = await controller.GetCoachDetail(TheCanonical.CoachId);
         service.Verify(a => a.GetCoachDetail(TheCanonical.CoachId));
