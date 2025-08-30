@@ -13,7 +13,7 @@ public class Course : DomainEntity<Course>
     public DateOnly Start { get; init; }
     public DateOnly End { get; init; }
     public List<TimeSlot> TimeSlots { get; private set; } = [];
-    public List<Skill> RequiredSkills { get; private set; } = [];
+    public List<Skill> RequiredSkills { get; init; } = [];
     public bool IsConfirmed { get; private set; }
     public Coach? AssignedCoach { get; private set; }
 

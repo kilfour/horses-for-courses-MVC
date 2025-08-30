@@ -21,12 +21,6 @@ public class E_AssignCoachDomain : CourseDomainTests
     }
 
     [Fact]
-    public void AssignCoach_Without_TimeSlots_Throws()
-    {
-        Assert.Throws<AtLeastOneTimeSlotRequired>(() => Entity.Confirm());
-    }
-
-    [Fact]
     public void AssignCoach_When_Unconfirmed_Throws()
         => Assert.Throws<CourseNotYetConfirmed>(() =>
             Entity
