@@ -35,6 +35,7 @@ public class Course : DomainEntity<Course>
         NotAllowedIfAlreadyConfirmed();
         NotAllowedWhenThereAreDuplicateSkills(skills);
         return OverWriteRequiredSkills(skills);
+
         // ------------------------------------------------------------------------------------------------
         static bool NotAllowedWhenThereAreDuplicateSkills(IEnumerable<string> skills)
             => skills.NoDuplicatesAllowed(a => new CourseAlreadyHasSkill(string.Join(",", a)));
@@ -53,6 +54,7 @@ public class Course : DomainEntity<Course>
         NotAllowedIfAlreadyConfirmed();
         NotAllowedWhenTimeSlotsOverlap(timeSlots);
         return OverWriteTimeSlots(timeSlots);
+
         // ------------------------------------------------------------------------------------------------
         bool NotAllowedWhenTimeSlotsOverlap(IEnumerable<TimeSlot> timeSlots)
             => TimeSlot.HasOverlap(timeSlots) ? throw new OverlappingTimeSlots() : true;
@@ -64,6 +66,7 @@ public class Course : DomainEntity<Course>
         NotAllowedIfAlreadyConfirmed();
         NotAllowedWhenThereAreNoTimeSlots();
         return ConfirmIt();
+
         // ------------------------------------------------------------------------------------------------
         bool NotAllowedWhenThereAreNoTimeSlots()
             => TimeSlots.Count == 0 ? throw new AtLeastOneTimeSlotRequired() : true;
@@ -77,6 +80,7 @@ public class Course : DomainEntity<Course>
         NotAllowedIfCoachIsInsuitable(coach);
         NotAllowedIfCoachIsUnavailable(coach);
         return AssignTheCoachAlready(coach);
+
         // ------------------------------------------------------------------------------------------------
         bool NotAllowedIfNotYetConfirmed()
             => !IsConfirmed ? throw new CourseNotYetConfirmed() : true;
@@ -85,7 +89,7 @@ public class Course : DomainEntity<Course>
         bool NotAllowedIfCoachIsInsuitable(Coach coach)
             => !coach.IsSuitableFor(this) ? throw new CoachNotSuitableForCourse() : true;
         bool NotAllowedIfCoachIsUnavailable(Coach coach)
-            => !Is.TheCoach(coach).AvailableFor(this) ? throw new CoachNotAvailableForCourse() : true;
+            => !coach.IsAvailableFor(this) ? throw new CoachNotAvailableForCourse() : true;
         Course AssignTheCoachAlready(Coach coach)
         {
             AssignedCoach = coach;

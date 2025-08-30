@@ -35,8 +35,9 @@ public class Coach(string name, string email) : DomainEntity<Coach>
     public bool IsSuitableFor(Course course)
         => course.RequiredSkills.All(Skills.Contains);
 
+    public bool IsAvailableFor(Course course)
+        => CheckIf.ImAvailable(this).For(course);
+
     public void AssignCourse(Course course)
-    {
-        assignedCourses.Add(course);
-    }
+        => assignedCourses.Add(course);
 }

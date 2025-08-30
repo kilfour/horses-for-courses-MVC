@@ -1,18 +1,18 @@
-using HorsesForCourses.Core.Domain.Coaches;
+using HorsesForCourses.Core.Domain.Courses;
 using HorsesForCourses.Core.Domain.Courses.TimeSlots;
 
-namespace HorsesForCourses.Core.Domain.Courses;
+namespace HorsesForCourses.Core.Domain.Coaches;
 
-public static class Is
+public static class CheckIf
 {
-    public static CoachPlanner TheCoach(Coach coach) => new(coach);
+    public static CoachCalender ImAvailable(Coach coach) => new(coach);
 }
 
-public class CoachPlanner(Coach coach)
+public class CoachCalender(Coach coach)
 {
     private readonly Coach coach = coach;
 
-    public bool AvailableFor(Course course)
+    public bool For(Course course)
     {
         foreach (var assigned in coach.AssignedCourses)
         {
