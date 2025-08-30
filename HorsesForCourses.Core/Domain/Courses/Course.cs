@@ -15,7 +15,6 @@ public class Course : DomainEntity<Course>
     public List<TimeSlot> TimeSlots { get; private set; } = [];
     public List<Skill> RequiredSkills { get; private set; } = [];
     public bool IsConfirmed { get; private set; }
-
     public Coach? AssignedCoach { get; private set; }
 
     private Course() { /*** EFC Was Here ****/ }
@@ -36,8 +35,8 @@ public class Course : DomainEntity<Course>
         NotAllowedIfAlreadyConfirmed();
         NotAllowedWhenThereAreDuplicateSkills(skills);
         return OverWriteRequiredSkills(skills);
-
         // ------------------------------------------------------------------------------------------------
+        // --
         static bool NotAllowedWhenThereAreDuplicateSkills(IEnumerable<string> skills)
             => skills.NoDuplicatesAllowed(a => new CourseAlreadyHasSkill(string.Join(",", a)));
         Course OverWriteRequiredSkills(IEnumerable<string> skills)
@@ -47,6 +46,7 @@ public class Course : DomainEntity<Course>
             RequiredSkills.AddRange(newSkills);
             return this;
         }
+        // ------------------------------------------------------------------------------------------------
     }
 
     public virtual Course UpdateTimeSlots<T>(IEnumerable<T> timeSlotInfo, Func<T, (CourseDay Day, int Start, int End)> getTimeSlot)
@@ -55,11 +55,12 @@ public class Course : DomainEntity<Course>
         NotAllowedIfAlreadyConfirmed();
         NotAllowedWhenTimeSlotsOverlap(timeSlots);
         return OverWriteTimeSlots(timeSlots);
-
         // ------------------------------------------------------------------------------------------------
+        // --
         bool NotAllowedWhenTimeSlotsOverlap(IEnumerable<TimeSlot> timeSlots)
             => TimeSlot.HasOverlap(timeSlots) ? throw new OverlappingTimeSlots() : true;
         Course OverWriteTimeSlots(IEnumerable<TimeSlot> timeSlots) { TimeSlots = [.. timeSlots]; return this; }
+        // ------------------------------------------------------------------------------------------------
     }
 
     public Course Confirm()
@@ -67,11 +68,12 @@ public class Course : DomainEntity<Course>
         NotAllowedIfAlreadyConfirmed();
         NotAllowedWhenThereAreNoTimeSlots();
         return ConfirmIt();
-
         // ------------------------------------------------------------------------------------------------
+        // --
         bool NotAllowedWhenThereAreNoTimeSlots()
             => TimeSlots.Count == 0 ? throw new AtLeastOneTimeSlotRequired() : true;
         Course ConfirmIt() { IsConfirmed = true; return this; }
+        // ------------------------------------------------------------------------------------------------
     }
 
     public virtual Course AssignCoach(Coach coach)
@@ -83,6 +85,7 @@ public class Course : DomainEntity<Course>
         return AssignTheCoachAlready(coach);
 
         // ------------------------------------------------------------------------------------------------
+        // --
         bool NotAllowedIfNotYetConfirmed()
             => !IsConfirmed ? throw new CourseNotYetConfirmed() : true;
         bool NotAllowedIfCourseAlreadyHasCoach()
@@ -97,5 +100,6 @@ public class Course : DomainEntity<Course>
             coach.AssignCourse(this);
             return this;
         }
+        // ------------------------------------------------------------------------------------------------
     }
 }

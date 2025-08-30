@@ -21,6 +21,7 @@ public class Coach(string name, string email) : DomainEntity<Coach>
         NotAllowedWhenThereAreDuplicateSkills(skills);
         OverwriteSkills(skills);
         // ------------------------------------------------------------------------------------------------
+        // --
         static bool NotAllowedWhenThereAreDuplicateSkills(IEnumerable<string> skills)
             => skills.NoDuplicatesAllowed(a => new CoachAlreadyHasSkill(string.Join(",", a)));
         void OverwriteSkills(IEnumerable<string> skills)
@@ -30,6 +31,7 @@ public class Coach(string name, string email) : DomainEntity<Coach>
                 .ToList()
                 .ForEach(a => Skills.Add(a));
         }
+        // ------------------------------------------------------------------------------------------------
     }
 
     public bool IsSuitableFor(Course course)
