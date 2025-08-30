@@ -9,7 +9,7 @@ public record OfficeHour : ComparableValue<OfficeHour, int>
 
     protected override int InnerValue => Value;
 
-    private OfficeHour() { }
+    private OfficeHour() { /*** EFC Was Here ****/ }
 
     private OfficeHour(int value)
     {

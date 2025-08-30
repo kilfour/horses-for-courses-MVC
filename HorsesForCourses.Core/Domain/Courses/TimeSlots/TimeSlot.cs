@@ -8,7 +8,7 @@ public record TimeSlot
     public OfficeHour Start { get; } = OfficeHour.Empty;
     public OfficeHour End { get; } = OfficeHour.Empty;
 
-    private TimeSlot() { }
+    private TimeSlot() { /*** EFC Was Here ****/ }
     private TimeSlot(CourseDay day, OfficeHour start, OfficeHour end)
     {
         Day = day;

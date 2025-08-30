@@ -9,22 +9,23 @@ namespace HorsesForCourses.Core.Domain.Courses;
 
 public class Course : DomainEntity<Course>
 {
-    public string Name { get; private set; }
-    public DateOnly StartDate { get; private set; }
-    public DateOnly EndDate { get; private set; }
+    public string Name { get; init; } = string.Empty;
+    public DateOnly Start { get; init; }
+    public DateOnly End { get; init; }
     public List<TimeSlot> TimeSlots { get; private set; } = [];
     public List<Skill> RequiredSkills { get; private set; } = [];
     public bool IsConfirmed { get; private set; }
 
     public Coach? AssignedCoach { get; private set; }
 
-    public Course(string name, DateOnly startDate, DateOnly endDate)
+    private Course() { /*** EFC Was Here ****/ }
+    public Course(string name, DateOnly start, DateOnly end)
     {
-        if (startDate > endDate)
+        if (start > end)
             throw new CourseEndDateCanNotBeBeforeStartDate();
         Name = name.IsValidDefaultString<CourseNameCanNotBeEmpty, CourseNameCanNotBeTooLong>();
-        StartDate = startDate;
-        EndDate = endDate;
+        Start = start;
+        End = end;
     }
 
     bool NotAllowedIfAlreadyConfirmed()

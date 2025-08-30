@@ -28,10 +28,10 @@ public class CourseDataConfiguration : IEntityTypeConfiguration<Course>
             .IsRequired()
             .HasMaxLength(DefaultString.MaxLength);
 
-        course.Property(c => c.StartDate)
+        course.Property(c => c.Start)
             .IsRequired();
 
-        course.Property(c => c.EndDate)
+        course.Property(c => c.End)
             .IsRequired();
 
         course.Property(c => c.IsConfirmed)
