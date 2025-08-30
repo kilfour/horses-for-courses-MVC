@@ -16,14 +16,14 @@ public abstract class CoursesServiceTests
     protected readonly Mock<IAmASuperVisor> supervisor;
     protected readonly Mock<IGetCourseById> getCourseById;
     protected readonly Mock<IGetCoachById> getCoachById;
-    protected readonly Mock<IGetTheCourseSummaries> getCourseSummaries;
-    protected readonly Mock<IGetTheCourseDetail> getCourseDetail;
+    protected readonly Mock<IGetCourseSummaries> getCourseSummaries;
+    protected readonly Mock<IGetCourseDetail> getCourseDetail;
     protected readonly CourseSpy courseSpy;
 
     public CoursesServiceTests()
     {
-        getCourseDetail = new Mock<IGetTheCourseDetail>();
-        getCourseSummaries = new Mock<IGetTheCourseSummaries>();
+        getCourseDetail = new Mock<IGetCourseDetail>();
+        getCourseSummaries = new Mock<IGetCourseSummaries>();
         courseSpy = new();
         getCourseById = new Mock<IGetCourseById>();
         getCoachById = new Mock<IGetCoachById>();

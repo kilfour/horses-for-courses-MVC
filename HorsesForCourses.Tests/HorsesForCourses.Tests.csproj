@@ -27,4 +27,8 @@
     <ProjectReference Include="..\HorsesForCourses.MVC\HorsesForCourses.MVC.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\QuickAcid\QuickAcid\QuickAcid.csproj" />
+  </ItemGroup>
+
 </Project>
