@@ -1,22 +1,17 @@
-namespace HorsesForCourses.Core.Extensions;
+namespace HorsesForCourses.Core.ValidationHelpers;
 
-public static class ListExtensions
+public static class Duplicates
 {
     private static List<T> GetDuplicates<T>(this IEnumerable<T> collection)
-        => collection
+        => [.. collection
             .GroupBy(x => x)
             .Where(g => g.Count() > 1)
             .SelectMany(g => g)
-            .Distinct()
-            .ToList();
+            .Distinct()];
 
-    public static bool NoDuplicatesAllowed<T, TException>(this IEnumerable<T> collection) where TException : Exception, new()
-    {
-        var duplicates = collection.GetDuplicates();
-        if (duplicates.Count != 0)
-            throw new TException();
-        return true;
-    }
+    public static bool NoDuplicatesAllowed<T, TException>(this IEnumerable<T> collection)
+        where TException : Exception, new()
+            => NoDuplicatesAllowed(collection, _ => new TException());
 
     public static bool NoDuplicatesAllowed<T, TException>(
         this IEnumerable<T> collection,

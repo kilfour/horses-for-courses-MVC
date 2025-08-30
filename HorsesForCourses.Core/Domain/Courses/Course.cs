@@ -3,7 +3,7 @@ using HorsesForCourses.Core.Domain.Coaches;
 using HorsesForCourses.Core.Domain.Courses.InvalidationReasons;
 using HorsesForCourses.Core.Domain.Courses.TimeSlots;
 using HorsesForCourses.Core.Domain.Skills;
-using HorsesForCourses.Core.Extensions;
+using HorsesForCourses.Core.ValidationHelpers;
 
 namespace HorsesForCourses.Core.Domain.Courses;
 

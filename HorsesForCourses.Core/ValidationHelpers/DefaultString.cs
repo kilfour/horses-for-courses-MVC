@@ -1,4 +1,4 @@
-namespace HorsesForCourses.Core.Abstractions;
+namespace HorsesForCourses.Core.ValidationHelpers;
 
 public static class DefaultString
 {

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using HorsesForCourses.Core.Domain.Courses;
 using Microsoft.EntityFrameworkCore.Metadata;
 using HorsesForCourses.Core.Domain.Courses.TimeSlots;
-using HorsesForCourses.Core.Abstractions;
+using HorsesForCourses.Core.ValidationHelpers;
 
 namespace HorsesForCourses.Service.Warehouse.Courses;
 

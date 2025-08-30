@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Metadata;
-using HorsesForCourses.Core.Abstractions;
 using HorsesForCourses.Core.Domain.Coaches;
+using HorsesForCourses.Core.ValidationHelpers;
 
 namespace HorsesForCourses.Service.Warehouse.Coaches;
 
