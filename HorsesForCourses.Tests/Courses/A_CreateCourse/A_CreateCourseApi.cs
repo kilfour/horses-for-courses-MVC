@@ -32,6 +32,6 @@ public class A_CreateCourseApi : CoursesApiControllerTests
     {
         var result = await Act();
         Assert.NotNull(result);
-        Assert.IsType<int>(result!.Value);
+        Assert.IsType<IdPrimitive>(result!.Value);
     }
 }

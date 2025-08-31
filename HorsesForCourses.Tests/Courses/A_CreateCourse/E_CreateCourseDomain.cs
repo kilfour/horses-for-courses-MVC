@@ -17,7 +17,7 @@ public class E_CreateCourseDomain : CourseDomainTests
     }
 
     [Fact]
-    public void CreateCourse_WithValidData_keeps_default_id()
+    public void CreateCourse_WithValidData_does_not_assign_id()
         => Assert.Equal(default, Entity.Id.Value);
 
     [Fact]

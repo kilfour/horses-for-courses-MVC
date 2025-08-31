@@ -1,8 +1,11 @@
+using System.Reflection;
+using HorsesForCourses.Core.Abstractions;
 using HorsesForCourses.Core.Domain;
 using HorsesForCourses.Core.Domain.Coaches;
 using HorsesForCourses.Tests.Tools;
 using HorsesForCourses.Tests.Tools.Coaches;
 using Moq;
+using QuickPulse.Show;
 
 namespace HorsesForCourses.Tests.Coaches.A_RegisterCoach;
 

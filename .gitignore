@@ -24,6 +24,7 @@ coverage/
 .DS_Store
 
 # Logs and temp files
+temp/
 log*.txt
 *.log
 *.tmp

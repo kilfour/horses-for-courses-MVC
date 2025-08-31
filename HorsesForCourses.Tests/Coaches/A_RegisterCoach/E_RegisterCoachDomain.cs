@@ -17,10 +17,8 @@ public class E_RegisterCoachDomain : CoachDomainTests
     }
 
     [Fact]
-    public void RegisterCoach_WithValidData_keeps_default_id()
-    {
-        Assert.Equal(default, Entity.Id.Value);
-    }
+    public void RegisterCoach_WithValidData_does_not_assign_id()
+        => Assert.Equal(default, Entity.Id.Value);
 
     [Fact]
     public void RegisterCoach_WithEmptyName_ShouldThrow()

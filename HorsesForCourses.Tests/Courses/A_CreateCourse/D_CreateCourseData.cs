@@ -16,7 +16,7 @@ public class D_CreateCourseData : CourseDatabaseTests
 
     private async Task Act()
     {
-        await supervisor.Enlist(Entity);
+        // await supervisor.Enlist(Entity); // done in base class
         await supervisor.Ship();
     }
 

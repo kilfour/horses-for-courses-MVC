@@ -31,6 +31,6 @@ public class A_RegisterCoachApi : CoachesApiControllerTests
     {
         var result = await Act();
         Assert.NotNull(result);
-        Assert.IsType<int>(result!.Value);
+        Assert.IsType<IdPrimitive>(result!.Value);
     }
 }
