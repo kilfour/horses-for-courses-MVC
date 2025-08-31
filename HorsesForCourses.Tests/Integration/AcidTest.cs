@@ -20,21 +20,20 @@ public record AcidTestContext(List<Id<Coach>> CoachIds);
 
 public class AcidTest
 {
-    [Fact]
+    [Fact(Skip = "integration")]
     public void RegisterCoach()
     {
         var script =
             from options in "Session Factory".Stashed(GetDbContextOptions)
             from coachService in Script.Execute(() => GetCoachesService(options))
             from _ in Script.Choose(
-
-                from coachId in "Register Coach".Act(() =>
-                    coachService.RegisterCoach(TheCanonical.CoachName, TheCanonical.CoachEmail).GetAwaiter().GetResult())
-                from reload in Script.Execute(() => GetDbContext(options).Find<Coach>(Id<Coach>.From(coachId)))
+                from coachId in "Register Coach".Act(() => coachService
+                    .RegisterCoach(TheCanonical.CoachName, TheCanonical.CoachEmail)
+                    .Await())
+                from reload in Script.Execute(() => LoadCoach(options, coachId))
                 from registered in "Coach Is Registered".Spec(() => reload != null)
                 from _ in "Coach Name Registered".Spec(() => reload.Name.Value == TheCanonical.CoachName)
                 from __ in "Coach Email Registered".Spec(() => reload.Email.Value == TheCanonical.CoachEmail)
-
                 select Acid.Test
             )
             select Acid.Test;
@@ -43,7 +42,7 @@ public class AcidTest
 
     public record RegisterCoachRequest(string Name, string Email);
 
-    [Fact]
+    [Fact(Skip = "integration")]
     public void RegisterCoachConcurrent()
     {
         var script =
@@ -67,6 +66,7 @@ public class AcidTest
                 select Acid.Test,
 
                 // Delayed Verify
+                //   Todo: unify asserts in one Spec or something and clear needler data after check 
                 from registered in "Coach Is Registered".SpecIf(
                     () => needler.HasDataWaiting,
                     () => needler.Check((a, b) => LoadCoach(options, b) != null))

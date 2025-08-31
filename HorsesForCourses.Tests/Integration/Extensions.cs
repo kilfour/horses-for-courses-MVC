@@ -1,6 +1,6 @@
 namespace HorsesForCourses.Tests.Integration;
 
-public static class TaskExtensions
+public static class Extensions
 {
     public static Task<TOut> Attach<TIn, TOut>(this Task<TOut> task, Needler<TIn, TOut> needler, string key, TIn record, int sleepy = 0)
     {
@@ -12,4 +12,7 @@ public static class TaskExtensions
         }, TaskContinuationOptions.OnlyOnRanToCompletion);
         return task;
     }
+
+    public static TOut Await<TOut>(this Task<TOut> task)
+        => task.GetAwaiter().GetResult();
 }
