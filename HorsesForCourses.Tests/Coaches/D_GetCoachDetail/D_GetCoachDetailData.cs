@@ -7,17 +7,18 @@ namespace HorsesForCourses.Tests.Coaches.D_GetCoachDetail;
 
 public class D_GetCoachDetailData : DatabaseTests
 {
-    private const int ExpectedIdAssignedByDb = 1;
+    private IdPrimitive IdAssignedByDb;
+
     private async Task<CoachDetail?> Act()
-        => await new GetCoachDetail(GetDbContext()).One(ExpectedIdAssignedByDb);
+        => await new GetCoachDetail(GetDbContext()).One(IdAssignedByDb);
 
     [Fact]
     public async Task With_Coach()
     {
-        AddToDb(TheCanonical.Coach());
+        IdAssignedByDb = AddToDb(TheCanonical.Coach());
         var detail = await Act();
         Assert.NotNull(detail);
-        Assert.Equal(ExpectedIdAssignedByDb, detail.Id);
+        Assert.Equal(IdAssignedByDb, detail.Id);
         Assert.Equal(TheCanonical.CoachName, detail.Name);
         Assert.Equal(TheCanonical.CoachEmail, detail.Email);
         Assert.Equal([], detail.Skills);

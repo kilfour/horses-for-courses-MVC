@@ -42,7 +42,7 @@ public class C_AssignCoachMVC : CoursesMVCControllerTests
     public async Task AssignCoach_POST_Returns_View_On_Exception()
     {
         service.Setup(a => a.GetCourseDetail(TheCanonical.CourseId)).ReturnsAsync(TheCanonical.CourseDetail());
-        service.Setup(a => a.AssignCoach(It.IsAny<int>(), It.IsAny<int>())).ThrowsAsync(new CourseAlreadyConfirmed());
+        service.Setup(a => a.AssignCoach(It.IsAny<IdPrimitive>(), It.IsAny<IdPrimitive>())).ThrowsAsync(new CourseAlreadyConfirmed());
         var result = await controller.AssignCoach(TheCanonical.CourseId);
         var view = Assert.IsType<ViewResult>(result);
         var model = Assert.IsType<AssignCoachViewModel>(view.Model);
@@ -53,8 +53,8 @@ public class C_AssignCoachMVC : CoursesMVCControllerTests
     [Fact]
     public async Task AssignCoach_POST_Returns_View_With_ModelError_On_Exception()
     {
-        service.Setup(a => a.AssignCoach(It.IsAny<int>(), It.IsAny<int>())).ThrowsAsync(new CourseNotYetConfirmed());
-        var result = await controller.AssignCoach(-1, TheCanonical.CoachId);
+        service.Setup(a => a.AssignCoach(It.IsAny<IdPrimitive>(), It.IsAny<IdPrimitive>())).ThrowsAsync(new CourseNotYetConfirmed());
+        var result = await controller.AssignCoach(TheCanonical.BadId, TheCanonical.CoachId);
         Assert.False(controller.ModelState.IsValid);
         Assert.Contains(controller.ModelState, kvp => kvp.Value!.Errors.Any(e => e.ErrorMessage == "Course not yet confirmed."));
     }

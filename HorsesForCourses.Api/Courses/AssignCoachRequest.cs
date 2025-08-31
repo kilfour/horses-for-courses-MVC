@@ -1,3 +1,3 @@
 namespace HorsesForCourses.Api.Courses;
 
-public record AssignCoachRequest(int CoachId);
+public record AssignCoachRequest(IdPrimitive CoachId);

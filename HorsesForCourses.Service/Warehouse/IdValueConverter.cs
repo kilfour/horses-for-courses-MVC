@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HorsesForCourses.Service.Warehouse;
 
-public class IdValueConverter<T> : ValueConverter<Id<T>, int>
+public class IdValueConverter<T> : ValueConverter<Id<T>, IdPrimitive>
 {
     public IdValueConverter()
         : base(

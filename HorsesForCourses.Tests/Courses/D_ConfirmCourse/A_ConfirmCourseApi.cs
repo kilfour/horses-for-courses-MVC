@@ -26,7 +26,7 @@ public class A_ConfirmCourseApi : CoursesApiControllerTests
     [Fact]
     public async Task UpdateTimeSlots_Returns_Not_Found_If_No_Course()
     {
-        var response = await controller.ConfirmCourse(-1);
+        var response = await controller.ConfirmCourse(TheCanonical.BadId);
         Assert.IsType<NotFoundResult>(response);
     }
 }

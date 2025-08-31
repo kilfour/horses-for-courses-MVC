@@ -51,7 +51,7 @@ public class C_UpdateSkillsService : CoachesServiceTests
     [Fact]
     public async Task UpdateSkills_failure_returns_false()
     {
-        var success = await service.UpdateSkills(-1, TheCanonical.Skills);
+        var success = await service.UpdateSkills(TheCanonical.BadId, TheCanonical.Skills);
         Assert.False(success);
     }
 }

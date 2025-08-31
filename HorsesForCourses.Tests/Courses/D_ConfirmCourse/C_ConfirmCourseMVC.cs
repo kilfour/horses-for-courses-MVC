@@ -42,7 +42,7 @@ public class C_ConfirmCourseMVC : CoursesMVCControllerTests
     public async Task ConfirmCourse_POST_Returns_View_On_Exception()
     {
         service.Setup(a => a.GetCourseDetail(TheCanonical.CourseId)).ReturnsAsync(TheCanonical.CourseDetail());
-        service.Setup(a => a.ConfirmCourse(It.IsAny<int>())).ThrowsAsync(new CourseAlreadyConfirmed());
+        service.Setup(a => a.ConfirmCourse(It.IsAny<IdPrimitive>())).ThrowsAsync(new CourseAlreadyConfirmed());
         var result = await controller.ConfirmCourse(TheCanonical.CourseId);
         var view = Assert.IsType<ViewResult>(result);
         var model = Assert.IsType<ConfirmCourseViewModel>(view.Model);
@@ -53,8 +53,8 @@ public class C_ConfirmCourseMVC : CoursesMVCControllerTests
     [Fact]
     public async Task ConfirmCourse_POST_Returns_View_With_ModelError_On_Exception()
     {
-        service.Setup(a => a.ConfirmCourse(It.IsAny<int>())).ThrowsAsync(new CourseAlreadyConfirmed());
-        var result = await controller.ConfirmCourse(-1);
+        service.Setup(a => a.ConfirmCourse(It.IsAny<IdPrimitive>())).ThrowsAsync(new CourseAlreadyConfirmed());
+        var result = await controller.ConfirmCourse(TheCanonical.BadId);
         Assert.False(controller.ModelState.IsValid);
         Assert.Contains(controller.ModelState, kvp => kvp.Value!.Errors.Any(e => e.ErrorMessage == "Course already confirmed."));
     }

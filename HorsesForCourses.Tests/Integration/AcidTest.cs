@@ -48,7 +48,7 @@ public class AcidTest
     {
         var script =
 
-            from needler in "Needler".Stashed(() => new Needler<RegisterCoachRequest, int>())
+            from needler in "Needler".Stashed(() => new Needler<RegisterCoachRequest, IdPrimitive>())
 
             from options in "Session Factory".Stashed(GetDbContextOptions)
             from coachService in Script.Execute(() => GetCoachesService(options))
@@ -85,7 +85,7 @@ public class AcidTest
             .And(20.ExecutionsPerRun());
     }
 
-    private static Coach LoadCoach(DbContextOptions<AppDbContext> options, int id)
+    private static Coach LoadCoach(DbContextOptions<AppDbContext> options, IdPrimitive id)
     {
         return GetDbContext(options).Coaches.Where(a => a.Id == Id<Coach>.From(id)).Single();
     }

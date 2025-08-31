@@ -54,7 +54,7 @@ public class C_AssignCoachService : CoursesServiceTests
     {
         getCoachById.Setup(a => a.Load(TheCanonical.CoachId)).ReturnsAsync(TheCanonical.Coach());
         getCourseById.Setup(a => a.Load(TheCanonical.CourseId)).ReturnsAsync((Course)null!);
-        Assert.False(await service.AssignCoach(-1, TheCanonical.CoachId));
+        Assert.False(await service.AssignCoach(TheCanonical.BadId, TheCanonical.CoachId));
     }
 
     [Fact]

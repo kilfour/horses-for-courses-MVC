@@ -7,22 +7,22 @@ namespace HorsesForCourses.Tests.Courses.G_GetCourseDetail;
 
 public class D_GetCourseDetailData : DatabaseTests
 {
-    private const int ExpectedIdAssignedByDb = 1;
+    private IdPrimitive IdAssignedByDb;
     private async Task<CourseDetail?> Act()
-        => await new GetCourseDetail(GetDbContext()).One(ExpectedIdAssignedByDb);
+        => await new GetCourseDetail(GetDbContext()).One(IdAssignedByDb);
 
     [Fact]
     public async Task With_Course()
     {
 
-        AddToDb(TheCanonical.Course()
+        IdAssignedByDb = AddToDb(TheCanonical.Course()
             .UpdateRequiredSkills(TheCanonical.Skills)
             .UpdateTimeSlots(TheCanonical.TimeSlotsFullDayMonday(), a => a)
             .Confirm());
 
         var detail = await Act();
         Assert.NotNull(detail);
-        Assert.Equal(1, detail.Id);
+        Assert.Equal(IdAssignedByDb, detail.Id);
         Assert.Equal(TheCanonical.CourseName, detail.Name);
         Assert.Equal(TheCanonical.CourseStart, detail.Start);
         Assert.Equal(TheCanonical.CourseEnd, detail.End);

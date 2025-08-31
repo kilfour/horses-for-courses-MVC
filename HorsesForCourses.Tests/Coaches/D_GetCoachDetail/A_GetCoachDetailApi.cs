@@ -28,7 +28,7 @@ public class A_GetCoachDetailApi : CoachesApiControllerTests
     [Fact]
     public async Task GetCoachDetail_Returns_Not_Found_If_No_Coach()
     {
-        var response = await controller.GetCoachDetail(-1);
+        var response = await controller.GetCoachDetail(TheCanonical.BadId);
         Assert.IsType<NotFoundResult>(response);
     }
 }

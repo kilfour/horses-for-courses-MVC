@@ -1,3 +1,4 @@
+using HorsesForCourses.Core.Abstractions;
 using HorsesForCourses.Service.Warehouse;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
@@ -22,13 +23,13 @@ public abstract class DatabaseTests : IDisposable
 
     public void Dispose() => connection.Dispose();
 
-    protected void AddToDb(params object[] entities)
+    protected IdPrimitive AddToDb<T>(DomainEntity<T> entity)
     {
         using var context = GetDbContext();
-        foreach (var entity in entities)
         {
             context.Add(entity!);
         }
         context.SaveChanges();
+        return entity.Id.Value;
     }
 }

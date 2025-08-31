@@ -7,14 +7,14 @@ namespace HorsesForCourses.Service.Coaches.GetCoachDetail;
 
 public interface IGetCoachDetail
 {
-    Task<CoachDetail?> One(int id);
+    Task<CoachDetail?> One(IdPrimitive id);
 }
 
 public class GetCoachDetail(AppDbContext dbContext) : IGetCoachDetail
 {
     private readonly AppDbContext dbContext = dbContext;
 
-    public async Task<CoachDetail?> One(int id)
+    public async Task<CoachDetail?> One(IdPrimitive id)
     {
         var coachId = Id<Coach>.From(id);
         return await dbContext.Coaches

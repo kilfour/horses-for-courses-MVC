@@ -2,15 +2,15 @@ namespace HorsesForCourses.Core.Abstractions;
 
 public record Id<T>
 {
-    private readonly int value;
-    public int Value => value;
+    private readonly IdPrimitive value;
+    public IdPrimitive Value => value;
 
-    public static Id<T> Empty { get; } = new Id<T>(default(int));
+    public static Id<T> Empty { get; } = new Id<T>(default(IdPrimitive));
 
     private Id() { }
 
-    private Id(int value) => this.value = value;
+    private Id(IdPrimitive value) => this.value = value;
 
-    public static Id<T> From(int value) => new(value);
+    public static Id<T> From(IdPrimitive value) => new(value);
 }
 

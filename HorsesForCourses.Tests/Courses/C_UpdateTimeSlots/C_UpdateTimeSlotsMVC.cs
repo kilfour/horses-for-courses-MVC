@@ -45,7 +45,7 @@ public class C_UpdateTimeSlotsMVC : CoursesMVCControllerTests
     {
         service.Setup(a => a.GetCourseDetail(TheCanonical.CourseId)).ReturnsAsync(TheCanonical.CourseDetail());
         service.Setup(a => a.UpdateTimeSlots(
-            It.IsAny<int>(),
+            It.IsAny<IdPrimitive>(),
             It.IsAny<IEnumerable<TimeSlotViewModel>>(),
             It.IsAny<Func<TimeSlotViewModel, (CourseDay, int, int)>>()))
             .ThrowsAsync(new OverlappingTimeSlots());
@@ -60,11 +60,11 @@ public class C_UpdateTimeSlotsMVC : CoursesMVCControllerTests
     public async Task UpdateTimeSlots_POST_Returns_View_With_ModelError_On_Exception()
     {
         service.Setup(a => a.UpdateTimeSlots(
-            It.IsAny<int>(),
+            It.IsAny<IdPrimitive>(),
             It.IsAny<IEnumerable<TimeSlotViewModel>>(),
             It.IsAny<Func<TimeSlotViewModel, (CourseDay, int, int)>>()))
             .ThrowsAsync(new OverlappingTimeSlots());
-        var result = await controller.UpdateTimeSlots(-1, TheCanonical.TimeSlotsWithDuplicateViewModel());
+        var result = await controller.UpdateTimeSlots(TheCanonical.BadId, TheCanonical.TimeSlotsWithDuplicateViewModel());
         Assert.False(controller.ModelState.IsValid);
         Assert.Contains(controller.ModelState, kvp => kvp.Value!.Errors.Any(e => e.ErrorMessage == "Overlapping time slots."));
     }

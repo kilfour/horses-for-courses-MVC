@@ -35,7 +35,7 @@ public class A_UpdateSkillsApi : CoachesApiControllerTests
     public async Task UpdateSkills_Service_Failure_Returns_Not_Found()
     {
         service.Setup(a => a.UpdateSkills(TheCanonical.CoachId, request.Skills)).ReturnsAsync(false);
-        var response = await controller.UpdateSkills(-1, request);
+        var response = await controller.UpdateSkills(TheCanonical.BadId, request);
         Assert.IsType<NotFoundResult>(response);
     }
 }

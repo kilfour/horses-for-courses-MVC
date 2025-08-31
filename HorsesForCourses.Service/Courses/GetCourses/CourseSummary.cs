@@ -1,7 +1,7 @@
 namespace HorsesForCourses.Service.Courses.GetCourses;
 
 public record CourseSummary(
-    int Id,
+    IdPrimitive Id,
     string Name,
     DateOnly StartDate,
     DateOnly EndDate,

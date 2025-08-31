@@ -27,14 +27,14 @@ public class A_AssignCoachApi : CoursesApiControllerTests
     [Fact]
     public async Task UpdateTimeSlots_Returns_Not_Found_If_No_Course()
     {
-        var response = await controller.AssignCoach(-1, new AssignCoachRequest(TheCanonical.CoachId));
+        var response = await controller.AssignCoach(TheCanonical.BadId, new AssignCoachRequest(TheCanonical.CoachId));
         Assert.IsType<NotFoundResult>(response);
     }
 
     [Fact]
     public async Task UpdateTimeSlots_Returns_Not_Found_If_No_Coach()
     {
-        var response = await controller.AssignCoach(1, new AssignCoachRequest(-1));
+        var response = await controller.AssignCoach(TheCanonical.CourseId, new AssignCoachRequest(TheCanonical.BadId));
         Assert.IsType<NotFoundResult>(response);
     }
 }

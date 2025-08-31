@@ -16,7 +16,8 @@ public class D_AssignCoachData : DatabaseTests
     {
         course = TheCanonical.Course();
         coach = TheCanonical.Coach();
-        AddToDb(course, coach);
+        AddToDb(course);
+        AddToDb(coach);
     }
 
     private void Act()

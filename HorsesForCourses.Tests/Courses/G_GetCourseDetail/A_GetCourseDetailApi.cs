@@ -26,5 +26,5 @@ public class A_GetCourseDetailApi : CoursesApiControllerTests
 
     [Fact]
     public async Task GetCourseDetailReturns_NotFound_If_Course_Not_Present()
-        => Assert.IsType<NotFoundResult>(await controller.GetCourseDetail(-1));
+        => Assert.IsType<NotFoundResult>(await controller.GetCourseDetail(TheCanonical.BadId));
 }

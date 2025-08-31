@@ -13,7 +13,7 @@ public class CoachesController(ICoachesService Service) : WebApiController
         => Ok(await Service.RegisterCoach(request.Name, request.Email));
 
     [HttpPost("{id}/skills")]
-    public async Task<IActionResult> UpdateSkills(int id, UpdateSkillsRequest request)
+    public async Task<IActionResult> UpdateSkills(IdPrimitive id, UpdateSkillsRequest request)
         => NoContentNotFoundIfFalse(await Service.UpdateSkills(id, request.Skills));
 
     [HttpGet]
@@ -21,6 +21,6 @@ public class CoachesController(ICoachesService Service) : WebApiController
         => Ok(await Service.GetCoaches(page, pageSize));
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetCoachDetail(int id)
+    public async Task<IActionResult> GetCoachDetail(IdPrimitive id)
         => OkNotFoundIfNull(await Service.GetCoachDetail(id));
 }

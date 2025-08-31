@@ -26,7 +26,7 @@ public class A_UpdateRequiredSkillsApi : CoursesApiControllerTests
     [Fact]
     public async Task UpdateRequiredSkills_Returns_Not_Found_If_No_Course()
     {
-        var response = await controller.UpdateRequiredSkills(-1, TheCanonical.Skills);
+        var response = await controller.UpdateRequiredSkills(TheCanonical.BadId, TheCanonical.Skills);
         Assert.IsType<NotFoundResult>(response);
     }
 }

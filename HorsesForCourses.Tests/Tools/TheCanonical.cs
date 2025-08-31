@@ -16,7 +16,10 @@ namespace HorsesForCourses.Tests.Tools;
 
 public static class TheCanonical
 {
-    public const int CoachId = 99;
+    public static IdPrimitive BadId = -1;//Guid.Empty; // -1;
+
+
+    public static readonly IdPrimitive CoachId = 99; //new("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"); // 99
     public const string CoachName = "The Coach";
     public const string CoachEmail = "coach@coaching.mcCoach";
     public static Coach Coach()
@@ -32,7 +35,7 @@ public static class TheCanonical
     public readonly static HashSet<Skill> HardSkills = [Skill.From("one"), Skill.From("two")];
     public readonly static List<Skill> HardSkillsList = [Skill.From("one"), Skill.From("two")];
 
-    public const int CourseId = 999;
+    public static readonly IdPrimitive CourseId = 999; //new("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");//999;
     public const string CourseName = "The Course";
     public static readonly DateOnly CourseStart = 1.January(2025);
     public static readonly DateOnly CourseEnd = 31.January(2025);

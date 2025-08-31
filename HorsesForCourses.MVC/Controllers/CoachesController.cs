@@ -19,11 +19,11 @@ public class CoachesController(ICoachesService Service) : MvcController
             .OnException(() => View(new RegisterCoachViewModel(name, email)));
 
     [HttpGet("UpdateSkills/{id}")]
-    public async Task<IActionResult> UpdateSkills(int id)
+    public async Task<IActionResult> UpdateSkills(IdPrimitive id)
         => ViewOrNotFoundIfNull(await Service.GetCoachDetail(id), a => new UpdateSkillsViewModel(a!));
 
     [HttpPost("UpdateSkills/{id}"), ValidateAntiForgeryToken]
-    public async Task<IActionResult> UpdateSkills(int id, List<string> skills)
+    public async Task<IActionResult> UpdateSkills(IdPrimitive id, List<string> skills)
         => await This(async () => await Service.UpdateSkills(id, skills))
             .OnSuccess(() => RedirectToAction(nameof(Index)))
             .OnException(async () =>
@@ -34,7 +34,7 @@ public class CoachesController(ICoachesService Service) : MvcController
         => View(await Service.GetCoaches(page, pageSize));
 
     [HttpGet("Coaches/{id}")]
-    public async Task<IActionResult> GetCoachDetail(int id)
+    public async Task<IActionResult> GetCoachDetail(IdPrimitive id)
         => ViewOrNotFoundIfNull(await Service.GetCoachDetail(id), a => a);
 }
 

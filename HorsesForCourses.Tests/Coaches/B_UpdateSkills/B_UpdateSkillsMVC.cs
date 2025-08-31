@@ -41,7 +41,7 @@ public class B_UpdateSkillsMVC : CoachesMVCControllerTests
     public async Task UpdateSkills_POST_Returns_View_On_Exception()
     {
         service.Setup(a => a.GetCoachDetail(TheCanonical.CoachId)).ReturnsAsync(TheCanonical.CoachDetail());
-        service.Setup(a => a.UpdateSkills(It.IsAny<int>(), It.IsAny<List<string>>()))
+        service.Setup(a => a.UpdateSkills(It.IsAny<IdPrimitive>(), It.IsAny<List<string>>()))
             .ThrowsAsync(new CoachAlreadyHasSkill("one"));
         var result = await controller.UpdateSkills(TheCanonical.CoachId, ["one", "one"]);
         var view = Assert.IsType<ViewResult>(result);
@@ -54,9 +54,9 @@ public class B_UpdateSkillsMVC : CoachesMVCControllerTests
     [Fact]
     public async Task UpdateSkills_POST_Returns_View_With_ModelError_On_Exception()
     {
-        service.Setup(a => a.UpdateSkills(It.IsAny<int>(), It.IsAny<List<string>>()))
+        service.Setup(a => a.UpdateSkills(It.IsAny<IdPrimitive>(), It.IsAny<List<string>>()))
             .ThrowsAsync(new CoachAlreadyHasSkill("one"));
-        var result = await controller.UpdateSkills(-1, ["one", "one"]);
+        var result = await controller.UpdateSkills(TheCanonical.BadId, ["one", "one"]);
         Assert.False(controller.ModelState.IsValid);
         Assert.Contains(controller.ModelState, kvp => kvp.Value!.Errors.Any(e => e.ErrorMessage == "Coach already has skill."));
     }

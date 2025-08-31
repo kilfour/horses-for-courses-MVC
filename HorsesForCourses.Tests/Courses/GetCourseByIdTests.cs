@@ -8,17 +8,17 @@ namespace HorsesForCourses.Tests.Courses;
 
 public class GetCourseByIdTests : DatabaseTests
 {
-    private const int ExpectedIdAssignedByDb = 1;
+    private IdPrimitive IdAssignedByDb;
     private async Task<Course?> Act()
-        => await new GetCourseById(GetDbContext()).Load(ExpectedIdAssignedByDb);
+        => await new GetCourseById(GetDbContext()).Load(IdAssignedByDb);
 
     [Fact]
     public async Task LoadIt()
     {
-        AddToDb(TheCanonical.Course());
+        IdAssignedByDb = AddToDb(TheCanonical.Course());
         var result = await Act();
         Assert.NotNull(result);
-        Assert.Equal(ExpectedIdAssignedByDb, result.Id.Value);
+        Assert.Equal(IdAssignedByDb, result.Id.Value);
         Assert.Equal(TheCanonical.CourseName, result.Name.Value);
     }
 

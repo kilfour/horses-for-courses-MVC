@@ -7,14 +7,14 @@ namespace HorsesForCourses.Service.Courses.GetCourseDetail;
 
 public interface IGetCourseDetail
 {
-    Task<CourseDetail?> One(int id);
+    Task<CourseDetail?> One(IdPrimitive id);
 }
 
 public class GetCourseDetail(AppDbContext dbContext) : IGetCourseDetail
 {
     private readonly AppDbContext dbContext = dbContext;
 
-    public async Task<CourseDetail?> One(int id)
+    public async Task<CourseDetail?> One(IdPrimitive id)
     {
         var courseId = Id<Course>.From(id);
         return await dbContext.Courses

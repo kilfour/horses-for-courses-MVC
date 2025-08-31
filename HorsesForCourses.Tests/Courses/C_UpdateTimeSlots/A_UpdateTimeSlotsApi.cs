@@ -37,7 +37,7 @@ public class A_UpdateTimeSlotsApi : CoursesApiControllerTests
     [Fact]
     public async Task UpdateTimeSlots_Returns_Not_Found_If_No_Course()
     {
-        var response = await controller.UpdateTimeSlots(-1, request);
+        var response = await controller.UpdateTimeSlots(TheCanonical.BadId, request);
         Assert.IsType<NotFoundResult>(response);
     }
 }

@@ -5,7 +5,7 @@ namespace HorsesForCourses.Service.Courses.GetCourseDetail;
 public record CourseDetail // Reused too much, check IsConfirmed
 {
     public record TimeSlotInfo(CourseDay Day, int Start, int End);
-    public int Id { get; set; }
+    public IdPrimitive Id { get; set; }
     public string Name { get; set; } = string.Empty;
     public DateOnly Start { get; set; }
     public DateOnly End { get; set; }
