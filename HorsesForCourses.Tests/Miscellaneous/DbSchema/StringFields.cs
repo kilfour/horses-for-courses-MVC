@@ -1,6 +1,5 @@
 using HorsesForCourses.Service.Warehouse;
 using Microsoft.EntityFrameworkCore;
-using QuickPulse.Show;
 
 namespace HorsesForCourses.Tests.Miscellaneous.DbSchema;
 
