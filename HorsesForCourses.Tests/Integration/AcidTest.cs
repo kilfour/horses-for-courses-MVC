@@ -82,9 +82,7 @@ public class AcidTest
         , "Flower Arranging"];
 
     private static Coach LoadCoach(DbContextOptions<AppDbContext> options, IdPrimitive id)
-    {
-        return GetDbContext(options).Coaches.Where(a => a.Id == Id<Coach>.From(id)).Single();
-    }
+        => GetDbContext(options).Coaches.Where(a => a.Id == Id<Coach>.From(id)).Single();
 
     private static DbContextOptions<AppDbContext> GetDbContextOptions()
     {
