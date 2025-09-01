@@ -10,40 +10,41 @@ namespace HorsesForCourses.Core.Domain.Courses;
 public class Course : DomainEntity<Course>
 {
     public CourseName Name { get; init; } = CourseName.Empty;
-    public DateOnly Start { get; init; }
-    public DateOnly End { get; init; }
-    public List<TimeSlot> TimeSlots { get; private set; } = [];
-    public List<Skill> RequiredSkills { get; init; } = [];
+
+    public Period Period { get; init; } = Period.Empty;
+
+    public IReadOnlyCollection<TimeSlot> TimeSlots => timeSlots.AsReadOnly();
+    private List<TimeSlot> timeSlots = [];
+
+    public IReadOnlyCollection<Skill> RequiredSkills => requiredSkills.AsReadOnly();
+    private readonly List<Skill> requiredSkills = [];
+
     public bool IsConfirmed { get; private set; }
     public Coach? AssignedCoach { get; private set; }
 
     private Course() { /*** EFC Was Here ****/ }
     public Course(string name, DateOnly start, DateOnly end)
     {
-        if (start > end)
-            throw new CourseEndDateCanNotBeBeforeStartDate();
         Name = new CourseName(name);
-        Start = start;
-        End = end;
+        Period = Period.From(start, end);
     }
 
     bool NotAllowedIfAlreadyConfirmed()
         => IsConfirmed ? throw new CourseAlreadyConfirmed() : true;
 
-    public virtual Course UpdateRequiredSkills(IEnumerable<string> skills)
+    public virtual Course UpdateRequiredSkills(IEnumerable<string> newSkills)
     {
         NotAllowedIfAlreadyConfirmed();
-        NotAllowedWhenThereAreDuplicateSkills(skills);
-        return OverWriteRequiredSkills(skills);
+        NotAllowedWhenThereAreDuplicateSkills();
+        return OverWriteRequiredSkills();
         // ------------------------------------------------------------------------------------------------
         // --
-        static bool NotAllowedWhenThereAreDuplicateSkills(IEnumerable<string> skills)
-            => skills.NoDuplicatesAllowed(a => new CourseAlreadyHasSkill(string.Join(",", a)));
-        Course OverWriteRequiredSkills(IEnumerable<string> skills)
+        bool NotAllowedWhenThereAreDuplicateSkills()
+            => newSkills.NoDuplicatesAllowed(a => new CourseAlreadyHasSkill(string.Join(",", a)));
+        Course OverWriteRequiredSkills()
         {
-            var newSkills = skills.Select(Skill.From).ToList();
-            RequiredSkills.Clear();
-            RequiredSkills.AddRange(newSkills);
+            requiredSkills.Clear();
+            requiredSkills.AddRange(newSkills.Select(Skill.From));
             return this;
         }
         // ------------------------------------------------------------------------------------------------
@@ -51,15 +52,15 @@ public class Course : DomainEntity<Course>
 
     public virtual Course UpdateTimeSlots<T>(IEnumerable<T> timeSlotInfo, Func<T, (CourseDay Day, int Start, int End)> getTimeSlot)
     {
-        var timeSlots = TimeSlot.EnumerableFrom(timeSlotInfo, getTimeSlot);
+        var newTimeSlots = TimeSlot.EnumerableFrom(timeSlotInfo, getTimeSlot);
         NotAllowedIfAlreadyConfirmed();
-        NotAllowedWhenTimeSlotsOverlap(timeSlots);
-        return OverWriteTimeSlots(timeSlots);
+        NotAllowedWhenTimeSlotsOverlap();
+        return OverWriteTimeSlots();
         // ------------------------------------------------------------------------------------------------
         // --
-        bool NotAllowedWhenTimeSlotsOverlap(IEnumerable<TimeSlot> timeSlots)
-            => TimeSlot.HasOverlap(timeSlots) ? throw new OverlappingTimeSlots() : true;
-        Course OverWriteTimeSlots(IEnumerable<TimeSlot> timeSlots) { TimeSlots = [.. timeSlots]; return this; }
+        bool NotAllowedWhenTimeSlotsOverlap()
+            => TimeSlot.HasOverlap(newTimeSlots) ? throw new OverlappingTimeSlots() : true;
+        Course OverWriteTimeSlots() { this.timeSlots = [.. newTimeSlots]; return this; }
         // ------------------------------------------------------------------------------------------------
     }
 

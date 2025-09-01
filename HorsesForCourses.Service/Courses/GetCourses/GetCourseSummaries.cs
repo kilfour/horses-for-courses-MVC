@@ -21,8 +21,8 @@ public class GetCourseSummaries(AppDbContext dbContext) : IGetCourseSummaries
             .Select(p => new CourseSummary(
                 p.Id.Value,
                 p.Name.Value,
-                p.Start,
-                p.End,
+                p.Period.Start,
+                p.Period.End,
                 p.TimeSlots.Any(),
                 p.AssignedCoach != null))
             .ToPagedResultAsync(request);

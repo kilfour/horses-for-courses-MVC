@@ -31,11 +31,15 @@ public class CourseDataConfiguration : IEntityTypeConfiguration<Course>
                 .HasMaxLength(DefaultString.MaxLength);
         });
 
-        course.Property(c => c.Start)
-            .IsRequired();
 
-        course.Property(c => c.End)
-            .IsRequired();
+        course.OwnsOne(c => c.Period, period =>
+        {
+            period.Property(c => c.Start)
+                .IsRequired();
+
+            period.Property(c => c.End)
+                .IsRequired();
+        });
 
         course.Property(c => c.IsConfirmed)
             .IsRequired();

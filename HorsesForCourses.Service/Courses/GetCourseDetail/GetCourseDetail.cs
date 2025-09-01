@@ -24,8 +24,8 @@ public class GetCourseDetail(AppDbContext dbContext) : IGetCourseDetail
             {
                 Id = a.Id.Value,
                 Name = a.Name.Value,
-                Start = a.Start,
-                End = a.End,
+                Start = a.Period.Start,
+                End = a.Period.End,
                 Skills = a.RequiredSkills.Select(b => b.Value),
                 TimeSlots = a.TimeSlots.Select(b => new CourseDetail.TimeSlotInfo(b.Day, b.Start.Value, b.End.Value)),
                 IsConfirmed = a.IsConfirmed,

@@ -26,8 +26,8 @@ public class CoachCalender(Coach coach)
 
     private static bool CoursesOverlap(Course courseOne, Course courseTwo)
     {
-        var start = Max(courseOne.Start, courseTwo.Start);
-        var end = Min(courseOne.End, courseTwo.End);
+        var start = Max(courseOne.Period.Start, courseTwo.Period.Start);
+        var end = Min(courseOne.Period.End, courseTwo.Period.End);
         if (end < start) return false;
 
         var courseOneByDay = GetTimeSlotsByDay(courseOne);

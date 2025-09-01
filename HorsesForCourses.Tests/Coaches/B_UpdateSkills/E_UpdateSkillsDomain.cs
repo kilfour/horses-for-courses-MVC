@@ -22,7 +22,7 @@ public class E_UpdateSkillsDomain : CoachDomainTests
     public void UpdateSkills_WithValidData_ShouldSucceed()
     {
         Entity.UpdateSkills(TheCanonical.Skills);
-        Assert.Equal(TheCanonical.HardSkills, Entity.Skills);
+        Assert.Equal(TheCanonical.HardSkills.OrderBy(a => a.Value), Entity.Skills.OrderBy(a => a.Value));
     }
 
     [Fact]
