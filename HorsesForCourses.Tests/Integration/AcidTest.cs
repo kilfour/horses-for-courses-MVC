@@ -81,7 +81,6 @@ public class AcidTest
         , "Kung Fu"
         , "Flower Arranging"];
 
-
     private static Coach LoadCoach(DbContextOptions<AppDbContext> options, IdPrimitive id)
     {
         return GetDbContext(options).Coaches.Where(a => a.Id == Id<Coach>.From(id)).Single();
@@ -121,8 +120,14 @@ public class AcidTest
         from timeslot in Fuzz.Constant(TimeSlot.From(day, start, end))
         select timeslot;
 
-    private readonly static string[] CourseSuffixes =
-        ["For Dummies", "Basic Techiques", "Advanced", "101", "For Professionals", "The Ultimate", "What You Always Wanted to Know"];
+    private readonly static string[] CourseSuffixes = [
+        "For Dummies",
+        "Basic Techiques",
+        "Advanced",
+        "101",
+        "For Professionals",
+        "The Ultimate",
+        "What You Always Wanted to Know"];
 
     private static readonly Generator<Course> CourseGenerator =
          from start in Fuzz.Int(1, 31)
