@@ -13,77 +13,72 @@ using Microsoft.EntityFrameworkCore;
 using QuickAcid;
 using QuickFuzzr;
 using QuickFuzzr.Data;
+using QuickFuzzr.UnderTheHood;
+using QuickPulse.Arteries;
 
 namespace HorsesForCourses.Tests.Integration;
 
 public record AcidTestContext(List<Id<Coach>> CoachIds);
 
+
+
 public class AcidTest
 {
-    [Fact(Skip = "integration")]
-    public void RegisterCoach()
+    [Fact(Skip = "Explicit")]
+    public void TheTest()
     {
         var script =
             from options in "Session Factory".Stashed(GetDbContextOptions)
+            from coachesInDb in "Session Factory".Stashed(() => new Dictionary<string, int>())
             from coachService in Script.Execute(() => GetCoachesService(options))
             from _ in Script.Choose(
-                from coachId in "Register Coach".Act(() => coachService
-                    .RegisterCoach(TheCanonical.CoachName, TheCanonical.CoachEmail)
-                    .Await())
-                from reload in Script.Execute(() => LoadCoach(options, coachId))
-                from registered in "Coach Is Registered".Spec(() => reload != null)
-                from _ in "Coach Name Registered".Spec(() => reload.Name.Value == TheCanonical.CoachName)
-                from __ in "Coach Email Registered".Spec(() => reload.Email.Value == TheCanonical.CoachEmail)
-                select Acid.Test
+                RegisterCoach(options, coachService, coachesInDb),
+                UpdateSkills(options, coachService, coachesInDb)
             )
             select Acid.Test;
-        QState.Run(script).With(5.Runs()).And(5.ExecutionsPerRun());
+        QState.Run(script).With(5.Runs()).And(10.ExecutionsPerRun());
     }
 
-    public record RegisterCoachRequest(string Name, string Email);
-
-    [Fact(Skip = "integration")]
-    public void RegisterCoachConcurrent()
-    {
-        var script =
-
-            from needler in "Needler".Stashed(() => new Needler<RegisterCoachRequest, IdPrimitive>())
-
-            from options in "Session Factory".Stashed(GetDbContextOptions)
-            from coachService in Script.Execute(() => GetCoachesService(options))
-
-            from _ in Script.Choose(
-                // Register Coach 
-                from name in "Coach Name".Input(Fuzz.ChooseFrom(DataLists.FirstNames).Unique("name"))
-                from email in "Coach Email".Input(Fuzz.Constant($"{name}@coaches.com"))
-                from request in Script.Execute(() => new RegisterCoachRequest(name, email))
-                from sleepy in "sleep time".Input(Fuzz.Int())
-                from task in "Register Coach".Act(() =>
-                {
-                    coachService.RegisterCoach(name, email)
-                        .Attach(needler, name, request, sleepy);
-                })
-                select Acid.Test,
-
-                // Delayed Verify
-                //   Todo: unify asserts in one Spec or something and clear needler data after check 
-                from registered in "Coach Is Registered".SpecIf(
-                    () => needler.HasDataWaiting,
-                    () => needler.Check((a, b) => LoadCoach(options, b) != null))
-                from withEmail in "Coach Email Registered".SpecIf(
-                    () => needler.HasDataWaiting,
-                    () => needler.Check(a => a.Email, a => LoadCoach(options, a).Email.Value))
-                select Acid.Test)
-
+    private static QAcidScript<Acid> RegisterCoach(
+        DbContextOptions<AppDbContext> options,
+        CoachesService coachService,
+        Dictionary<string, int> coachesInDb) =>
+            from name in "Coach Name".Input(Fuzz.ChooseFrom(DataLists.FirstNames).Unique("name"))
+            from email in "Coach Email".Input(Fuzz.Constant($"{name}@coaches.com"))
+            from coachId in "Register Coach".Act(() =>
+            {
+                var id = coachService.RegisterCoach(name, email).Await();
+                coachesInDb[name] = id;
+                return id;
+            })
+            from reload in Script.Execute(() => LoadCoach(options, coachId))
+            from registered in "Coach Is Registered".Spec(() => reload != null)
+            from _ in "Coach Name Registered".Spec(() => reload.Name.Value == TheCanonical.CoachName)
+            from __ in "Coach Email Registered".Spec(() => reload.Email.Value == TheCanonical.CoachEmail)
             select Acid.Test;
 
-        var needleScript =
+    private static QAcidScript<Acid> UpdateSkills(
+        DbContextOptions<AppDbContext> options,
+        CoachesService coachService,
+        Dictionary<string, int> coachesInDb) =>
+            from skills in "coach skills".Input(Fuzz.ChooseFromThese(Skills).Many(1, 5).Unique(Guid.NewGuid()))
+            from coachName in "coach name".Input(Fuzz.ChooseFromWithDefaultWhenEmpty(coachesInDb.Keys))
+            from success in "Update Skills".ActIf(
+                () => coachesInDb.Count != 0,
+                () => coachService.UpdateSkills(coachesInDb[coachName], skills).Await())
+            from reload in Script.Execute(() => LoadCoach(options, coachesInDb[coachName]))
+            from registered in "Coach Is Registered".Spec(() => reload != null)
+            from _ in "Coach Name Registered".Spec(() => reload.Name.Value == TheCanonical.CoachName)
+            from __ in "Coach Email Registered".Spec(() => reload.Email.Value == TheCanonical.CoachEmail)
+            select Acid.Test;
 
-        QState.Run(script)
-            .Options(a => a with { FileAs = "RegisterCoach" })
-            .With(50.Runs())
-            .And(20.ExecutionsPerRun());
-    }
+    private readonly static string[] Skills =
+        [ "C#"
+        , "Cookery"
+        , "Agile Dev"
+        , "Kung Fu"
+        , "Flower Arranging"];
+
 
     private static Coach LoadCoach(DbContextOptions<AppDbContext> options, IdPrimitive id)
     {
