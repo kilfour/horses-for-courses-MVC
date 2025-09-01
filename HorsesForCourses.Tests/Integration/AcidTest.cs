@@ -1,5 +1,7 @@
 using HorsesForCourses.Core.Abstractions;
 using HorsesForCourses.Core.Domain.Coaches;
+using HorsesForCourses.Core.Domain.Courses;
+using HorsesForCourses.Core.Domain.Courses.TimeSlots;
 using HorsesForCourses.Service.Coaches;
 using HorsesForCourses.Service.Coaches.GetCoachById;
 using HorsesForCourses.Service.Coaches.GetCoachDetail;
@@ -14,7 +16,7 @@ using QuickAcid;
 using QuickFuzzr;
 using QuickFuzzr.Data;
 using QuickFuzzr.UnderTheHood;
-using QuickPulse.Arteries;
+using WibblyWobbly;
 
 namespace HorsesForCourses.Tests.Integration;
 
@@ -111,4 +113,30 @@ public class AcidTest
             getCoachDetail);
         return new CoachesService(repository);
     }
+
+    private static Generator<TimeSlot> TimeslotGeneratorFor(int key) =>
+        from start in Fuzz.Int(9, 17)
+        from end in Fuzz.Int(start + 1, 18)
+        from day in Fuzz.Enum<CourseDay>()
+        from timeslot in Fuzz.Constant(TimeSlot.From(day, start, end))
+        select timeslot;
+
+    private readonly static string[] CourseSuffixes =
+        ["For Dummies", "Basic Techiques", "Advanced", "101", "For Professionals", "The Ultimate", "What You Always Wanted to Know"];
+
+    private static readonly Generator<Course> CourseGenerator =
+         from start in Fuzz.Int(1, 31)
+         let startDate = start.January(2025)
+         from end in Fuzz.Int(start + 1, 32)
+         let endDate = end.January(2025)
+         from skill in Fuzz.ChooseFromThese(Skills)
+         from namePartTwo in Fuzz.ChooseFromThese(CourseSuffixes)
+         let name = $"{skill}, {namePartTwo}."
+         from key in Fuzz.Int().Unique("weekday-key")
+         from timeslots in TimeslotGeneratorFor(key).Many(1, 5)
+         from course in Fuzz.Constant(new Course(name, startDate, endDate))
+            .Apply(a => a.UpdateRequiredSkills([skill]))
+            .Apply(a => a.UpdateTimeSlots(timeslots.ToList(), b => (b.Day, b.Start.Value, b.End.Value)))
+            .Apply(a => a.Confirm())
+         select course;
 }
