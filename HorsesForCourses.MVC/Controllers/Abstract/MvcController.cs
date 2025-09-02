@@ -29,7 +29,7 @@ public abstract class MvcController : Controller
             }
             catch (DomainException ex)
             {
-                Controller.ModelState.AddModelError(string.Empty, ex.MessageFromType());
+                Controller.ModelState.AddModelError(string.Empty, ex.MessageFromType);
                 return await onException;
             }
         }

@@ -23,9 +23,9 @@ public interface ICoursesService
 
 public class CoursesService(CoursesRepository Repository) : ICoursesService
 {
-    public async Task<IdPrimitive> CreateCourse(string name, DateOnly startDate, DateOnly endDate)
+    public async Task<IdPrimitive> CreateCourse(string name, DateOnly start, DateOnly end)
     {
-        var course = new Course(name, startDate, endDate);
+        var course = new Course(name, start, end);
         await Repository.Supervisor.Enlist(course);
         await Repository.Supervisor.Ship();
         return course.Id.Value;

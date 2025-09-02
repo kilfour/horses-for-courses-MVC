@@ -7,6 +7,7 @@ using HorsesForCourses.Service.Coaches.GetCoachById;
 using HorsesForCourses.Service.Coaches.GetCoachDetail;
 using HorsesForCourses.Service.Coaches.GetCoaches;
 using HorsesForCourses.Service.Coaches.Repository;
+using HorsesForCourses.Service.Courses;
 using HorsesForCourses.Service.Warehouse;
 using HorsesForCourses.Tests.Tools;
 using Microsoft.Data.Sqlite;
@@ -16,32 +17,61 @@ using QuickAcid;
 using QuickFuzzr;
 using QuickFuzzr.Data;
 using QuickFuzzr.UnderTheHood;
+using QuickPulse.Show;
 using WibblyWobbly;
 
 namespace HorsesForCourses.Tests.Integration;
 
-public record AcidTestContext(List<Id<Coach>> CoachIds);
-
-
+public record CoachesIn(Dictionary<string, int> Db)
+{
+    public int Add(string key, int id)
+    {
+        Db[key] = id;
+        return id;
+    }
+}
 
 public class AcidTest
 {
-    [Fact(Skip = "Explicit")]
+    [Fact]
     public void TheTest()
     {
         var script =
-            from options in "Session Factory".Stashed(GetDbContextOptions)
-            from coachesInDb in "Session Factory".Stashed(() => new Dictionary<string, int>())
+            from options in Script.Stashed(GetDbContextOptions)
+            from coachesInDb in Script.Stashed(() => new CoachesIn([]))
             from coachService in Script.Execute(() => GetCoachesService(options))
             from _ in Script.Choose(
                 RegisterCoach(options, coachService, coachesInDb),
-                UpdateSkills(options, coachService, coachesInDb)
-            )
+                UpdateSkills(options, coachService, coachesInDb))
             select Acid.Test;
-        QState.Run(script).With(5.Runs()).And(10.ExecutionsPerRun());
+
+        QState.Run(script, 103232334)
+            .Options(a => a with { FileAs = "Acid", Verbose = true })
+            .With(5.Runs())
+            .And(10.ExecutionsPerRun());
     }
 
+    public record CoachName : Input;
+    public record CoachEmail : Input;
+    public record RegisterTheCoach : Act;
+    public record CoachIsRegistered : Spec;
+    public record CoachNameCheck : Spec;
+    public record CoachEmailCheck : Spec;
+
     private static QAcidScript<Acid> RegisterCoach(
+        DbContextOptions<AppDbContext> options,
+        CoachesService coachService,
+        CoachesIn coachesIn) =>
+            from name in Script.Input<CoachName>().From(Fuzz.ChooseFrom(DataLists.FirstNames).Unique("name"))
+            from email in Script.Input<CoachEmail>().From(Fuzz.Constant($"{name}@coaches.com"))
+            from coachId in Script.Act<RegisterTheCoach>()
+                .Do(() => coachesIn.Add(name, coachService.RegisterCoach(name, email).Await()))
+            from reload in Script.Execute(() => LoadCoach(options, coachId))
+            from _ in Script.Spec<CoachIsRegistered>(() => reload != null)
+            from __ in Script.Spec<CoachNameCheck>(() => reload.Name.Value == name)
+            from ___ in Script.Spec<CoachEmailCheck>(() => reload.Email.Value == email)
+            select Acid.Test;
+    private static QAcidScript<Acid> RegisterCoachOld(
         DbContextOptions<AppDbContext> options,
         CoachesService coachService,
         Dictionary<string, int> coachesInDb) =>
@@ -55,22 +85,58 @@ public class AcidTest
             })
             from reload in Script.Execute(() => LoadCoach(options, coachId))
             from registered in "Coach Is Registered".Spec(() => reload != null)
-            from _ in "Coach Name Registered".Spec(() => reload.Name.Value == TheCanonical.CoachName)
-            from __ in "Coach Email Registered".Spec(() => reload.Email.Value == TheCanonical.CoachEmail)
+            from _ in "Coach Name Registered".Spec(() => reload.Name.Value == name)
+            from __ in "Coach Email Registered".Spec(() => reload.Email.Value == email)
             select Acid.Test;
-
     private static QAcidScript<Acid> UpdateSkills(
         DbContextOptions<AppDbContext> options,
         CoachesService coachService,
-        Dictionary<string, int> coachesInDb) =>
-            from skills in "coach skills".Input(Fuzz.ChooseFromThese(Skills).Many(1, 5).Unique(Guid.NewGuid()))
-            from coachName in "coach name".Input(Fuzz.ChooseFromWithDefaultWhenEmpty(coachesInDb.Keys))
+        CoachesIn coachesIn) =>
+            from coachName in "coach name".Input(Fuzz.ChooseFromWithDefaultWhenEmpty(coachesIn.Db.Keys))
+            from skills in "coach skills".Input(Fuzz.ChooseFromThese(Skills).Unique(Guid.NewGuid()).Many(1, 5))
             from success in "Update Skills".ActIf(
-                () => coachesInDb.Count != 0,
-                () => coachService.UpdateSkills(coachesInDb[coachName], skills).Await())
-            from reload in Script.Execute(() => LoadCoach(options, coachesInDb[coachName]))
-            from registered in "Coach Is Registered".Spec(() => reload != null)
-            from _ in "Coach Name Registered".Spec(() => reload.Name.Value == TheCanonical.CoachName)
+                () => coachesIn.Db.Count != 0,
+                () => coachService.UpdateSkills(coachesIn.Db[coachName], skills).Await())
+            from reload in Script.ExecuteIf(
+                () => coachesIn.Db.Count != 0,
+                () => LoadCoach(options, coachesIn.Db[coachName]))
+            from _ in "Coach Is Registered".SpecIf(
+                () => coachesIn.Db.Count != 0,
+                () => reload != null)
+                // from _t in "Db Skills".TraceIf(
+                //     () => coachesIn.Db.Count != 0,
+                //     () => Introduce.This(reload.Skills.Select(a => a.Value).Order(), false))
+                // from __t in "Input Skills".TraceIf(
+                //     () => coachesIn.Db.Count != 0,
+                //     () => Introduce.This(skills.Order(), false))
+            from __ in "Coach Skills Updated".SpecIf(
+                () => coachesIn.Db.Count != 0,
+                () => reload.Skills.Select(a => a.Value).Order().SequenceEqual(skills.Order()))
+
+            select Acid.Test;
+
+    private static QAcidScript<Acid> CreateCourse(
+        DbContextOptions<AppDbContext> options,
+        CoursesService coursesService,
+        Dictionary<string, int> coursesInDb) =>
+            from name in "Course Name".Input(
+                from courseSkill in Fuzz.ChooseFromThese(Skills)
+                from suffix in Fuzz.ChooseFromThese(CourseSuffixes)
+                from complete in Fuzz.Constant($"{courseSkill}, {suffix}.").Unique("course-names")
+                select complete)
+            from startDay in "start day".Input(Fuzz.Int(1, 31))
+            from start in Script.Execute(() => startDay.January(2025))
+            from endDay in "start day".Input(Fuzz.Int(startDay + 1, 32))
+            from end in Script.Execute(() => endDay.January(2025))
+            from coachId in "Register Coach".Act(() =>
+            {
+                var id = coursesService.CreateCourse(name, start, end).Await();
+                coursesInDb[name] = id;
+                return id;
+            })
+            from reload in Script.Execute(() => LoadCoach(options, coachId))
+            from registered in "Course Is Registered".Spec(() => reload != null)
+            from _ in "Course Name Registered".Spec(() => reload.Name.Value == TheCanonical.CoachName)
             from __ in "Coach Email Registered".Spec(() => reload.Email.Value == TheCanonical.CoachEmail)
             select Acid.Test;
 
@@ -138,7 +204,6 @@ public class AcidTest
          from key in Fuzz.Int().Unique("weekday-key")
          from timeslots in TimeslotGeneratorFor(key).Many(1, 5)
          from course in Fuzz.Constant(new Course(name, startDate, endDate))
-            .Apply(a => a.UpdateRequiredSkills([skill]))
             .Apply(a => a.UpdateTimeSlots(timeslots.ToList(), b => (b.Day, b.Start.Value, b.End.Value)))
             .Apply(a => a.Confirm())
          select course;

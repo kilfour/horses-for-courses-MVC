@@ -21,7 +21,7 @@ public sealed class DomainExceptionMiddleware(RequestDelegate next, ILogger<Doma
                 context,
                 StatusCodes.Status400BadRequest,
                 "Domain rule violated",
-                ex.MessageFromType());
+                ex.MessageFromType);
         }
         catch (Exception ex)
         {
