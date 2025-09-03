@@ -1,17 +1,16 @@
 import { html, htmlIndexedList } from '../_utils/fabrication-facility.js';
 
 export function renderSkillList(skills, parentElement) {
-    if (skills.length === 0) skills = skills.push('');
+    function reRender() { renderSkillList(skills, parentElement); }
+    function addSkill() { skills.push(''); reRender(); }
+    function removeSkill(ix) { skills.splice(ix, 1); reRender(); }
+    if (skills.length === 0) skills.push('');
     const skillList =
         html('div',
             html('div', { class: 'imb-2 d-flex justify-content-between align-items-center' },
                 html('label', { class: 'form-label m-0' }, 'Skills'),
                 html('button', {
-                    onclick: () => {
-                        skills.push('');
-                        renderSkillList(skills, parentElement);
-                    },
-                    type: 'button',
+                    onclick: () => addSkill(),
                     class: 'btn btn-outline-secondary btn-sm'
                 }, 'Add Skill')
             ),
@@ -25,10 +24,7 @@ export function renderSkillList(skills, parentElement) {
                         placeholder: 'New skill'
                     }),
                     html('button', {
-                        onclick: () => {
-                            skills.splice(ix, 1);
-                            renderSkillList(skills, parentElement);
-                        },
+                        onclick: () => removeSkill(ix),
                         type: 'button',
                         class: 'btn btn-outline-danger remove-skill'
                     }, 'Remove')

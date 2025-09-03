@@ -2,8 +2,6 @@
 @using HorsesForCourses.MVC.Models.Coaches
 @model UpdateSkillsViewModel
 
-<script type="module" src="~/js/Coaches/update-skills.js"></script>
-
 <h2>Update Skills</h2>
 
 <form asp-action="UpdateSkills" method="post" asp-antiforgery="true">
@@ -27,8 +25,8 @@
 @section Scripts {
     <script type="module">
         import { renderSkillList } from '/js/Coaches/update-skills.js';
-        let skills = @Html.Raw(JsonSerializer.Serialize(Model.Skills));
         (function () {
+            let skills = @Html.Raw(JsonSerializer.Serialize(Model.Skills));
             renderSkillList(skills, document.getElementById('skills-list'));
         })();
     </script>
