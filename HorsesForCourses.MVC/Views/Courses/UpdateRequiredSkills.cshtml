@@ -16,25 +16,10 @@
 
 @section Scripts {
     <script type="module">
-        import { renderItemList } from '/js/Lists/item-list.js';
-        import { html } from '/js/_utils/fabrication-facility.js';
+        import { renderSkillList } from '/js/Lists/skill-list.js';
         (function () {
             let skills = @Html.Raw(JsonSerializer.Serialize(Model.Skills));
-            renderItemList(
-                'Required Skills',
-                'Add Required Skill',
-                skills,
-                () => '',
-                (skill, ix) => html('input',
-                    {
-                        type: 'text',
-                        class: 'form-control skill-input',
-                        name: `Skills[${ix}]`,
-                        value: skill,
-                        placeholder: 'New skill'
-                    }
-                ),
-                document.getElementById('skills-list'));
+            renderSkillList('Required Skills', 'Add Required Skill', skills, document.getElementById('skills-list'));
         })();
     </script>
 }

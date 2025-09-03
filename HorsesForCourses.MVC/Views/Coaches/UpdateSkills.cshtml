@@ -18,24 +18,10 @@
 
 @section Scripts {
     <script type="module">
-        import { renderStringList } from '/js/Coaches/update-skills.js';
+        import { renderSkillList } from '/js/Lists/skill-list.js';
         (function () {
             let skills = @Html.Raw(JsonSerializer.Serialize(Model.Skills));
-            renderItemList(
-                'Skills',
-                'Add Skill',
-                skills,
-                () => '',
-                (skill, ix) => html('input',
-                    {
-                        type: 'text',
-                        class: 'form-control skill-input',
-                        name: `Skills[${ix}]`,
-                        value: skill,
-                        placeholder: 'New skill'
-                    }
-                ),
-                document.getElementById('skills-list'));
+            renderSkillList('Skills', 'Add Skill', skills, document.getElementById('skills-list'));
         })();
     </script>
 }

@@ -17,52 +17,43 @@
 
 @section Scripts {
     <script type="module">
-        import { renderItemList } from '/js/Lists/item-list.js';
+        import { renderItemList, selectBy } from '/js/Lists/item-list.js';
         import { html, htmlList } from '/js/_utils/fabrication-facility.js';
+        // ---------------------------------------------------------------------
+        // -- Initialize List 'Component'
+        // ---------------------------------------------------------------------
         (function () {
-            let timeSlots = @Html.Raw(JsonSerializer.Serialize(Model.TimeSlots));
-            let days = [
-                { value: -1, label: '' },
-                { value: 0, label: 'Monday' },
-                { value: 1, label: 'Tuesday' },
-                { value: 2, label: 'Wednesday' },
-                { value: 3, label: 'Thursday' },
-                { value: 4, label: 'Friday' }
-            ];
-            let hours = [-1, 9, 10, 11, 12, 13, 14, 15, 16, 17];
-            renderItemList(
-                'Time Slots',
-                'Add Time Slot',
+            const timeSlots = @Html.Raw(JsonSerializer.Serialize(Model.TimeSlots));
+            renderItemList('Time Slots', 'Add Time Slot',
                 timeSlots,
                 () => ({ Day: -1, Start: -1, End: -1 }),
                 (timeSlot, ix) => html('div',
-                    html('select', { name: 'TimeSlots[' + ix + '].Day' },
-                        htmlList(days,
-                            a => html('option', {
-                                value: a.value,
-                                selected: (timeSlot.Day === a.value ? 'selected' : null)
-                            }, a.label)
-                        )
-                    )
-                    , html('select', { name: 'TimeSlots[' + ix + '].Start' }
-                        , htmlList(hours,
-                            a => html('option', {
-                                value: a,
-                                selected: (timeSlot.Start == a ? 'selected' : null)
-                            }, a == -1 ? '' : a)
-                        )
-                    )
-                    , html('select', { name: 'TimeSlots[' + ix + '].End' }
-                        , htmlList(hours,
-                            a => html('option', {
-                                value: a,
-                                selected: (timeSlot.End == a ? 'selected' : null)
-                            }, a == -1 ? '' : a)
-                        )
-                    )
+                    timeSlotDaySelect('TimeSlots[' + ix + '].Day', timeSlot.Day),
+                    timeSlotHourSelect('TimeSlots[' + ix + '].Start', timeSlot.Start),
+                    timeSlotHourSelect('TimeSlots[' + ix + '].End', timeSlot.End)
                 ),
                 document.getElementById('time-slots-list')
             );
         })();
+        // ---------------------------------------------------------------------
+        // -- HELPERS
+        // ---------------------------------------------------------------------
+        function timeSlotDaySelect(name, current) {
+            return selectBy(name, current, a => a.value, a => a.label,
+                [
+                    { value: -1, label: '' },
+                    { value: 0, label: 'Monday' },
+                    { value: 1, label: 'Tuesday' },
+                    { value: 2, label: 'Wednesday' },
+                    { value: 3, label: 'Thursday' },
+                    { value: 4, label: 'Friday' }
+                ]);
+        }
+
+        function timeSlotHourSelect(name, current) {
+            return selectBy(name, current, a => a, a => a == -1 ? '' : a,
+                [-1, 9, 10, 11, 12, 13, 14, 15, 16, 17]);
+        }
+
     </script>
 }

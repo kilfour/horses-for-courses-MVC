@@ -1,4 +1,4 @@
-import { html, htmlIndexedList } from '../_utils/fabrication-facility.js';
+import { html, htmlList, htmlIndexedList } from '../_utils/fabrication-facility.js';
 
 export function renderItemList(label, buttonLabel, items, newItemFunc, renderItemFunc, parentElement) {
     function reRender() { renderItemList(label, buttonLabel, items, newItemFunc, renderItemFunc, parentElement); }
@@ -25,4 +25,15 @@ export function renderItemList(label, buttonLabel, items, newItemFunc, renderIte
                 )
             ));
     parentElement.replaceChildren(skillList);
+}
+
+export function selectBy(name, current, getValue, getLabel, items) {
+    return html('select', { name: name },
+        htmlList(items,
+            item => html('option', {
+                value: getValue(item),
+                selected: (current === getValue(item) ? 'selected' : null)
+            }, getLabel(item))
+        )
+    )
 }
