@@ -8,11 +8,11 @@ namespace HorsesForCourses.MVC.Controllers;
 
 public class CoachesController(ICoachesService Service) : MvcController
 {
-    [HttpGet]
+    [HttpGet("RegisterCoach")]
     public async Task<IActionResult> RegisterCoach()
         => await Task.Run(() => View(new RegisterCoachViewModel()));
 
-    [HttpPost, ValidateAntiForgeryToken]
+    [HttpPost("RegisterCoach"), ValidateAntiForgeryToken]
     public async Task<IActionResult> RegisterCoach(string name, string email)
         => await This(async () => await Service.RegisterCoach(name, email))
             .OnSuccess(() => RedirectToAction(nameof(Index)))
