@@ -51,38 +51,14 @@ public class AcidTest
             .And(10.ExecutionsPerRun());
     }
 
-    public record CoachName : Input;
-    public record CoachEmail : Input;
-    public record RegisterTheCoach : Act;
-    public record CoachIsRegistered : Spec;
-    public record CoachNameCheck : Spec;
-    public record CoachEmailCheck : Spec;
-
     private static QAcidScript<Acid> RegisterCoach(
         DbContextOptions<AppDbContext> options,
         CoachesService coachService,
         CoachesIn coachesIn) =>
-            from name in Script.Input<CoachName>().From(Fuzz.ChooseFrom(DataLists.FirstNames).Unique("name"))
-            from email in Script.Input<CoachEmail>().From(Fuzz.Constant($"{name}@coaches.com"))
-            from coachId in Script.Act<RegisterTheCoach>()
-                .Do(() => coachesIn.Add(name, coachService.RegisterCoach(name, email).Await()))
-            from reload in Script.Execute(() => LoadCoach(options, coachId))
-            from _ in Script.Spec<CoachIsRegistered>(() => reload != null)
-            from __ in Script.Spec<CoachNameCheck>(() => reload.Name.Value == name)
-            from ___ in Script.Spec<CoachEmailCheck>(() => reload.Email.Value == email)
-            select Acid.Test;
-    private static QAcidScript<Acid> RegisterCoachOld(
-        DbContextOptions<AppDbContext> options,
-        CoachesService coachService,
-        Dictionary<string, int> coachesInDb) =>
             from name in "Coach Name".Input(Fuzz.ChooseFrom(DataLists.FirstNames).Unique("name"))
             from email in "Coach Email".Input(Fuzz.Constant($"{name}@coaches.com"))
-            from coachId in "Register Coach".Act(() =>
-            {
-                var id = coachService.RegisterCoach(name, email).Await();
-                coachesInDb[name] = id;
-                return id;
-            })
+            from coachId in "Register Coach".Act(
+                () => coachesIn.Add(name, coachService.RegisterCoach(name, email).Await()))
             from reload in Script.Execute(() => LoadCoach(options, coachId))
             from registered in "Coach Is Registered".Spec(() => reload != null)
             from _ in "Coach Name Registered".Spec(() => reload.Name.Value == name)
