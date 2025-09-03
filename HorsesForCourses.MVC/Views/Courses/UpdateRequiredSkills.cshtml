@@ -1,14 +1,12 @@
 ﻿@using System.Text.Json
-@using HorsesForCourses.MVC.Models.Coaches
-@model UpdateSkillsViewModel
+@using HorsesForCourses.MVC.Models.Courses
+@model UpdateRequiredSkillsViewModel
 
-<h2>Update Skills</h2>
+<h2>Update Required Skills</h2>
 
 <h3>@Model.Name</h3>
 
-<h4>@Model.Email</h4>
-
-<form asp-action="UpdateSkills" method="post" asp-antiforgery="true">
+<form asp-action="UpdateRequiredSkills" method="post" asp-antiforgery="true">
     <div asp-validation-summary="ModelOnly"></div>
     <div id="skills-list"></div>
     <button type="submit" class="btn btn-primary">Save</button>
@@ -18,12 +16,13 @@
 
 @section Scripts {
     <script type="module">
-        import { renderStringList } from '/js/Coaches/update-skills.js';
+        import { renderItemList } from '/js/Lists/item-list.js';
+        import { html } from '/js/_utils/fabrication-facility.js';
         (function () {
             let skills = @Html.Raw(JsonSerializer.Serialize(Model.Skills));
             renderItemList(
-                'Skills',
-                'Add Skill',
+                'Required Skills',
+                'Add Required Skill',
                 skills,
                 () => '',
                 (skill, ix) => html('input',

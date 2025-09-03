@@ -1,0 +1,68 @@
+﻿@using System.Text.Json
+@using HorsesForCourses.Core.Domain.Courses.TimeSlots
+@using HorsesForCourses.MVC.Models.Courses
+@model UpdateTimeSlotsViewModel
+
+<h2>Update Time Slots</h2>
+
+<h3>@Model.Name</h3>
+
+<form asp-action="UpdateTimeSlots" method="post" asp-antiforgery="true">
+    <div asp-validation-summary="ModelOnly"></div>
+    <div id="time-slots-list"></div>
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
+
+<a asp-action="Index" class="btn btn-secondary">Back to list</a>
+
+@section Scripts {
+    <script type="module">
+        import { renderItemList } from '/js/Lists/item-list.js';
+        import { html, htmlList } from '/js/_utils/fabrication-facility.js';
+        (function () {
+            let timeSlots = @Html.Raw(JsonSerializer.Serialize(Model.TimeSlots));
+            let days = [
+                { value: -1, label: '' },
+                { value: 0, label: 'Monday' },
+                { value: 1, label: 'Tuesday' },
+                { value: 2, label: 'Wednesday' },
+                { value: 3, label: 'Thursday' },
+                { value: 4, label: 'Friday' }
+            ];
+            let hours = [-1, 9, 10, 11, 12, 13, 14, 15, 16, 17];
+            renderItemList(
+                'Time Slots',
+                'Add Time Slot',
+                timeSlots,
+                () => ({ Day: -1, Start: -1, End: -1 }),
+                (timeSlot, ix) => html('div',
+                    html('select', { name: 'TimeSlots[' + ix + '].Day' },
+                        htmlList(days,
+                            a => html('option', {
+                                value: a.value,
+                                selected: (timeSlot.Day === a.value ? 'selected' : null)
+                            }, a.label)
+                        )
+                    )
+                    , html('select', { name: 'TimeSlots[' + ix + '].Start' }
+                        , htmlList(hours,
+                            a => html('option', {
+                                value: a,
+                                selected: (timeSlot.Start == a ? 'selected' : null)
+                            }, a == -1 ? '' : a)
+                        )
+                    )
+                    , html('select', { name: 'TimeSlots[' + ix + '].End' }
+                        , htmlList(hours,
+                            a => html('option', {
+                                value: a,
+                                selected: (timeSlot.End == a ? 'selected' : null)
+                            }, a == -1 ? '' : a)
+                        )
+                    )
+                ),
+                document.getElementById('time-slots-list')
+            );
+        })();
+    </script>
+}

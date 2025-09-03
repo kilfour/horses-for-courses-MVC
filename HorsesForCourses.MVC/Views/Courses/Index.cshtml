@@ -27,10 +27,24 @@
                 <td>@item.HasSchedule</td>
                 <td>@item.HasCoach</td>
                 <td>
-                    <a class="nav-link text-dark" asp-controller="Courses" asp-action="GetCourseDetail"
-                        asp-route-id="@item.Id">
-                        Detail
-                    </a>
+                    <div>
+                        <a class="nav-link text-dark" asp-controller="Courses" asp-action="GetCourseDetail"
+                            asp-route-id="@item.Id">
+                            Detail
+                        </a>
+                    </div>
+                    <div>
+                        <a class="nav-link text-dark" asp-controller="Courses" asp-action="UpdateRequiredSkills"
+                            asp-route-id="@item.Id">
+                            Required Skills
+                        </a>
+                    </div>
+                    <div>
+                        <a class="nav-link text-dark" asp-controller="Courses" asp-action="UpdateTimeSlots"
+                            asp-route-id="@item.Id">
+                            Time Slots
+                        </a>
+                    </div>
                 </td>
             </tr>
         }
