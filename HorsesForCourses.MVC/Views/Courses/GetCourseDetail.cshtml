@@ -1,13 +1,12 @@
-﻿@using HorsesForCourses.MVC.Models.Coaches
-@using HorsesForCourses.Service.Coaches.GetCoachDetail
-@model CoachDetail
+﻿@using HorsesForCourses.MVC.Models.Courses
+@using HorsesForCourses.Service.Courses.GetCourseDetail
+@model CourseDetail
 
-<h2>Coach Details</h2>
+<h2>Course Details</h2>
 <h3>@Model.Name</h3>
-<h4>@Model.Email</h4>
 
 <div class="mb-3">
-    <label class="form-label">Skills</label>
+    <label class="form-label">Required Skills</label>
     @if (Model.Skills.Any())
     {
         <ul class="list-group">
@@ -24,21 +23,21 @@
 </div>
 
 <div class="mb-3">
-    <label class="form-label">Courses</label>
-    @if (Model.Courses.Any())
+    <label class="form-label">TimeSlots</label>
+    @if (Model.TimeSlots.Any())
     {
         <ul class="list-group">
-            @foreach (var course in Model.Courses)
+            @foreach (var timeSlot in Model.TimeSlots)
             {
                 <li class="list-group-item">
-                    @course.Id - @course.Name
+                    @timeSlot.Day: @timeSlot.Start - @timeSlot.Start
                 </li>
             }
         </ul>
     }
     else
     {
-        <p class="text-muted">No courses assigned</p>
+        <p class="text-muted">No timeslots assigned</p>
     }
 </div>
 

@@ -34,4 +34,15 @@ public class E_CreateCourseDomain : CourseDomainTests
     public void CreateCourse_WithEndDateBeforeStartDate_ShouldThrow()
         => Assert.Throws<CourseEndDateCanNotBeBeforeStartDate>(
             () => new Course(TheCanonical.CourseName, new DateOnly(2025, 7, 31), new DateOnly(2025, 7, 1)));
+
+
+    [Fact]
+    public void CreateCourse_WithDefaultStartDate_ShouldThrow()
+        => Assert.Throws<CourseStartDateCanNotBeEmpty>(
+            () => new Course(TheCanonical.CourseName, default, new DateOnly(2025, 7, 1)));
+
+    [Fact]
+    public void CreateCourse_WithDefaultEndDate_ShouldThrow()
+        => Assert.Throws<CourseEndDateCanNotBeEmpty>(
+            () => new Course(TheCanonical.CourseName, new DateOnly(2025, 7, 31), default));
 }

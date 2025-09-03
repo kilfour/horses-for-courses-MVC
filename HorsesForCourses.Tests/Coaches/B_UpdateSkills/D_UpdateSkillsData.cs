@@ -28,6 +28,6 @@ public class D_UpdateSkillsData : DatabaseTests
     public void Skills_can_be_updated()
     {
         Act();
-        Assert.Equal(TheCanonical.HardSkills, Reload().Skills);
+        Assert.Equal(TheCanonical.HardSkillsList, Reload().Skills);
     }
 }

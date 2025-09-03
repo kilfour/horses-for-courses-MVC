@@ -16,6 +16,10 @@ public record Period
 
     public static Period From(DateOnly start, DateOnly end)
     {
+        if (start == default)
+            throw new CourseStartDateCanNotBeEmpty();
+        if (end == default)
+            throw new CourseEndDateCanNotBeEmpty();
         if (start > end)
             throw new CourseEndDateCanNotBeBeforeStartDate();
         return new Period(start, end);

@@ -9,7 +9,6 @@
 <table class="table table-striped">
     <thead>
         <tr>
-            <th>Id</th>
             <th>Name</th>
             <th>Email</th>
             <th># Courses Assigned</th>
@@ -20,7 +19,6 @@
         @foreach (var coach in Model.Items)
         {
             <tr>
-                <td>@coach.Id</td>
                 <td>@coach.Name</td>
                 <td>@coach.Email</td>
                 <td>@coach.NumberOfCoursesAssignedTo</td>

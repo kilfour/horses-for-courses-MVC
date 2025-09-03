@@ -38,11 +38,11 @@ public class AcidTest
     {
         var script =
             from options in Script.Stashed(GetDbContextOptions)
-            from coachesInDb in Script.Stashed(() => new CoachesIn([]))
+            from coachesIn in Script.Stashed(() => new CoachesIn([]))
             from coachService in Script.Execute(() => GetCoachesService(options))
-            from _ in Script.Choose(
-                RegisterCoach(options, coachService, coachesInDb),
-                UpdateSkills(options, coachService, coachesInDb))
+            from _ in Script.ChooseIf(
+                (() => true, RegisterCoach(options, coachService, coachesIn)),
+                (() => coachesIn.Db.Count != 0, UpdateSkills(options, coachService, coachesIn)))
             select Acid.Test;
 
         QState.Run(script, 103232334)
@@ -64,27 +64,19 @@ public class AcidTest
             from _ in "Coach Name Registered".Spec(() => reload.Name.Value == name)
             from __ in "Coach Email Registered".Spec(() => reload.Email.Value == email)
             select Acid.Test;
+
     private static QAcidScript<Acid> UpdateSkills(
         DbContextOptions<AppDbContext> options,
         CoachesService coachService,
         CoachesIn coachesIn) =>
-            from coachName in "coach name".Input(Fuzz.ChooseFromWithDefaultWhenEmpty(coachesIn.Db.Keys))
+            from coachName in "coach name".Input(Fuzz.ChooseFrom(coachesIn.Db.Keys))
             from skills in "coach skills".Input(Fuzz.ChooseFromThese(Skills).Unique(Guid.NewGuid()).Many(1, 5))
-            from success in "Update Skills".ActIf(
-                () => coachesIn.Db.Count != 0,
+            from success in "Update Skills".Act(
                 () => coachService.UpdateSkills(coachesIn.Db[coachName], skills).Await())
-            from reload in Script.ExecuteIf(
-                () => coachesIn.Db.Count != 0,
+            from reload in Script.Execute(
                 () => LoadCoach(options, coachesIn.Db[coachName]))
-            from _ in "Coach Is Registered".SpecIf(
-                () => coachesIn.Db.Count != 0,
+            from _ in "Coach Is Registered".Spec(
                 () => reload != null)
-                // from _t in "Db Skills".TraceIf(
-                //     () => coachesIn.Db.Count != 0,
-                //     () => Introduce.This(reload.Skills.Select(a => a.Value).Order(), false))
-                // from __t in "Input Skills".TraceIf(
-                //     () => coachesIn.Db.Count != 0,
-                //     () => Introduce.This(skills.Order(), false))
             from __ in "Coach Skills Updated".SpecIf(
                 () => coachesIn.Db.Count != 0,
                 () => reload.Skills.Select(a => a.Value).Order().SequenceEqual(skills.Order()))

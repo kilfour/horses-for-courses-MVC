@@ -18,6 +18,9 @@
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="9.0.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.7" />
+
+    <PackageReference Include="QuickPulse.Show" Version="0.1.6" />
+    
   </ItemGroup>
 
   <ItemGroup>
