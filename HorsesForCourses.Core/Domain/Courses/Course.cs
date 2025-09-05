@@ -50,7 +50,9 @@ public class Course : DomainEntity<Course>
         // ------------------------------------------------------------------------------------------------
     }
 
-    public virtual Course UpdateTimeSlots<T>(IEnumerable<T> timeSlotInfo, Func<T, (CourseDay Day, int Start, int End)> getTimeSlot)
+    public virtual Course UpdateTimeSlots<T>(
+        IEnumerable<T> timeSlotInfo,
+        Func<T, (CourseDay Day, int Start, int End)> getTimeSlot)
     {
         var newTimeSlots = TimeSlot.EnumerableFrom(timeSlotInfo, getTimeSlot);
         NotAllowedIfAlreadyConfirmed();
