@@ -6,21 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddHorsesForCourses();
 builder.Services.AddHorsesForCoursesMVC();
-
-builder.Services.AddAuthentication("Cookies")
-    .AddCookie("Cookies", o => { o.LoginPath = "/Account/Login"; });
-
-builder.Services.AddAuthorizationBuilder()
-    .AddPolicy("CanEditCoach", p =>
-        p.RequireClaim("skill", "Agile Coaching"))
-    .AddPolicy("CanReallyEditCoach", p =>
-        p.RequireClaim("skill", "Very Agile Coaching"));
-
 var app = builder.Build();
-
-app.UseAuthentication();
-app.UseAuthorization();
-
 if (!app.Environment.IsDevelopment())
 {
     using (var scope = app.Services.CreateScope())
