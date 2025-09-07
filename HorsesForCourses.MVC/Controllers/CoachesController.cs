@@ -2,10 +2,12 @@
 using HorsesForCourses.MVC.Controllers.Abstract;
 using HorsesForCourses.MVC.Models.Coaches;
 using HorsesForCourses.Service.Coaches;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HorsesForCourses.MVC.Controllers;
 
+[Authorize]
 public class CoachesController(ICoachesService Service) : MvcController
 {
     [HttpGet("RegisterCoach")]
@@ -30,6 +32,7 @@ public class CoachesController(ICoachesService Service) : MvcController
                 ViewOrNotFoundIfNull(await Service.GetCoachDetail(id), a => new UpdateSkillsViewModel(a!)));
 
     [HttpGet("Coaches/")]
+    [AllowAnonymous]
     public async Task<IActionResult> Index(int page = 1, int pageSize = 25)
         => View(await Service.GetCoaches(page, pageSize));
 

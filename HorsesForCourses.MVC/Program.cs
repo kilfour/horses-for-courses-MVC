@@ -6,7 +6,16 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddHorsesForCourses();
 builder.Services.AddHorsesForCoursesMVC();
+
+builder.Services.AddAuthentication("Cookies")
+    .AddCookie("Cookies", o => { o.LoginPath = "/Account/Login"; });
+builder.Services.AddAuthorization();
+
 var app = builder.Build();
+
+app.UseAuthentication();
+app.UseAuthorization();
+
 if (!app.Environment.IsDevelopment())
 {
     using (var scope = app.Services.CreateScope())

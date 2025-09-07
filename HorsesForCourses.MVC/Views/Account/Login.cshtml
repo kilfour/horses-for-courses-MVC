@@ -1,0 +1,12 @@
+﻿@using HorsesForCourses.MVC.Models.Account
+@model LoginViewModel
+
+<h2>Login</h2>
+
+<form asp-controller="Account" asp-action="Login" method="post" asp-antiforgery="true">
+    <div asp-validation-summary="ModelOnly"></div>
+    <label>Email</label>
+    <input asp-for="Email" />
+
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
