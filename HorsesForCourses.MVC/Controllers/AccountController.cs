@@ -16,7 +16,10 @@ public class AccountController : Controller
     [HttpPost]
     public async Task<IActionResult> Login(string email)
     {
-        var claims = new List<Claim> { new(ClaimTypes.Name, email) };
+        var claims = new List<Claim> {
+            new(ClaimTypes.Name, email),
+            new("skill", "Agile Coaching")
+        };
         var id = new ClaimsIdentity(claims, "Cookies");
         await HttpContext.SignInAsync("Cookies", new ClaimsPrincipal(id));
         return Redirect("/");
@@ -28,4 +31,8 @@ public class AccountController : Controller
         await HttpContext.SignOutAsync("Cookies");
         return Redirect("/");
     }
+
+    [HttpGet]
+    public IActionResult AccessDenied(string? returnUrl = null)
+        => View(model: returnUrl);
 }

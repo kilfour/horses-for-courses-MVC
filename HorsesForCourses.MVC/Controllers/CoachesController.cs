@@ -21,10 +21,12 @@ public class CoachesController(ICoachesService Service) : MvcController
             .OnException(() => View(new RegisterCoachViewModel(name, email)));
 
     [HttpGet("UpdateSkills/{id}")]
+    [Authorize(Policy = "CanEditCoach")]
     public async Task<IActionResult> UpdateSkills(IdPrimitive id)
         => ViewOrNotFoundIfNull(await Service.GetCoachDetail(id), a => new UpdateSkillsViewModel(a!));
 
     [HttpPost("UpdateSkills/{id}"), ValidateAntiForgeryToken]
+    [Authorize(Policy = "CanReallyEditCoach")]
     public async Task<IActionResult> UpdateSkills(IdPrimitive id, List<string> skills)
         => await This(async () => await Service.UpdateSkills(id, skills))
             .OnSuccess(() => RedirectToAction(nameof(Index)))

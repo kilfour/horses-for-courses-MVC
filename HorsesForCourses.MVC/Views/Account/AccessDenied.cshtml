@@ -1,0 +1,19 @@
+@model string
+@{
+    ViewData["Title"] = "Toegang geweigerd";
+}
+<h1 class="display-6">403 — Toegang geweigerd</h1>
+<p>Je bent ingelogd, maar je mist de vereiste rechten om deze actie uit te voeren.</p>
+@if (!string.IsNullOrWhiteSpace(Model))
+{
+    <p>
+        <a class="btn btn-primary" href="@Model">Ga terug</a>
+        <a class="btn btn-outline-secondary" href="/">Naar startpagina</a>
+    </p>
+}
+else
+{
+    <p>
+        <a class="btn btn-outline-secondary" href="/">Naar startpagina</a>
+    </p>
+}

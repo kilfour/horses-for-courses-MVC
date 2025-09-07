@@ -9,7 +9,12 @@ builder.Services.AddHorsesForCoursesMVC();
 
 builder.Services.AddAuthentication("Cookies")
     .AddCookie("Cookies", o => { o.LoginPath = "/Account/Login"; });
-builder.Services.AddAuthorization();
+
+builder.Services.AddAuthorizationBuilder()
+    .AddPolicy("CanEditCoach", p =>
+        p.RequireClaim("skill", "Agile Coaching"))
+    .AddPolicy("CanReallyEditCoach", p =>
+        p.RequireClaim("skill", "Very Agile Coaching"));
 
 var app = builder.Build();
 
