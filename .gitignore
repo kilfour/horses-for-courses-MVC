@@ -5,7 +5,7 @@ node_modules/
 .vite/
 
 # Build output
-dist/
+
 
 # Test coverage
 coverage/
